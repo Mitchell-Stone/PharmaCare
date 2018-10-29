@@ -7,3 +7,4 @@ C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCar
 C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
 C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
 C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
+C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\System.Xml.ReaderWriter.dll
