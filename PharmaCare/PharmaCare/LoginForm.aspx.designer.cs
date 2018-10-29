@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PharmaCare
-{
-
-
-    public partial class LoginForm
-    {
-
+namespace PharmaCare {
+    
+    
+    public partial class LoginForm {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
