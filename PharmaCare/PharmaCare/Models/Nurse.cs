@@ -7,5 +7,8 @@ namespace PharmaCare.Models
 {
     public class Nurse
     {
+        public int NurseID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
