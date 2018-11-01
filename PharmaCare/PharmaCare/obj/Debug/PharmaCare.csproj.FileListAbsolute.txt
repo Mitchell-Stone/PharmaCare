@@ -57,3 +57,9 @@ C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\roslyn\vbc.exe.
 C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\roslyn\vbc.rsp
 C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\roslyn\VBCSCompiler.exe
 C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\7105200717\Documents\GitHub\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
+C:\Users\7105200717\Documents\GitHub\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.dll.config
+C:\Users\7105200717\Documents\GitHub\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.dll
+C:\Users\7105200717\Documents\GitHub\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.pdb
+C:\Users\7105200717\Documents\GitHub\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
+C:\Users\7105200717\Documents\GitHub\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
