@@ -77,3 +77,9 @@ C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pd
 C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\PharmaCare.dll.config
 C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\PharmaCare.dll
 C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\PharmaCare.pdb
+C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\bin\PharmaCare.dll.config
+C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\bin\PharmaCare.dll
+C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\bin\PharmaCare.pdb
+C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
+C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
+C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
