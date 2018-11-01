@@ -1,19 +1,71 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PharmaCare.Site" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" 
+    Inherits="PharmaCare.Site" ClientIDMode="Static" %>
 
 <!DOCTYPE html>
 
-<html>
-<head runat="server">
-    <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head runat="server">
+        <title>PharmaCare</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="Content/site.css" rel="stylesheet" />
+        <script src="Scripts/jquery-1.9.1.min.js"></script>
+        <script src="Scripts/bootstrap.min.js"></script>
+        <asp:ContentPlaceHolder ID="headPlaceholder" runat="server"></asp:ContentPlaceHolder>
+    </head>
+    <body>       
+        <div class="container">
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container-fluid">
+                    <!-- navbar body - nav content for toggling -->
+                    <div id="mainMenu">
+                        <ul id="navList" runat="server" class="nav">
+                            <li runat="server"> 
+                                <asp:HyperLink NavigateUrl="~/Home.aspx" runat="server">
+                                    PharmaCare
+                                </asp:HyperLink>
+                            </li>
+                            <li runat="server"> 
+                                <asp:HyperLink NavigateUrl="~/Home.aspx" runat="server">
+                                    Home
+                                </asp:HyperLink>
+                            </li>
+                            <li runat="server">                               
+                                <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server">
+                                    Prescriptions
+                                </asp:HyperLink>
+                            </li>
+                            <li runat="server">
+                                <asp:HyperLink NavigateUrl="~/Patient.aspx" runat="server">
+                                    Patients
+                                </asp:HyperLink>
+                            </li>
+                            <li runat="server">
+                                <asp:HyperLink NavigateUrl="~/Schedule.aspx" runat="server">
+                                    Schedules
+                                </asp:HyperLink>
+                            </li>
+                            <li runat="server">
+                                <asp:HyperLink NavigateUrl="~/LogIn.aspx" runat="server">
+                                    Log In
+                                </asp:HyperLink>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <form id="form1" runat="server" class="form-horizontal">            
+                <hr />
+                <main class="row">
+                    <div class="col-sm-12">
+                        <asp:ContentPlaceHolder ID="mainPlaceholder" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </main>
+                <footer class="text-center text-capitalize">
+                    <label>copyright &copy; PharmaCare, all rights reserved.</label>
+                </footer>
+            </form>
         </div>
-    </form>
-</body>
+    </body>
 </html>
