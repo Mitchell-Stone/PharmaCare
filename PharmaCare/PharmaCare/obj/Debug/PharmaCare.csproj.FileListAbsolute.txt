@@ -83,3 +83,4 @@ C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\bin\Pha
 C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
 C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
 C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
+C:\Users\mitch\OneDrive\Desktop\PharmaCare\Project\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csprojResolveAssemblyReference.cache
