@@ -70,3 +70,10 @@ C:\Users\0105186517\Documents\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaC
 C:\Users\0105186517\Documents\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
 C:\Users\0105186517\Documents\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
 C:\Users\0105186517\Documents\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csprojResolveAssemblyReference.cache
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\PharmaCare.dll.config
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\PharmaCare.dll
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\PharmaCare.pdb
