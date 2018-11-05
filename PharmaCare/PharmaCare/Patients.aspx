@@ -25,6 +25,10 @@
         </div>
         <div class="col-sm-2">
             <asp:Button ID="btnAddPatient" runat="server" Text="Add Patient" />
+            <asp:Button ID="btnUpdate" runat="server" Text="Update Patient" />
+        </div>
+        <div class="col-sm-2">
+            <asp:TextBox ID="txtFind" runat="server"></asp:TextBox>
             <asp:Button ID="btnFindPatient" runat="server" Text="Find Patient" />
         </div>  
         <div class="col-sm-1">
