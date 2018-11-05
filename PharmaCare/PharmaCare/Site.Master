@@ -27,18 +27,23 @@
                                 </asp:HyperLink>
                             </li>
                             <li runat="server">                               
-                                <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server">
-                                    Prescriptions
+                                <asp:HyperLink NavigateUrl="~/Staff.aspx" runat="server">
+                                    Staff
                                 </asp:HyperLink>
                             </li>
                             <li runat="server">
-                                <asp:HyperLink NavigateUrl="~/Patient.aspx" runat="server">
-                                    Patients
+                                <asp:HyperLink NavigateUrl="~/Nurse.aspx" runat="server">
+                                    Nurse
                                 </asp:HyperLink>
                             </li>
                             <li runat="server">
-                                <asp:HyperLink NavigateUrl="~/Schedule.aspx" runat="server">
-                                    Schedules
+                                <asp:HyperLink NavigateUrl="~/Pharmacist.aspx" runat="server">
+                                    Pharmacist
+                                </asp:HyperLink>
+                            </li>
+                            <li runat="server">
+                                <asp:HyperLink NavigateUrl="~/Doctor.aspx" runat="server">
+                                    Doctor 
                                 </asp:HyperLink>
                             </li>
                             <li runat="server">
