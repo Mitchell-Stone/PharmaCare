@@ -26,6 +26,14 @@
         <div class="col-sm-2">
             <asp:Button ID="btnAddPatient" runat="server" Text="Add Patient" />
             <asp:Button ID="btnFindPatient" runat="server" Text="Find Patient" />
+        </div>  
+        <div class="col-sm-1">
+            <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID=""
+                DataKeyNames="" >
+                <Columns>
+
+                </Columns>
+            </asp:GridView>
         </div>
     </div>
 </asp:Content>
