@@ -5,9 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceholder" runat="server">
     <asp:DataGrid ID="dgPreperationList" runat="server" AutoPostBack="True"
                     DataSourceID="PrepDataSource" DataValueField="Pre" 
-                    CssClass="form-control">
-
-
+                    CssClass="grid">
     </asp:DataGrid>
 
     <asp:SqlDataSource ID="PrepDataSource" runat="server" 

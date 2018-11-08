@@ -58,7 +58,7 @@
                                     Staff
                                 </asp:HyperLink>
                                 <div class="dropdown-block">
-                                    <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Out Patient Prescriptions</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/SearchPrescriptions.aspx" runat="server" CssClass="dropdown-content">Out Patient Prescriptions</asp:Hyperlink>
                                 </div>
                             </li>   
                             <li runat="server" class="dropdown">
