@@ -26,7 +26,9 @@
                                     Doctor 
                                 </asp:HyperLink>
                                 <div class="dropdown-block">
-                                    <asp:Hyperlink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Prescriptions</asp:Hyperlink>
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Write Prescription</asp:HyperLink>
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Modify Prescription</asp:HyperLink>
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Cancel Prescription</asp:HyperLink>
                                 </div>
                             </li>
                             <li runat="server" class="dropdown">
@@ -48,6 +50,7 @@
                                 <div class="dropdown-block">
                                     <asp:Hyperlink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">View Prescriptions</asp:Hyperlink>
                                     <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Distribution Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Nursing Station List</asp:Hyperlink>
                                 </div>
                             </li>
                             <li runat="server" class="dropdown">                               
