@@ -17,23 +17,16 @@
             <asp:TextBox ID="txtPFname" runat="server"></asp:TextBox>
             <label> Last Name : </label>
             <asp:TextBox ID="txtPLname" runat="server"></asp:TextBox>
-        </div>
-       
-     <%-- <div class="col-sm-3">
-            <label> Floor Number : </label>
-            <asp:TextBox ID="txtFloor" runat="server"></asp:TextBox>
-            <label> Room Number : </label>
-            <asp:TextBox ID="txtRoom" runat="server"></asp:TextBox>
-            <label> Wing Number : </label>
-            <asp:TextBox ID="txtWing" runat="server"></asp:TextBox>
-        </div>--%> 
-          
-        <div class="col-sm-1">
-            <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="GetPrescriptions"
-                ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>' 
-                        SelectCommand="SELECT [PrescriptionId], [DrugId], [PatientName], 
+        </div>          
+        <div class="col-sm-2">
+            <asp:SqlDataSource runat="server" ID="Prescriptions"
+                ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>'
+                SelectCommand="SELECT [PrescriptionId], [DrugId], [PatientName], 
                         [PrescriptionDate], [PrescribingDoctor], [AdditionalInformation],[PrescriptionStatus],[DrugDose],[FirstTime],[LastTime],[TimesPerDay],[StatusOfDose] FROM [Prescription] 
-                        ORDER BY [PatientName]" >
+                        ORDER BY [PatientName]">
+    </asp:SqlDataSource>
+            <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="Prescriptions"
+                ><%--CssClass="table table-bordered table-striped table-condensed" --%>
                 <Columns>
                     <asp:BoundField DataField="PrescriptionID" HeaderText="Presciption ID"
                         ReadOnly="True" SortExpression="PrescriptionID" >
@@ -84,6 +77,8 @@
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                 </Columns>
+                <PagerSettings Mode="NumericFirstLast" />
+                
             </asp:GridView>
         </div>
     </div>
