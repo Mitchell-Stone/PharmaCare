@@ -18,36 +18,41 @@
                 <div class="contents">
                 <div class="label-textstwo">First Name
                     </div>
-                <input id="Text" type="text" />
+                <input class="Text" id="inputsm" type="text" />
                 </div>
 
                  <div class="contents">
                 <div class="label-textstwo">Last Name
                     </div>
-                <input id="Text1" type="text" />
+                <input class="Text" type="text" />
                 </div>
             
                 <div class="contents">
                 <div class="label-textstwo">Email</div>
-                <input id="Text2" type="text" />
+                <input class="Text" type="text" />
                 </div>
 
                 <div class="contents">
                 <div class="label-textstwo">Job</div>
-                 <input id="Text3" type="text" />
+                 <input class="Text" type="text" />
                 </div>
 
                 <div class="contents">
                 <div class="label-textstwo">Password</div>
-                <input id="Password2" type="password" />
+                <input class="Text" type="password" />
                 </div>
+                  
                  
-                    <button class="back">Back</button>
+                  
+                    <asp:Button class="back" runat="server" Text="Back" ID="btn_Back" OnClick="btn_back" />
 
-                   <button class="submit">Submit</button>
+                   
+                    <asp:Button class="submit" runat="server" Text="Submit" ID="btn_Submit" OnClick="btn_submit" />
 
-
+                 
                 </div>
+
+            
 
          
         </div>   

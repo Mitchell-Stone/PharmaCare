@@ -13,5 +13,15 @@ namespace PharmaCare
         {
 
         }
+
+        protected void btn_back(object sender, EventArgs e)
+        {
+            Response.Redirect("LogIn.aspx");
+        }
+
+        protected void btn_submit(object sender, EventArgs e)
+        {
+
+        }
     }
 }

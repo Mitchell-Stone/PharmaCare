@@ -11,6 +11,7 @@
         <link href="Content/site.css" rel="stylesheet" />
         <script src="Scripts/jquery-1.9.1.min.js"></script>
         <script src="Scripts/bootstrap.min.js"></script>
+        
         <asp:ContentPlaceHolder ID="headPlaceholder" runat="server"></asp:ContentPlaceHolder>
     </head>
     <body>       
@@ -18,8 +19,9 @@
             <nav class="navbar navbar-default navbar-static-top">
                 <div class="container-fluid">
                     <!-- navbar body - nav content for toggling -->
+                    
                     <div id="mainMenu">
-                        <h2>PharmaCare</h2>
+                       <h2 class="pharma">PharmaCare</h2>
                         <ul id="navList" runat="server" class="nav">
                             <li runat="server" class="dropdown">
                                 <asp:HyperLink NavigateUrl="~/#.aspx" runat="server" CssClass="selection-header">

@@ -18,5 +18,10 @@ namespace PharmaCare
         {
 
         }
+
+        protected void btn_SignUp(object sender, EventArgs e)
+        {
+            Response.Redirect("SignUp.aspx");
+        }
     }
 }

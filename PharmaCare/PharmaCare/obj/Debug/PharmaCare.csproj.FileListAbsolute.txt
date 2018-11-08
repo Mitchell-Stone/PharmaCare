@@ -39,3 +39,10 @@ D:\VisualStudioCode\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj
 D:\VisualStudioCode\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
 D:\VisualStudioCode\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
 D:\VisualStudioCode\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
+E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.dll.config
+E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.dll
+E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.pdb
+E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csprojAssemblyReference.cache
+E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
+E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
+E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
