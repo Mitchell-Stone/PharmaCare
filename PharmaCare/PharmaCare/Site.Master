@@ -28,8 +28,9 @@
                                     Doctor 
                                 </asp:HyperLink>
                                 <div class="dropdown-block">
-                                    <asp:Hyperlink NavigateUrl="~/Patients.aspx" runat="server" CssClass="dropdown-content">View Patients</asp:Hyperlink>
-                                    <asp:Hyperlink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">View Prescriptions</asp:Hyperlink>
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Write Prescription</asp:HyperLink>
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Modify Prescription</asp:HyperLink>
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Cancel Prescription</asp:HyperLink>
                                 </div>
                             </li>
                             <li runat="server" class="dropdown">
@@ -37,19 +38,21 @@
                                     Pharmacist
                                 </asp:HyperLink>
                                 <div class="dropdown-block">
-                                    <asp:Hyperlink NavigateUrl="~/Patients.aspx" runat="server" CssClass="dropdown-content">View Patients</asp:Hyperlink>
                                     <asp:Hyperlink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">View Prescriptions</asp:Hyperlink>
-                                    <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Generate Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Print Labels</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/PreparationList.aspx" runat="server" CssClass="dropdown-content">Preperation List</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Distribution Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Nursing Station List</asp:Hyperlink>
                                 </div>
                             </li>
                             <li runat="server" class="dropdown">
-                                <asp:HyperLink NavigateUrl="~/#" runat="server" CssClass="selection-header">
+                                <asp:HyperLink NavigateUrl="~/#.aspx" runat="server" CssClass="selection-header">
                                     Nurse
                                 </asp:HyperLink>
                                 <div class="dropdown-block">
-                                    <asp:Hyperlink NavigateUrl="~/Patients.aspx" runat="server" CssClass="dropdown-content">View Patients</asp:Hyperlink>
                                     <asp:Hyperlink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">View Prescriptions</asp:Hyperlink>
-                                    <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Generate Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Distribution Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Nursing Station List</asp:Hyperlink>
                                 </div>
                             </li>
                             <li runat="server" class="dropdown">                               
@@ -57,8 +60,7 @@
                                     Staff
                                 </asp:HyperLink>
                                 <div class="dropdown-block">
-                                    <asp:Hyperlink NavigateUrl="~/Patients.aspx" runat="server" CssClass="dropdown-content">View Patients</asp:Hyperlink>
-                                    <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Generate Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/SearchPrescriptions.aspx" runat="server" CssClass="dropdown-content">Out Patient Prescriptions</asp:Hyperlink>
                                 </div>
                             </li>   
                             <li runat="server" class="dropdown">
