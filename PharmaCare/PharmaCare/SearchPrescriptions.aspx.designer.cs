@@ -10,7 +10,7 @@
 namespace PharmaCare {
     
     
-    public partial class WebForm1 {
+    public partial class SearchPrescriptions {
         
         /// <summary>
         /// txtSearchPatient control.
@@ -76,12 +76,12 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.SqlDataSource Prescriptions;
         
         /// <summary>
-        /// dgvPrescriptions control.
+        /// DgvPrescriptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvPrescriptions;
+        protected global::System.Web.UI.WebControls.GridView DgvPrescriptions;
     }
 }

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="headPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceholder" runat="server">
-    <h1>Search Prescription Page</h1>
+    <h1>Outdoor Patient Prescription Page</h1>
     <div class="row">
         <div class="col-sm-2">
             <label>Search Patient : </label>
@@ -26,7 +26,7 @@
                         ORDER BY [PatientName]">
     </asp:SqlDataSource>
             <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="Prescriptions"
-                ><%--CssClass="table table-bordered table-striped table-condensed" --%>
+                CssClass="table table-bordered table-striped table-condensed">
                 <Columns>
                     <asp:BoundField DataField="PrescriptionID" HeaderText="Presciption ID"
                         ReadOnly="True" SortExpression="PrescriptionID" >
