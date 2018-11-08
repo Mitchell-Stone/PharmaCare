@@ -74,10 +74,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\site.css" />
-    <Content Include="Doctor.aspx" />
-    <Content Include="Home.aspx" />
-    <Content Include="Nurse.aspx" />
-    <Content Include="Pharmacist.aspx" />
     <Content Include="LogIn.aspx" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -107,7 +103,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="SearchPrescriptions.aspx" />
     <Content Include="SignUp.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Scripts\bootstrap.min.js.map" />
@@ -140,39 +135,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Staff.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Doctor.aspx.cs">
-      <DependentUpon>Doctor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Doctor.aspx.designer.cs">
-      <DependentUpon>Doctor.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Nurse.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\Pharmacist.cs" />
     <Compile Include="Models\Prescriptions.cs" />
     <Compile Include="Models\Staff.cs" />
-    <Compile Include="Nurse.aspx.cs">
-      <DependentUpon>Nurse.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Nurse.aspx.designer.cs">
-      <DependentUpon>Nurse.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pharmacist.aspx.cs">
-      <DependentUpon>Pharmacist.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pharmacist.aspx.designer.cs">
-      <DependentUpon>Pharmacist.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Prescriptions.aspx.cs">
       <DependentUpon>Prescriptions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -202,26 +175,12 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="Home.aspx.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Home.aspx.designer.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
-    </Compile>
     <Compile Include="LogIn.aspx.cs">
       <DependentUpon>LogIn.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="LogIn.aspx.designer.cs">
       <DependentUpon>LogIn.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Staff.aspx.cs">
-      <DependentUpon>Staff.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Staff.aspx.designer.cs">
-      <DependentUpon>Staff.aspx</DependentUpon>
     </Compile>
     <Compile Include="Schedule.aspx.cs">
       <DependentUpon>Schedule.aspx</DependentUpon>
