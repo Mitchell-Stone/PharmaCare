@@ -11,6 +11,7 @@ namespace PharmaCare
             BindData();
         }
 
+
         private void BindData()
         {
             //get the connection string from the config file to connect to the local database
@@ -31,8 +32,8 @@ namespace PharmaCare
             con.Open();
 
             //set the data source to the datagrid and then bind the data
-            dgPreperationList.DataSource = command.ExecuteReader();
-            dgPreperationList.DataBind();
+            gvPrepList.DataSource = command.ExecuteReader();
+            gvPrepList.DataBind();
 
             //close the connection
             con.Close();
