@@ -13,21 +13,21 @@ namespace PharmaCare {
     public partial class Prescriptions {
         
         /// <summary>
-        /// txtPatients control.
+        /// Patients control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPatients;
+        protected global::System.Web.UI.WebControls.SqlDataSource Patients;
         
         /// <summary>
-        /// btnPatients control.
+        /// DgvPatients control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPatients;
+        protected global::System.Web.UI.WebControls.GridView DgvPatients;
     }
 }
