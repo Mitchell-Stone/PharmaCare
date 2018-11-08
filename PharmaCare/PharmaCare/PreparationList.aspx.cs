@@ -1,19 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace PharmaCare
 {
-    public partial class WebForm4 : System.Web.UI.Page
+    public partial class WebForm2 : System.Web.UI.Page
     {
-        //string[] prepParams = new string[] { "active", "verified", "non-verified", "hold", "cancelled", "expired", "pending due to drug interactions" };
-
         protected void Page_Load(object sender, EventArgs e)
         {
+            BindData();
+        }
 
+        private void BindData()
+        {
+            //get the connection string from the config file to connect to the local database
+            string connectionString = ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString;
+
+            //create the connection
+            SqlConnection con = new SqlConnection(connectionString);
+
+            string query = "SELECT Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
+                "FROM Prescription " +
+                "LEFT JOIN Drugs " +
+                "ON Prescription.DrugId = Drugs.DrugId " +
+                "WHERE Prescription.PrescriptionStatus = 'verified' " +
+                "ORDER BY DrugName";
+
+            //generate the command and open the connection
+            SqlCommand command = new SqlCommand(query, con);
+            con.Open();
+
+            //set the data source to the datagrid and then bind the data
+            dgPreperationList.DataSource = command.ExecuteReader();
+            dgPreperationList.DataBind();
+
+            //close the connection
+            con.Close();
         }
     }
 }
