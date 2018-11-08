@@ -14,8 +14,8 @@
         ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>' 
         SelectCommand="SELECT [Drugs].[DrugName], [Drugs].[DrugForm], [Prescription].[DrugDose], [Prescription].[TimesPerDay] 
         FROM [Prescription]
-        LEFT JOIN [Drugs]
-        ON [Prescription].[DrugId] = [Drugs].[DrugId]
+        LEFT JOIN [Drugs] ON [Prescription].[DrugId] = [Drugs].[DrugId]
+        WHERE [Prescription].[PrescriptionStatus] = 'verified'
         ORDER BY [DrugName]">
     </asp:SqlDataSource>
 

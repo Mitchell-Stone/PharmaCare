@@ -84,6 +84,7 @@
     <Content Include="Prescriptions.aspx" />
     <Content Include="Schedule.aspx" />
     <Content Include="SearchPrescriptions.aspx" />
+    <Content Include="PreparationList.aspx" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -191,6 +192,13 @@
     </Compile>
     <Compile Include="SearchPrescriptions.aspx.designer.cs">
       <DependentUpon>SearchPrescriptions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PreparationList.aspx.cs">
+      <DependentUpon>PreparationList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PreparationList.aspx.designer.cs">
+      <DependentUpon>PreparationList.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
