@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SearchPrescriptions.aspx.cs" Inherits="PharmaCare.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SearchPrescriptions.aspx.cs" Inherits="PharmaCare.SearchPrescriptions" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="headPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceholder" runat="server">
@@ -25,8 +25,9 @@
                         [PrescriptionDate], [PrescribingDoctor], [AdditionalInformation],[PrescriptionStatus],[DrugDose],[FirstTime],[LastTime],[TimesPerDay],[StatusOfDose] FROM [Prescription] 
                         ORDER BY [PatientName]">
     </asp:SqlDataSource>
-            <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="Prescriptions"
-                CssClass="table table-bordered table-striped table-condensed">
+            <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="Prescriptions"
+                CssClass="table table-bordered table-striped table-condensed"
+                OnPreRender="DgvPrescriptions_PreRender">
                 <Columns>
                     <asp:BoundField DataField="PrescriptionID" HeaderText="Presciption ID"
                         ReadOnly="True" SortExpression="PrescriptionID" >
