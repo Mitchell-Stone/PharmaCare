@@ -8,7 +8,7 @@ namespace PharmaCare.Models
 {
     public class PatientDB
     {
-        public static Patient GetAllPatients()
+        public static List<Patient> GetAllPatients()
         {
             //set connection to HospitalDB class GetConnection method
             SqlConnection connection = HospitalDB.GetConnection();
@@ -21,8 +21,9 @@ namespace PharmaCare.Models
             {
                 connection.Open();
                 SqlDataReader patientReader = selectCommand.ExecuteReader(System.Data.CommandBehavior.SingleRow);
+                List<Patient> patients = new List<Patient>();
                 //read patients from patient table in hospitaldb
-                if (patientReader.Read())
+                while (patientReader.Read())
                 {
                     Patient patient = new Patient();
                     patient.PatientID = (int)patientReader["PatientID"];
@@ -35,12 +36,10 @@ namespace PharmaCare.Models
                     patient.wardID = (int)patientReader["WardID"];
                     patient.roomID = (int)patientReader["RoomID"];
                     //return patient information
-                    return patient;
+                    patients.Add(patient);
                 }
-                else
-                {
-                    return null;
-                }
+                return patients;
+
             }
             catch (SqlException ex)
             {
