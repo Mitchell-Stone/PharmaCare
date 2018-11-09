@@ -21,9 +21,9 @@
         <div class="col-sm-2">
             <asp:SqlDataSource runat="server" ID="Prescriptions"
                 ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>'
-                SelectCommand="SELECT [PrescriptionId], [DrugId], [PatientName], 
+                SelectCommand="SELECT [PrescriptionId], [DrugId], [PatientID], 
                         [PrescriptionDate], [PrescribingDoctor], [AdditionalInformation],[PrescriptionStatus],[DrugDose],[FirstTime],[LastTime],[TimesPerDay],[StatusOfDose] FROM [Prescription] 
-                        ORDER BY [PatientName]">
+                        ORDER BY [PatientID]">
     </asp:SqlDataSource>
             <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="Prescriptions"
                 CssClass="table table-bordered table-striped table-condensed"
@@ -33,8 +33,8 @@
                         ReadOnly="True" SortExpression="PrescriptionID" >
                         <ItemStyle CssClass="col-xs-1" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="PatientName" HeaderText="Patient Name"
-                        ReadOnly="True" SortExpression="PatientName" >
+                    <asp:BoundField DataField="PatientID" HeaderText="Patient ID"
+                        ReadOnly="True" SortExpression="PatientID" >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DrugID" HeaderText="Drug ID"
