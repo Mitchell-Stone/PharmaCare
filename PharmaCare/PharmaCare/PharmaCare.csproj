@@ -144,8 +144,11 @@
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Nurse.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\PatientDB.cs" />
+    <Compile Include="Models\PharmaCareDB.cs" />
     <Compile Include="Models\Pharmacist.cs" />
     <Compile Include="Models\Prescription.cs" />
+    <Compile Include="Models\PrescriptionDB.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Prescriptions.aspx.cs">
       <DependentUpon>Prescriptions.aspx</DependentUpon>

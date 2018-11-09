@@ -21,9 +21,7 @@
         <div class="col-sm-2">
             <asp:SqlDataSource runat="server" ID="Prescriptions"
                 ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>'
-                SelectCommand="SELECT [PrescriptionId], [DrugId], [PatientID], 
-                        [PrescriptionDate], [PrescribingDoctor], [AdditionalInformation],[PrescriptionStatus],[DrugDose],[FirstTime],[LastTime],[TimesPerDay],[StatusOfDose] FROM [Prescription] 
-                        ORDER BY [PatientID]">
+                SelectCommand="SELECT * FROM [Prescription] ORDER BY [PatientID]">
     </asp:SqlDataSource>
             <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="Prescriptions"
                 CssClass="table table-bordered table-striped table-condensed"
@@ -35,6 +33,10 @@
                     </asp:BoundField>
                     <asp:BoundField DataField="PatientID" HeaderText="Patient ID"
                         ReadOnly="True" SortExpression="PatientID" >
+                        <ItemStyle CssClass="col-xs-2" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="DoctorID" HeaderText="Doctor ID"
+                        ReadOnly="true" SortExpression="DoctorID" >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DrugID" HeaderText="Drug ID"
@@ -71,10 +73,6 @@
                     </asp:BoundField>
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
                         ReadOnly="true" SortExpression="PrescriptionDate" >
-                        <ItemStyle CssClass="col-xs-2" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="PrescribingDoctor" HeaderText="Prescribing Doctor"
-                        ReadOnly="true" SortExpression="PrescribingDoctor" >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                 </Columns>

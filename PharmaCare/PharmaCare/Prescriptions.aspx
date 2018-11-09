@@ -4,8 +4,7 @@
     <h1>THIS IS THE PRESCRIPTIONS PAGE</h1>
     <div>
         <asp:SqlDataSource runat="server" ID="Patients" ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>'
-            SelectCommand="SELECT Patients.PatientID, Patients.Name, Patients.Address, Patients.City, Patients.ZipCode, 
-            Patients.Type, Doctors.Name AS DocName, Patients.WardID, Patients.RoomID FROM Patients INNER JOIN Doctors ON
+            SelectCommand="SELECT Patients.*, Doctors.Name AS DocName FROM Patients INNER JOIN Doctors ON
             Patients.DoctorID = Doctors.DoctorID ORDER BY Patients.Name"></asp:SqlDataSource>
         <asp:GridView runat="server" ID="DgvPatients" AutoGenerateColumns="False" DataSourceID="Patients"
             CssClass="table table-bordered table-striped table-condensed"
@@ -30,4 +29,20 @@
             <PagerSettings Mode="NumericFirstLast" />
         </asp:GridView>
     </div>
+    <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-striped table-condensed">
+<Columns>
+    <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID" />
+    <asp:BoundField DataField="DrugId" HeaderText="Drug ID" />
+    <asp:BoundField DataField="PatientID" HeaderText="Patient ID" />
+    <asp:BoundField DataField="DoctorID" HeaderText="Doctor ID"/>
+    <asp:BoundField DataField="PrescribingDate" HeaderText="Date" />
+    <asp:BoundField DataField="InformationExtra" HeaderText="Extra Information" />
+    <asp:BoundField DataField="StatusPrescription" HeaderText="Status"/>
+    <asp:BoundField DataField="Doses" HeaderText="Drug Dose" />
+    <asp:BoundField DataField="FirstTimeUse" HeaderText="First Time" />
+    <asp:BoundField DataField="LastTimeUse" HeaderText="Last Time" />
+    <asp:BoundField DataField="FrequenseUseInADay" HeaderText="Times Per Day" />
+    <asp:BoundField DataField="DoseStatus" HeaderText="Status Of Dose" />
+</Columns>
+</asp:GridView>
 </asp:Content>

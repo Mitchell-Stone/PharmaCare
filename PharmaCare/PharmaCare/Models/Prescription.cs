@@ -11,8 +11,8 @@ namespace PharmaCare.Models
         public int PrescriptionID { get; set; }
         public int DrugID { get; set; }
         public int PatientID { get; set; }
+        public int DoctorID { get; set; }
         public string PrescribingDate { get; set; }
-        public string PrescribingDoctor { get; set; }
         public string InformationExtra { get; set; }
         public string StatusPrescription { get; set; }
         public string Doses { get; set; }
