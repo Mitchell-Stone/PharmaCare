@@ -56,7 +56,7 @@ namespace PharmaCare.Models
             }
         }
 
-        public void insertPrescription(int DrugID, int PatientID, int DoctorID, string PresDate, 
+        public static void insertPrescription(int DrugID, int PatientID, int DoctorID, string PresDate, 
             string AddInfo, string PresStatus, string DrugDose, string firstTime, string lastTime, string timesPerDay, string DoseStatus)
         {
             //set connection to schoolDB class GetConnection method
