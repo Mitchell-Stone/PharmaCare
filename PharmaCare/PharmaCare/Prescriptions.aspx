@@ -2,47 +2,59 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceHolder" runat="server">
     <h1>THIS IS THE PRESCRIPTIONS PAGE</h1>
-    <div>
-        <asp:SqlDataSource runat="server" ID="Patients" ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>'
-            SelectCommand="SELECT Patients.*, Doctors.Name AS DocName FROM Patients INNER JOIN Doctors ON
-            Patients.DoctorID = Doctors.DoctorID ORDER BY Patients.Name"></asp:SqlDataSource>
-        <asp:GridView runat="server" ID="DgvPatients" AutoGenerateColumns="False" DataSourceID="Patients"
-            CssClass="table table-bordered table-striped table-condensed"
-            OnPreRender="DgvPatients_PreRender" DataKeyNames="PatientID" AllowPaging="True" OnRowCommand="DgvPatients_RowCommand">
+    <div class="col-sm-12">
+        <label>Patient Name:</label>
+        <asp:TextBox runat="server" ID="txtPatient"></asp:TextBox>
+        <asp:Button runat="server" ID="btnPatient" Text="Search Patient" OnClick="btnPatient_Click" CssClass="btn-primary" />
+    </div>
+    <div class="container">
+        <div class="row">
+    <div runat="server" class=" col-lg-2" id="PatientDetails">
+        <h5 class="font-weight-bold">Patient Details:</h5>
+        <div>
+            <div class="row"><label class="font-weight-bold col">Name: </label><asp:Label runat="server" ID="Name" CssClass="col"></asp:Label></div>
+            <div class="row"><label class="font-weight-bold col">Address: </label><asp:Label runat="server" ID="Address" CssClass="col"></asp:Label></div>
+            <div class="row"><label class="font-weight-bold col">City: </label><asp:Label runat="server" ID="City" CssClass="col"></asp:Label></div>
+            <div class="row"><label class="font-weight-bold col">ZipCode: </label><asp:Label runat="server" ID="Zip" CssClass="col"></asp:Label></div>
+            <div class="row"><label class="font-weight-bold col">Type: </label><asp:Label runat="server" ID="Type" CssClass="col"></asp:Label></div>
+            <div class="row"><label class="font-weight-bold col">DoctorID: </label><asp:Label runat="server" ID="DoctorID" CssClass="col"></asp:Label></div>
+            <div class="row"><label class="font-weight-bold col">WardID: </label><asp:Label runat="server" ID="WardID" CssClass="col"></asp:Label></div>
+            <div class="row"><label class="font-weight-bold col">RoomID: </label><asp:Label runat="server" ID="RoomID" CssClass="col"></asp:Label></div>
+        </div>
+    </div>
+    <div class="table-responsive col-lg-10">
+        <h5 class="font-weight-bold">Patient Prescriptions:</h5>
+        <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover"
+            DataKeyNames="PrescriptionId" OnPreRender="DgvPrescriptions_PreRender"
+            EmptyDataText="There Are No Prescriptions For This Patient" EmptyDataRowStyle-ForeColor="Red">
             <Columns>
-                <asp:BoundField DataField="PatientID" HeaderText="PatientID" SortExpression="PatientID" ReadOnly="True"></asp:BoundField>
-                <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
-                <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address"></asp:BoundField>
-                <asp:BoundField DataField="City" HeaderText="City" SortExpression="City"></asp:BoundField>
-                <asp:BoundField DataField="ZipCode" HeaderText="ZipCode" SortExpression="ZipCode"></asp:BoundField>
-                <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type"></asp:BoundField>
-                <asp:BoundField DataField="DocName" HeaderText="Doctor" SortExpression="DocName"></asp:BoundField>
-                <asp:BoundField DataField="WardID" HeaderText="Ward" SortExpression="WardID"></asp:BoundField>
-                <asp:BoundField DataField="RoomID" HeaderText="Room" SortExpression="RoomID" />
-                <asp:TemplateField ShowHeader="False">
+                <%--<asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID" />--%>
+                <asp:BoundField DataField="DrugId" HeaderText="Drug ID" />
+                <asp:BoundField DataField="PatientID" HeaderText="Patient ID" />
+                <asp:BoundField DataField="DoctorID" HeaderText="Doctor ID" />
+                <asp:BoundField DataField="PrescribingDate" HeaderText="Date" />
+                <asp:BoundField DataField="InformationExtra" HeaderText="Extra Information" />
+                <asp:BoundField DataField="StatusPrescription" HeaderText="Status" />
+                <asp:BoundField DataField="Doses" HeaderText="Drug Dose" />
+                <asp:BoundField DataField="FirstTimeUse" HeaderText="First Time" />
+                <asp:BoundField DataField="LastTimeUse" HeaderText="Last Time" />
+                <asp:BoundField DataField="FrequenseUseInADay" HeaderText="Times Per Day" />
+                <asp:BoundField DataField="DoseStatus" HeaderText="Status Of Dose" />
+<%--                <asp:TemplateField ShowHeader="False">
                     <ItemTemplate>
-                        <asp:Button ID="btnViewPatientPrecriptions" runat="server" CausesValidation="false" CommandName="View"
-                            Text="View Prescription" CommandArgument='<%# Eval("PatientID") %>' />
+                        <asp:Button ID="btnEditPrescription" runat="server" CausesValidation="false" CommandName="Edit"
+                            Text="Edit" CommandArgument='<%# Eval("PrescriptionId") %>' CssClass="btn-primary" />
                     </ItemTemplate>
                 </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Button ID="btnDeletePrecription" runat="server" CausesValidation="false" CommandName="Delete"
+                            Text="Delete" CommandArgument='<%# Eval("PrescriptionId") %>' CssClass="btn-primary" />
+                    </ItemTemplate>
+                </asp:TemplateField>--%>
             </Columns>
-            <PagerSettings Mode="NumericFirstLast" />
         </asp:GridView>
     </div>
-    <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-striped table-condensed">
-<Columns>
-    <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID" />
-    <asp:BoundField DataField="DrugId" HeaderText="Drug ID" />
-    <asp:BoundField DataField="PatientID" HeaderText="Patient ID" />
-    <asp:BoundField DataField="DoctorID" HeaderText="Doctor ID"/>
-    <asp:BoundField DataField="PrescribingDate" HeaderText="Date" />
-    <asp:BoundField DataField="InformationExtra" HeaderText="Extra Information" />
-    <asp:BoundField DataField="StatusPrescription" HeaderText="Status"/>
-    <asp:BoundField DataField="Doses" HeaderText="Drug Dose" />
-    <asp:BoundField DataField="FirstTimeUse" HeaderText="First Time" />
-    <asp:BoundField DataField="LastTimeUse" HeaderText="Last Time" />
-    <asp:BoundField DataField="FrequenseUseInADay" HeaderText="Times Per Day" />
-    <asp:BoundField DataField="DoseStatus" HeaderText="Status Of Dose" />
-</Columns>
-</asp:GridView>
+                    </div>
+    </div>
 </asp:Content>

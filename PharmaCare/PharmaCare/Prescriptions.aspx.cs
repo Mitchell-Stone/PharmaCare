@@ -16,26 +16,11 @@ namespace PharmaCare
             
         }
 
-        protected void DgvPatients_PreRender(object sender, EventArgs e)
-        {
-            if (DgvPatients.HeaderRow != null)
-            {
-                DgvPatients.HeaderRow.TableSection = TableRowSection.TableHeader;
-            }
-        }
-
-        protected void DgvPatients_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            int patientID = Convert.ToInt16(e.CommandArgument);
-            GetPatient(patientID);
-            DisplayPatientPrescriptions();
-        }
-
         private void GetPatient(int patientID)
         {
             try
             {
-                patient = PatientDB.getPatient(patientID);
+                patient = PatientDB.getPatientById(patientID);
                 prescription = PrescriptionDB.GetPrescription(patientID);
             }
             catch (Exception ex)
@@ -43,13 +28,48 @@ namespace PharmaCare
                 ScriptManager.RegisterStartupScript(this, GetType(), "Warning", "alert(" + ex.Message + ")", true);
                 throw;
             }
-            
+        }
+
+        private void GetPatientByName(string patientID)
+        {
+            try
+            {
+                patient = PatientDB.getPatientByName(patientID);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "Warning", "alert(" + ex.Message + ")", true);
+                throw;
+            }
         }
 
         private void DisplayPatientPrescriptions()
         {
             DgvPrescriptions.DataSource = prescription;
             DgvPrescriptions.DataBind();
+        }
+
+        protected void DgvPrescriptions_PreRender(object sender, EventArgs e)
+        {
+            if (DgvPrescriptions.HeaderRow != null)
+            {
+                DgvPrescriptions.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void btnPatient_Click(object sender, EventArgs e)
+        {
+            GetPatientByName(txtPatient.Text);
+            GetPatient(patient.PatientID);
+            DisplayPatientPrescriptions();
+            Name.Text = patient.Name;
+            Address.Text = patient.Address;
+            City.Text = patient.City;
+            Zip.Text = patient.ZipCode;
+            Type.Text = patient.Type;
+            DoctorID.Text = patient.doctorID.ToString();
+            WardID.Text = patient.wardID.ToString();
+            RoomID.Text = patient.roomID.ToString();
         }
     }
 }

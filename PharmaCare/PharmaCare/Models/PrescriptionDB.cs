@@ -16,11 +16,12 @@ namespace PharmaCare.Models
             string selectStatement = "SELECT Prescription.*, Patients.Name AS PatName FROM Prescription " +
                 "INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID WHERE(Patients.PatientID = @PatientID)";
              //"SELECT * FROM Prescription WHERE PatientID = @PatientID";
-            //
+            //select command
             SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
             selectCommand.Parameters.AddWithValue("@PatientID", PatientID);
             try
             {
+                //open sql connection
                 connection.Open();
                 SqlDataReader PrescriptionReader = selectCommand.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
                 List<Prescription> patientPrescription = new List<Prescription>();
@@ -40,8 +41,8 @@ namespace PharmaCare.Models
                     prescription.FrequenseUseInADay = PrescriptionReader["TimesPerDay"].ToString();
                     prescription.DoseStatus = PrescriptionReader["StatusOfDose"].ToString();
                     patientPrescription.Add(prescription);
-
                 }
+                //return patientPrescription
                 return patientPrescription;
             }
             catch (SqlException ex)
@@ -50,6 +51,53 @@ namespace PharmaCare.Models
             }
             finally
             {
+                //close connection
+                connection.Close();
+            }
+        }
+
+        public void insertPrescription(int DrugID, int PatientID, int DoctorID, string PresDate, 
+            string AddInfo, string PresStatus, string DrugDose, string firstTime, string lastTime, string timesPerDay, string DoseStatus)
+        {
+            //set connection to schoolDB class GetConnection method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+
+            //insert statement
+            string insertStatement = "INSERT INTO Prescription (DrugId,PatientID,DoctorID,PrescriptionDate," +
+                "AdditionalInformation,PrescriptionStatus,DrugDose,FirstTime,LastTime,TimesPerDay,StatusOfDose) " +
+                "VALUES (@DrugId, @PatientId, @DoctorId, @PresDate, @AddInfo, @PresStatus, @DrugDose, " +
+                "@FirstTime, @LastTime, @TimesPerDay, @StatusOfDose)";
+
+            //insert command
+            SqlCommand insertCommand = new SqlCommand(insertStatement, connection);
+
+            insertCommand.Parameters.AddWithValue("@DrugId", DrugID);
+            insertCommand.Parameters.AddWithValue("@PatientId", PatientID);
+            insertCommand.Parameters.AddWithValue("@DoctorId", DoctorID);
+            insertCommand.Parameters.AddWithValue("@PresDate", PresDate);
+            insertCommand.Parameters.AddWithValue("@AddInfo", AddInfo);
+            insertCommand.Parameters.AddWithValue("@PresStatus", PresStatus);
+            insertCommand.Parameters.AddWithValue("@DrugDose", DrugDose);
+            insertCommand.Parameters.AddWithValue("@FirstTime", firstTime);
+            insertCommand.Parameters.AddWithValue("@LastTime", lastTime);
+            insertCommand.Parameters.AddWithValue("@TimesPerDay", timesPerDay);
+            insertCommand.Parameters.AddWithValue("@StatusOfDose", DoseStatus);
+
+            try
+            {
+                //open sql connection
+                connection.Open();
+                //execute insert query
+                insertCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql error
+                throw ex;
+            }
+            finally
+            {
+                //close sql connection
                 connection.Close();
             }
         }
