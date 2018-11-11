@@ -40,6 +40,15 @@ namespace PharmaCare {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PatientDetails;
         
         /// <summary>
+        /// PatientId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PatientId;
+        
+        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>
@@ -130,6 +139,24 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.TextBox PresPatientID;
         
         /// <summary>
+        /// rfvPatientID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPatientID;
+        
+        /// <summary>
+        /// cvPatientID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cvPatientID;
+        
+        /// <summary>
         /// PresDocID control.
         /// </summary>
         /// <remarks>
@@ -139,13 +166,22 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.TextBox PresDocID;
         
         /// <summary>
-        /// PresDate control.
+        /// rfvDocID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PresDate;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDocID;
+        
+        /// <summary>
+        /// cvDocID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cvDocID;
         
         /// <summary>
         /// PresDrugID control.
@@ -157,6 +193,42 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.TextBox PresDrugID;
         
         /// <summary>
+        /// rfvDrugID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDrugID;
+        
+        /// <summary>
+        /// cvDrugID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cvDrugID;
+        
+        /// <summary>
+        /// PresDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox PresDate;
+        
+        /// <summary>
+        /// rfvDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDate;
+        
+        /// <summary>
         /// PresFirst control.
         /// </summary>
         /// <remarks>
@@ -164,6 +236,15 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox PresFirst;
+        
+        /// <summary>
+        /// rfvFirst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFirst;
         
         /// <summary>
         /// PresStatus control.
@@ -175,6 +256,15 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.TextBox PresStatus;
         
         /// <summary>
+        /// rfvStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStatus;
+        
+        /// <summary>
         /// PresDrugDose control.
         /// </summary>
         /// <remarks>
@@ -182,6 +272,15 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox PresDrugDose;
+        
+        /// <summary>
+        /// rfvDrugDose control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDrugDose;
         
         /// <summary>
         /// PresLast control.
@@ -193,6 +292,15 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.TextBox PresLast;
         
         /// <summary>
+        /// rfvLast control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLast;
+        
+        /// <summary>
         /// PresDoseStatus control.
         /// </summary>
         /// <remarks>
@@ -202,6 +310,15 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.TextBox PresDoseStatus;
         
         /// <summary>
+        /// rfv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv;
+        
+        /// <summary>
         /// PresTimesADay control.
         /// </summary>
         /// <remarks>
@@ -209,6 +326,15 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox PresTimesADay;
+        
+        /// <summary>
+        /// rfvTimesPerDay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTimesPerDay;
         
         /// <summary>
         /// PresAddInfo control.
@@ -227,5 +353,23 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInsertPres;
+        
+        /// <summary>
+        /// btnModifyPres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModifyPres;
+        
+        /// <summary>
+        /// btnClearPres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClearPres;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PharmaCare.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,7 +14,7 @@ namespace PharmaCare
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
         }
 
         /// <summary>
@@ -94,6 +95,7 @@ namespace PharmaCare
         /// </summary>
         private void populatePatientDetails()
         {
+            PatientId.Text = patient.PatientID.ToString();
             Name.Text = patient.Name;
             Address.Text = patient.Address;
             City.Text = patient.City;
@@ -105,6 +107,24 @@ namespace PharmaCare
         }
 
         /// <summary>
+        /// validates an input is an integer
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private bool validateInt(string input)
+        {
+            int value;
+            if (int.TryParse(input, out value))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Insert Prescription into database
         /// </summary>
         /// <param name="sender"></param>
@@ -112,22 +132,41 @@ namespace PharmaCare
         protected void btnInsertPres_Click(object sender, EventArgs e)
         {
             Prescription pres = new Prescription();
-            int drugId = Convert.ToInt32(PresDrugID.Text);
-            int patientId = Convert.ToInt32(PresPatientID.Text);
-            int doctorId = Convert.ToInt32(PresDocID.Text);
-            string presDate = PresDate.Text;
-            string addInfo = PresAddInfo.InnerText;
-            string presStatus = PresStatus.Text;
-            string drugDose = PresDrugDose.Text;
-            string first = PresFirst.Text;
-            string last = PresLast.Text;
-            string timesADay = PresTimesADay.Text;
-            string doseStatus = PresDoseStatus.Text;
+            if (validateInt(PresDrugID.Text) && validateInt(PresPatientID.Text) && validateInt(PresDocID.Text) &&
+                !string.IsNullOrEmpty(PresDate.Text + PresStatus.Text + PresDrugDose.Text +
+                PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
+            {
+                pres.DrugID = Convert.ToInt32(PresDrugID.Text);
+                pres.PatientID = Convert.ToInt32(PresPatientID.Text);
+                pres.DoctorID = Convert.ToInt32(PresDocID.Text);
+                pres.PrescribingDate = PresDate.Text;
+                pres.InformationExtra = PresAddInfo.InnerText;
+                pres.StatusPrescription = PresStatus.Text;
+                pres.DoseStatus = PresDrugDose.Text;
+                pres.FirstTimeUse = PresFirst.Text;
+                pres.LastTimeUse = PresLast.Text;
+                pres.FrequenseUseInADay = PresTimesADay.Text;
+                pres.DoseStatus = PresDoseStatus.Text;
+            }
+            else
+            {
+                return;
+            }
 
             try
             {
-                PrescriptionDB.insertPrescription(drugId, patientId, doctorId, presDate, addInfo, presStatus, drugDose, first, last, timesADay, doseStatus);
-                clearPrescription();
+                if (pres != null)
+                {
+                    PrescriptionDB.insertPrescription(pres.DrugID, pres.PatientID, pres.DoctorID,
+                   pres.PrescribingDate, pres.InformationExtra, pres.StatusPrescription, pres.DoseStatus,
+                   pres.FirstTimeUse, pres.LastTimeUse, pres.FrequenseUseInADay, pres.DoseStatus);
+                    clearPrescription();
+                }
+                else
+                {
+                    return;
+                }
+               
             }
             catch (Exception ex)
             {
