@@ -107,15 +107,45 @@ namespace PharmaCare.Models
         {
             SqlCommand command = con.CreateCommand();
 
-            command.CommandText = "SELECT Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
+            command.CommandText = "SELECT Prescription.PrescriptionId, Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
                 "FROM Prescription " +
                 "LEFT JOIN Drugs " +
                 "ON Prescription.DrugId = Drugs.DrugId " +
                 "WHERE Prescription.PrescriptionStatus = @status " +
-                "ORDER BY DrugName";
+                "ORDER BY Prescription.PrescriptionDate ASC";
             command.Parameters.AddWithValue("status", scriptStatus);
 
             return command.ExecuteReader();
+        }
+
+        public static void UpdatePrescriptionStatus(int prescriptionId, string status)
+        {
+            //open connection to the local database
+            SqlConnection con = PharmaCareDB.GetLocalConnection();
+
+            string sql = "UPDATE Prescription " +
+                "SET PrescriptionStatus = @status " +
+                "Where PrescriptionId = @prescriptionId";
+
+            try
+            {
+                using (var command = new SqlCommand(sql, con))
+                {
+                    command.Parameters.AddWithValue("status", status);
+                    command.Parameters.AddWithValue("prescriptionId", prescriptionId);
+
+                    con.Open();
+                    command.ExecuteNonQuery();
+                }             
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
     }
 }
