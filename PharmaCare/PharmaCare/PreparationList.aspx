@@ -14,10 +14,20 @@
         </div>
         <div class="row">
             <div class="mx-auto">
+                <asp:Button runat="server" Text="Show Active Prescriptions" 
+                    CssClass="btn btn-outline-primary m-2" ID="btnActivePres" OnClick="btnActivePres_Click"/>
                 <asp:Button runat="server" Text="Show Non-Verified Prescriptions" 
                     CssClass="btn btn-outline-primary m-2" ID="btnNonVerifiedPres" OnClick="btnNonVerifiedPres_Click"/>
-                <asp:Button runat="server" Text="Show Active Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnActivePres" OnClick="btnActivePres_Click"/>         
+                <asp:Button runat="server" Text="Show Cancelled Prescriptions" 
+                    CssClass="btn btn-outline-primary m-2" ID="btnCancelledPres" OnClick="btnCancelledPres_Click"/>
+                <asp:Button runat="server" Text="Show On Hold Prescriptions" 
+                    CssClass="btn btn-outline-primary m-2" ID="btnOnHoldPres" OnClick="btnOnHoldPres_Click"/>
+                <asp:Button runat="server" Text="Show Expired Prescriptions" 
+                    CssClass="btn btn-outline-primary m-2" ID="btnExpiredPres" OnClick="btnExpiredPres_Click"/>
+                <asp:Button runat="server" Text="Show Cocktail Conflicts" 
+                    CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>
+                <asp:Button runat="server" Text="Show All Prescriptions" 
+                    CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>
             </div>
         </div>   
     </div>
@@ -36,11 +46,11 @@
                 SortExpression="DrugDose"></asp:BoundField>
             <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day"
                 SortExpression="TimesPerDay"></asp:BoundField>
-            <asp:TemplateField HeaderText="Prescription Status">
+            <asp:TemplateField HeaderText="Set Prescription Status">
                 <ItemTemplate>
                     <asp:Button runat="server" Text="Set Active" CommandName="SetPrescriptionActive" 
                         CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
-                        CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnSetActive"
+                        CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnSetStatus"
                         AutoPostBack="True"/>
                 </ItemTemplate>
             </asp:TemplateField>

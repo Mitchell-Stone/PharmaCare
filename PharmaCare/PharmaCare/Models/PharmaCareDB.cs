@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace PharmaCare.Models
 {
@@ -12,8 +8,7 @@ namespace PharmaCare.Models
         public static SqlConnection GetConnection()
         {
             //connection string for pharmacaredb
-            string connectionString = System.Configuration.ConfigurationManager.
-            ConnectionStrings["PharmaCareDB"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString;
             //sql connection 
             SqlConnection connection = new SqlConnection(connectionString);
             //return the connection

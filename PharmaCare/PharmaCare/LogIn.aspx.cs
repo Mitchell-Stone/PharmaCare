@@ -19,8 +19,7 @@ namespace PharmaCare
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            //SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Conn"].ConnectionString);
-            SqlConnection conn = HospitalDB.GetConnection();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString);
             conn.Open();
             string checkuser = "select count (*) from Staff where UserName ='" + txtUsername.Text + "'";
             SqlCommand com = new SqlCommand(checkuser, conn);

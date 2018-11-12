@@ -116,13 +116,15 @@ footer {
     background-color:
 }*/
 
+*/
+
 .box{
-    height:320px;
-    width:350px;
+    height:260px;
+    width:320px;
     border:1px solid skyblue;
 }
 #txtUsername{
-    width:250px;
+    width:500%;
 }
 #txtPassword{
     width:250px;
