@@ -112,26 +112,6 @@ namespace PharmaCare.Models
             }
         }
 
-        public static List<string> GetStatusList(string status)
-        {
-            List<string> tempList = new List<string>();
-            SqlConnection con = new SqlConnection();
-            string sql = "SELECT PrescriptionStatus, PrescriptionDate " +
-                "FROM Prescription " +
-                "ORDER BY PrescriptionDate ASC";
-
-            using (var command = new SqlCommand(sql, con))
-            {
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    tempList.Add(reader["PrescriptionStatus"].ToString());
-                }
-            }
-
-            return tempList;
-        }
-
         public static void UpdatePrescriptionStatus(int prescriptionId, string status)
         {
             //open connection to the local database
