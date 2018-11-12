@@ -34,7 +34,7 @@ namespace PharmaCare
         {
             try
             {
-                patient = PatientDB.getPatientByName();
+                patient = PatientDB.getPatientByName(PatientID);
             }
             catch (Exception ex)
             {

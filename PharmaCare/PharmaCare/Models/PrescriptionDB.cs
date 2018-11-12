@@ -9,14 +9,17 @@ namespace PharmaCare.Models
 {
     public class PrescriptionDB
     {
+        /// <summary>
+        /// get prescriptions depending on patient id
+        /// </summary>
+        /// <param name="PatientID"></param>
+        /// <returns></returns>
         public static List<Prescription> GetPrescription(int PatientID)
         {
-            //set connection to schoolDB class GetConnection method
+            //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
             //select statement
-            string selectStatement = "SELECT Prescription.*, Patients.Name AS PatName FROM Prescription " +
-                "INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID WHERE(Patients.PatientID = @PatientID)";
-             //"SELECT * FROM Prescription WHERE PatientID = @PatientID";
+            string selectStatement = "SELECT * FROM Prescription WHERE PatientID = @PatientID";
             //select command
             SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
             selectCommand.Parameters.AddWithValue("@PatientID", PatientID);
@@ -57,10 +60,13 @@ namespace PharmaCare.Models
             }
         }
 
-        public static void insertPrescription(int DrugID, int PatientID, int DoctorID, string PresDate, 
-            string AddInfo, string PresStatus, string DrugDose, string firstTime, string lastTime, string timesPerDay, string DoseStatus)
+        /// <summary>
+        /// insert prescription
+        /// </summary>
+        /// <param name="pres"></param>
+        public static void insertPrescription(Prescription pres)
         {
-            //set connection to schoolDB class GetConnection method
+            //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
 
             //insert statement
@@ -72,17 +78,18 @@ namespace PharmaCare.Models
             //insert command
             SqlCommand insertCommand = new SqlCommand(insertStatement, connection);
 
-            insertCommand.Parameters.AddWithValue("@DrugId", DrugID);
-            insertCommand.Parameters.AddWithValue("@PatientId", PatientID);
-            insertCommand.Parameters.AddWithValue("@DoctorId", DoctorID);
-            insertCommand.Parameters.AddWithValue("@PresDate", PresDate);
-            insertCommand.Parameters.AddWithValue("@AddInfo", AddInfo);
-            insertCommand.Parameters.AddWithValue("@PresStatus", PresStatus);
-            insertCommand.Parameters.AddWithValue("@DrugDose", DrugDose);
-            insertCommand.Parameters.AddWithValue("@FirstTime", firstTime);
-            insertCommand.Parameters.AddWithValue("@LastTime", lastTime);
-            insertCommand.Parameters.AddWithValue("@TimesPerDay", timesPerDay);
-            insertCommand.Parameters.AddWithValue("@StatusOfDose", DoseStatus);
+            insertCommand.Parameters.AddWithValue("@DrugId", pres.DrugID);
+            insertCommand.Parameters.AddWithValue("@PatientId", pres.PatientID);
+            insertCommand.Parameters.AddWithValue("@DoctorId", pres.DoctorID);
+            insertCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
+            insertCommand.Parameters.AddWithValue("@AddInfo", pres.InformationExtra);
+            insertCommand.Parameters.AddWithValue("@PresStatus", pres.StatusPrescription);
+            insertCommand.Parameters.AddWithValue("@DrugDose", pres.Doses);
+            insertCommand.Parameters.AddWithValue("@FirstTime", pres.FirstTimeUse);
+            insertCommand.Parameters.AddWithValue("@LastTime", pres.LastTimeUse);
+            insertCommand.Parameters.AddWithValue("@TimesPerDay", pres.FrequenseUseInADay);
+            insertCommand.Parameters.AddWithValue("@StatusOfDose", pres.DoseStatus);
+
 
             try
             {
@@ -136,7 +143,7 @@ namespace PharmaCare.Models
 
                     con.Open();
                     command.ExecuteNonQuery();
-                }             
+                }
             }
             catch (SqlException ex)
             {
@@ -146,6 +153,63 @@ namespace PharmaCare.Models
             {
                 con.Close();
             }
+        }
+
+        /// <summary>
+        /// update the prescription
+        /// </summary>
+        /// <param name="pres"></param>
+        public static void updatePrescription(Prescription pres)
+        {
+            //set connection to PharmaCareDB class getConneciton method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+
+            //update statement
+            string updateStatement = "UPDATE Prescription SET DrugId = @DrugId, PatientID = @PatientId, DoctorID = @DoctorId, PrescriptionDate = @PresDate, " +
+            "AdditionalInformation = @AddInfo, PrescriptionStatus = @PresStatus, DrugDose = @DrugDose, FirstTime = @FirstTime, LastTime = @LastTime, " +
+            "TimesPerDay = @TimesPerDay, StatusOfDose = @StatusOfDose WHERE PrescriptionId = @PrescriptionId";
+
+            //update command
+            SqlCommand updateCommand = new SqlCommand(updateStatement, connection);
+
+            updateCommand.Parameters.AddWithValue("@DrugId", pres.DrugID);
+            updateCommand.Parameters.AddWithValue("@PatientId", pres.PatientID);
+            updateCommand.Parameters.AddWithValue("@DoctorId", pres.DoctorID);
+            updateCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
+            if (!string.IsNullOrEmpty(pres.InformationExtra))
+            {
+                updateCommand.Parameters.AddWithValue("@AddInfo", pres.InformationExtra);
+            }
+            else
+            {
+                updateCommand.Parameters.AddWithValue("@AddInfo", DBNull.Value);
+            }
+            updateCommand.Parameters.AddWithValue("@PresStatus", pres.StatusPrescription);
+            updateCommand.Parameters.AddWithValue("@DrugDose", pres.Doses);
+            updateCommand.Parameters.AddWithValue("@FirstTime", pres.FirstTimeUse);
+            updateCommand.Parameters.AddWithValue("@LastTime", pres.LastTimeUse);
+            updateCommand.Parameters.AddWithValue("@TimesPerDay", pres.FrequenseUseInADay);
+            updateCommand.Parameters.AddWithValue("@StatusOfDose", pres.DoseStatus);
+            updateCommand.Parameters.AddWithValue("@PrescriptionId", pres.PrescriptionID);
+
+            try
+            {
+                //open sql connection
+                connection.Open();
+                //execute insert query
+                updateCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql error
+                throw ex;
+            }
+            finally
+            {
+                //close sql connection
+                connection.Close();
+            }
+
         }
     }
 }

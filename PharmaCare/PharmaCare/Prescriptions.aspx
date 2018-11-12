@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Prescriptions.aspx.cs" Inherits="PharmaCare.Prescriptions" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Prescriptions.aspx.cs" Inherits="PharmaCare.Prescriptions" EnableEventValidation="False" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceHolder" runat="server">
     <h1>THIS IS THE PRESCRIPTIONS PAGE</h1>
@@ -54,9 +54,10 @@
                 <h5 class="font-weight-bold">Patient Prescriptions:</h5>
                 <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover"
                     DataKeyNames="PrescriptionId" OnPreRender="DgvPrescriptions_PreRender"
-                    EmptyDataText="There Are No Prescriptions For This Patient" EmptyDataRowStyle-ForeColor="Red">
+                    EmptyDataText="There Are No Prescriptions For This Patient" EmptyDataRowStyle-ForeColor="Red" 
+                    OnRowDataBound="DgvPrescriptions_RowDataBound" OnSelectedIndexChanged="DgvPrescriptions_SelectedIndexChanged">
                     <Columns>
-                        <%--<asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID" />--%>
+                        <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID" ItemStyle-CssClass="d-none" HeaderStyle-CssClass="d-none" />
                         <asp:BoundField DataField="DrugId" HeaderText="Drug ID" />
                         <asp:BoundField DataField="PatientID" HeaderText="Patient ID" />
                         <asp:BoundField DataField="DoctorID" HeaderText="Doctor ID" />
@@ -77,6 +78,15 @@
         <h5 class="font-weight-bold">Prescription:</h5>
         <div class="row">
             <div class="col-md-4">
+                <asp:Label runat="server" ID="presID" Visible="false"></asp:Label>
+                <label class="font-weight-bold">DrugID:</label>
+                <asp:TextBox runat="server" CssClass="float-right" ID="PresDrugID" ValidationGroup="presValidation"></asp:TextBox><br />
+                <asp:RequiredFieldValidator ID="rfvDrugID" runat="server" ErrorMessage="Drug ID is required"
+                    ControlToValidate="PresDrugID" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
+                <asp:CompareValidator ID="cvDrugID" runat="server" ErrorMessage="Drug ID must be a number"  ControlToValidate="presDrugID"
+                    CssClass="text-danger float-right" Type="Integer" ValidationGroup="presValidation" Operator="DataTypeCheck"></asp:CompareValidator>
+                </div>
+            <div class="col-md-4">
                 <label class="font-weight-bold">PatientID:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresPatientID" ValidationGroup="presValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvPatientID" runat="server" ErrorMessage="Patient ID is required" 
@@ -90,14 +100,6 @@
                 <asp:RequiredFieldValidator ID="rfvDocID" runat="server" ErrorMessage="Doctor ID is required" 
                     ControlToValidate="PresDocID" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
                 <asp:CompareValidator ID="cvDocID" runat="server" ErrorMessage="Doctor ID must be a number"  ControlToValidate="presDocID"
-                    CssClass="text-danger float-right" Type="Integer" ValidationGroup="presValidation" Operator="DataTypeCheck"></asp:CompareValidator>
-                </div>
-            <div class="col-md-4">
-                <label class="font-weight-bold">DrugID:</label>
-                <asp:TextBox runat="server" CssClass="float-right" ID="PresDrugID" ValidationGroup="presValidation"></asp:TextBox><br />
-                <asp:RequiredFieldValidator ID="rfvDrugID" runat="server" ErrorMessage="Drug ID is required"
-                    ControlToValidate="PresDrugID" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
-                <asp:CompareValidator ID="cvDrugID" runat="server" ErrorMessage="Drug ID must be a number"  ControlToValidate="presDrugID"
                     CssClass="text-danger float-right" Type="Integer" ValidationGroup="presValidation" Operator="DataTypeCheck"></asp:CompareValidator>
                 </div>
         </div>
@@ -115,7 +117,7 @@
                     ControlToValidate="PresFirst" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
                 </div>
             <div class="col-md-4">
-                <label class="font-weight-bold">Prescription Status:</label>
+                <label class="font-weight-bold">Status:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresStatus" ValidationGroup="presValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvStatus" runat="server" ErrorMessage="Prescription status is required"
                     ControlToValidate="PresStatus" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
@@ -164,8 +166,9 @@
         <div class="row">
             <div class="mx-auto">
                 <asp:Button runat="server" Text="Create" CssClass="btn btn-outline-primary m-2" ID="btnInsertPres" OnClick="btnInsertPres_Click" ValidationGroup="presValidation"/>
-                <asp:Button runat="server" Text="Modify" CssClass="btn btn-outline-primary m-2" ID="btnModifyPres"/>
-                <asp:Button runat="server" Text="Clear" CssClass="btn btn-outline-primary m-2" ID="btnClearPres"/>
+                <asp:Button runat="server" Text="Modify" CssClass="btn btn-outline-primary m-2" ID="btnModifyPres" OnClick="btnModifyPres_Click" ValidationGroup="presValidation"/>
+                <asp:Button runat="server" Text="Clear" CssClass="btn btn-outline-primary m-2" ID="btnClearPres" OnClick="btnClearPres_Click"/>
+
             </div>
         </div>
     </div>
