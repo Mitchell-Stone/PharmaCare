@@ -104,7 +104,8 @@ namespace PharmaCare.Models
 
         public static SqlDataReader BindPrescriptionType(SqlConnection con, string status)
         {
-            string sql = "SELECT Prescription.PrescriptionId, Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
+            string sql = "SELECT Prescription.PrescriptionStatus, Prescription.PrescriptionId, Prescription.PrescriptionDate, " +
+                "Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
                 "FROM Prescription " +
                 "LEFT JOIN Drugs " +
                 "ON Prescription.DrugId = Drugs.DrugId " +
@@ -120,7 +121,8 @@ namespace PharmaCare.Models
 
         public static SqlDataReader BindAllPrescriptionType(SqlConnection con)
         {
-            string sql = "SELECT Prescription.PrescriptionId, Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
+            string sql = "SELECT Prescription.PrescriptionStatus, Prescription.PrescriptionId, Prescription.PrescriptionDate, " +
+                "Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
                 "FROM Prescription " +
                 "LEFT JOIN Drugs " +
                 "ON Prescription.DrugId = Drugs.DrugId " +
@@ -130,6 +132,26 @@ namespace PharmaCare.Models
             {
                 return command.ExecuteReader();
             }
+        }
+
+        public static List<string> GetStatusList(string status)
+        {
+            List<string> tempList = new List<string>();
+            SqlConnection con = new SqlConnection();
+            string sql = "SELECT PrescriptionStatus, PrescriptionDate " +
+                "FROM Prescription " +
+                "ORDER BY PrescriptionDate ASC";
+
+            using (var command = new SqlCommand(sql, con))
+            {
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    tempList.Add(reader["PrescriptionStatus"].ToString());
+                }
+            }
+
+            return tempList;
         }
 
         public static void UpdatePrescriptionStatus(int prescriptionId, string status)

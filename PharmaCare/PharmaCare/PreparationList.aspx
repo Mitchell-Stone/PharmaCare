@@ -46,11 +46,13 @@
                 SortExpression="DrugDose"></asp:BoundField>
             <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day"
                 SortExpression="TimesPerDay"></asp:BoundField>
+            <asp:BoundField DataField="PrescriptionStatus" HeaderText="Status"
+                SortExpression="PrescriptionStatus"></asp:BoundField>
             <asp:TemplateField HeaderText="Set Prescription Status">
                 <ItemTemplate>
                     <asp:DropDownList runat="server" ID="ddlStatusTypes" AutoPostBack="true" 
                         CssClass="form-control"></asp:DropDownList>                    
-                    <asp:Button runat="server" Text="Set Status" CommandName="SetPrescriptionActive" 
+                    <asp:Button runat="server" Text="Apply Status" CommandName="SetPrescriptionStatus" 
                         CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
                         CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnSetStatus"
                         AutoPostBack="True"/>
