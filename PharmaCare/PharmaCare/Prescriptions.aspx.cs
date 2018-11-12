@@ -1,6 +1,7 @@
 ﻿using PharmaCare.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -23,14 +24,20 @@ namespace PharmaCare
         /// <param name="patientID"></param>
         private void GetPatient(int patientID)
         {
+            SqlConnection con = PharmaCareDB.GetConnection();
             try
             {
+                con.Open();
                 patient = PatientDB.getPatientById(patientID);
-                prescription = PrescriptionDB.GetPrescription(patientID);
+                DgvPrescriptions.DataSource = PrescriptionDB.GetPrescription(con, patientID);
+                DgvPrescriptions.DataBind();
             }
             catch (Exception ex)
             {
                 throw ex;
+            } finally
+            {
+                con.Close();
             }
         }
 
@@ -80,7 +87,7 @@ namespace PharmaCare
                 if (patient != null)
                 {
                     GetPatient(patient.PatientID);
-                    DisplayPatientPrescriptions();
+                    //DisplayPatientPrescriptions();
                     populatePatientDetails();
                     clearPrescription();
                     btnInsertPres.Enabled = true;
@@ -97,7 +104,6 @@ namespace PharmaCare
         /// </summary>
         private void populatePatientDetails()
         {
-            PatientId.Text = patient.PatientID.ToString();
             Name.Text = patient.Name;
             Address.Text = patient.Address;
             City.Text = patient.City;

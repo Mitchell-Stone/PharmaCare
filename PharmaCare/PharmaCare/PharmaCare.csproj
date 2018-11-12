@@ -160,6 +160,7 @@
     <Compile Include="Models\Pharmacist.cs" />
     <Compile Include="Models\Prescription.cs" />
     <Compile Include="Models\PrescriptionDB.cs" />
+    <Compile Include="Models\ScheduleDB.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Prescriptions.aspx.cs">
       <DependentUpon>Prescriptions.aspx</DependentUpon>
