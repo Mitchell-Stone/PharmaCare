@@ -76,12 +76,12 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.SqlDataSource Prescriptions;
         
         /// <summary>
-        /// DgvPrescriptions control.
+        /// dgvPrescriptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView DgvPrescriptions;
+        protected global::System.Web.UI.WebControls.GridView dgvPrescriptions;
     }
 }

@@ -8,22 +8,28 @@ namespace PharmaCare.Models
 {
     public class PatientDB
     {
-        public static List<Patient> GetAllPatients()
+        /// <summary>
+        /// Gets the patient by name
+        /// </summary>
+        /// <param name="PatientName"></param>
+        /// <returns></returns>
+        public static Patient getPatientByName(string PatientName)
         {
-            //set connection to HospitalDB class GetConnection method
-            SqlConnection connection = HospitalDB.GetConnection();
+            //set connection to schoolDB class GetConnection method
+            SqlConnection connection = PharmaCareDB.GetConnection();
             //select statement
-            string selectStatement = "SELECT * FROM patients";
+            string selectStatement = "SELECT * FROM Patients WHERE Name = @PatientName";
             //select command
             SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
-            //try open connection otherwise throw error
+            selectCommand.Parameters.AddWithValue("@PatientName", PatientName);
+
             try
             {
                 connection.Open();
                 SqlDataReader patientReader = selectCommand.ExecuteReader(System.Data.CommandBehavior.SingleRow);
-                List<Patient> patients = new List<Patient>();
-                //read patients from patient table in hospitaldb
-                while (patientReader.Read())
+
+                if
+                   (patientReader.Read())
                 {
                     Patient patient = new Patient();
                     patient.PatientID = (int)patientReader["PatientID"];
@@ -35,11 +41,65 @@ namespace PharmaCare.Models
                     patient.doctorID = (int)patientReader["DoctorID"];
                     patient.wardID = (int)patientReader["WardID"];
                     patient.roomID = (int)patientReader["RoomID"];
-                    //return patient information
-                    patients.Add(patient);
-                }
-                return patients;
 
+                    return patient;
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        /// <summary>
+        /// Gets the patient by ID
+        /// </summary>
+        /// <param name="PatientID"></param>
+        /// <returns></returns>
+        public static Patient getPatientById(int PatientID)
+        {
+            //set connection to schoolDB class GetConnection method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+            //select statement
+            string selectStatement = "SELECT * FROM Patients WHERE PatientID = @PatientID";
+            //select command
+            SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
+            selectCommand.Parameters.AddWithValue("@PatientID", PatientID);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader patientReader = selectCommand.ExecuteReader(System.Data.CommandBehavior.SingleRow);
+
+                if
+                   (patientReader.Read())
+                {
+                    Patient patient = new Patient();
+                    patient.PatientID = (int)patientReader["PatientID"];
+                    patient.Name = patientReader["Name"].ToString();
+                    patient.Address = patientReader["Address"].ToString();
+                    patient.City = patientReader["City"].ToString();
+                    patient.ZipCode = patientReader["ZipCode"].ToString();
+                    patient.Type = patientReader["Type"].ToString();
+                    patient.doctorID = (int)patientReader["DoctorID"];
+                    patient.wardID = (int)patientReader["WardID"];
+                    patient.roomID = (int)patientReader["RoomID"];
+
+                    return patient;
+
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (SqlException ex)
             {

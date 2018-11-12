@@ -29,9 +29,7 @@
                                     Doctor 
                                 </asp:HyperLink>
                                 <div class="dropdown-block">
-                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Write Prescription</asp:HyperLink>
-                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Modify Prescription</asp:HyperLink>
-                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Cancel Prescription</asp:HyperLink>
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Prescriptions</asp:HyperLink>
                                 </div>
                             </li>
                             <li runat="server" class="dropdown">
