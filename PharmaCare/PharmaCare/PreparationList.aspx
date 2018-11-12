@@ -25,7 +25,7 @@
                 <asp:Button runat="server" Text="Show Expired Prescriptions" 
                     CssClass="btn btn-outline-primary m-2" ID="btnExpiredPres" OnClick="btnExpiredPres_Click"/>
                 <asp:Button runat="server" Text="Show Cocktail Conflicts" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>
+                    CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>              
                 <asp:Button runat="server" Text="Show All Prescriptions" 
                     CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>
             </div>
@@ -48,7 +48,9 @@
                 SortExpression="TimesPerDay"></asp:BoundField>
             <asp:TemplateField HeaderText="Set Prescription Status">
                 <ItemTemplate>
-                    <asp:Button runat="server" Text="Set Active" CommandName="SetPrescriptionActive" 
+                    <asp:DropDownList runat="server" ID="ddlStatusTypes" AutoPostBack="true" 
+                        CssClass="form-control"></asp:DropDownList>                    
+                    <asp:Button runat="server" Text="Set Status" CommandName="SetPrescriptionActive" 
                         CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
                         CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnSetStatus"
                         AutoPostBack="True"/>
@@ -56,7 +58,6 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
-
     <asp:Label runat="server" ID="test"></asp:Label>
 </asp:Content>
 
