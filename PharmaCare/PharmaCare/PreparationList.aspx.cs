@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PharmaCare.Models;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -8,35 +9,64 @@ namespace PharmaCare
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindData();
+            BindVerifiedData();
         }
 
 
-        private void BindData()
+        private void BindVerifiedData()
         {
             //get the connection string from the config file to connect to the local database
             string connectionString = ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString;
 
             //create the connection
             SqlConnection con = new SqlConnection(connectionString);
+            try
+            {
+                con.Open();
+                gvPrepList.DataSource = PrescriptionDB.BindPrescriptionType(con, "verified");
+                gvPrepList.DataBind();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
-            string query = "SELECT Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
-                "FROM Prescription " +
-                "LEFT JOIN Drugs " +
-                "ON Prescription.DrugId = Drugs.DrugId " +
-                "WHERE Prescription.PrescriptionStatus = 'verified' " +
-                "ORDER BY DrugName";
+        private void BindActiveData()
+        {
+            //get the connection string from the config file to connect to the local database
+            string connectionString = ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString;
 
-            //generate the command and open the connection
-            SqlCommand command = new SqlCommand(query, con);
-            con.Open();
+            //create the connection
+            SqlConnection con = new SqlConnection(connectionString);
+            try
+            {
+                con.Open();
+                gvPrepList.DataSource = PrescriptionDB.BindPrescriptionType(con, "active");
+                gvPrepList.DataBind();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
-            //set the data source to the datagrid and then bind the data
-            gvPrepList.DataSource = command.ExecuteReader();
-            gvPrepList.DataBind();
+        protected void btnActivePres_Click(object sender, EventArgs e)
+        {
+            BindActiveData();            
+        }
 
-            //close the connection
-            con.Close();
+        protected void btnVerifiedPres_Click(object sender, EventArgs e)
+        {
+            BindVerifiedData();
         }
     }
 }

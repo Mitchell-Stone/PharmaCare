@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -100,6 +101,21 @@ namespace PharmaCare.Models
                 //close sql connection
                 connection.Close();
             }
+        }
+
+        public static SqlDataReader BindPrescriptionType(SqlConnection con, string scriptStatus)
+        {
+            SqlCommand command = con.CreateCommand();
+
+            command.CommandText = "SELECT Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
+                "FROM Prescription " +
+                "LEFT JOIN Drugs " +
+                "ON Prescription.DrugId = Drugs.DrugId " +
+                "WHERE Prescription.PrescriptionStatus = @status " +
+                "ORDER BY DrugName";
+            command.Parameters.AddWithValue("status", scriptStatus);
+
+            return command.ExecuteReader();
         }
     }
 }
