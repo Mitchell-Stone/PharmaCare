@@ -16,6 +16,7 @@
     </head>
     <body>       
         <div class="container">
+            <form id="form1" runat="server" class="form-horizontal content-page">            
             <nav class="navbar navbar-default navbar-static-top">
                 <div class="container-fluid">
                     <!-- navbar body - nav content for toggling -->
@@ -72,7 +73,6 @@
                     </div>
                 </div>
             </nav>
-            <form id="form1" runat="server" class="form-horizontal content-page">            
                 <hr />
                 <main class="row">
                     <div class="col-sm-12">
