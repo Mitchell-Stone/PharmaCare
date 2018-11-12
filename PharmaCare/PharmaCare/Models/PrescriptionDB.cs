@@ -37,21 +37,24 @@ namespace PharmaCare.Models
 
         public static void insertPrescription(Prescription pres)
         {
-            //set connection to schoolDB class GetConnection method
+            //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
 
             //insert statement
             string insertStatement = "INSERT INTO Prescription (DrugId,PatientID,DoctorID,PrescriptionDate," +
-                "AdditionalInformation,PrescriptionStatus,DrugDose,FirstTime,LastTime,TimesPerDay,StatusOfDose) " +
-                "VALUES (@DrugId, @PatientId, @DoctorId, @PresDate, @AddInfo, @PresStatus, @DrugDose, " +
-                "@FirstTime, @LastTime, @TimesPerDay, @StatusOfDose)";
+            "AdditionalInformation,PrescriptionStatus,DrugDose,FirstTime,LastTime,TimesPerDay,StatusOfDose) " +
+            "VALUES ((SELECT DrugId FROM Drugs WHERE DrugName = @DrugName), " +
+            "(SELECT PatientID FROM Patients WHERE Name = @PatientName), " +
+            "(SELECT DoctorID FROM Doctors WHERE DoctorName = @DoctorName), " +
+            "@PresDate, @AddInfo, @PresStatus, @DrugDose, " +
+            "@FirstTime, @LastTime, @TimesPerDay, @StatusOfDose)";
 
             //insert command
             SqlCommand insertCommand = new SqlCommand(insertStatement, connection);
 
-            insertCommand.Parameters.AddWithValue("@DrugId", pres.DrugID);
-            insertCommand.Parameters.AddWithValue("@PatientId", pres.PatientID);
-            insertCommand.Parameters.AddWithValue("@DoctorId", pres.DoctorID);
+            insertCommand.Parameters.AddWithValue("@DrugName", pres.DrugName);
+            insertCommand.Parameters.AddWithValue("@PatientName", pres.PatientName);
+            insertCommand.Parameters.AddWithValue("@DoctorName", pres.DoctorName);
             insertCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
             insertCommand.Parameters.AddWithValue("@AddInfo", pres.InformationExtra);
             insertCommand.Parameters.AddWithValue("@PresStatus", pres.StatusPrescription);

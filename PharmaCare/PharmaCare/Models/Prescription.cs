@@ -20,5 +20,10 @@ namespace PharmaCare.Models
         public string LastTimeUse { get; set; }
         public string FrequenseUseInADay { get; set; }
         public string DoseStatus { get; set; }
+
+        //Used for Inserting into the prescription database via name instead of id
+        public string DrugName { get; set; }
+        public string PatientName { get; set; }
+        public string DoctorName { get; set; }
     }
 }

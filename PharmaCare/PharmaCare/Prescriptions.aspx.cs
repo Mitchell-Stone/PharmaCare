@@ -140,17 +140,17 @@ namespace PharmaCare
         protected void btnInsertPres_Click(object sender, EventArgs e)
         {
             Prescription pres = new Prescription();
-            if (validateInt(PresDrugID.Text) && validateInt(PresPatientID.Text) && validateInt(PresDocID.Text) &&
-                !string.IsNullOrEmpty(PresDate.Text + PresStatus.Text + PresDrugDose.Text +
+            if (!string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text + 
+                PresDate.Text + PresStatus.Text + PresDrugDose.Text +
                 PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
             {
-                pres.DrugID = Convert.ToInt32(PresDrugID.Text);
-                pres.PatientID = Convert.ToInt32(PresPatientID.Text);
-                pres.DoctorID = Convert.ToInt32(PresDocID.Text);
+                pres.DrugName = PresDrugID.Text;
+                pres.PatientName = PresPatientID.Text;
+                pres.DoctorName = PresDocID.Text;
                 pres.PrescribingDate = PresDate.Text;
                 pres.InformationExtra = PresAddInfo.InnerText;
                 pres.StatusPrescription = PresStatus.Text;
-                pres.DoseStatus = PresDrugDose.Text;
+                pres.Doses = PresDrugDose.Text;
                 pres.FirstTimeUse = PresFirst.Text;
                 pres.LastTimeUse = PresLast.Text;
                 pres.FrequenseUseInADay = PresTimesADay.Text;
