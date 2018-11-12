@@ -22,6 +22,15 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Label table_header;
         
         /// <summary>
+        /// btnActivePres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnActivePres;
+        
+        /// <summary>
         /// btnNonVerifiedPres control.
         /// </summary>
         /// <remarks>
@@ -31,13 +40,49 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Button btnNonVerifiedPres;
         
         /// <summary>
-        /// btnActivePres control.
+        /// btnCancelledPres control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnActivePres;
+        protected global::System.Web.UI.WebControls.Button btnCancelledPres;
+        
+        /// <summary>
+        /// btnOnHoldPres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOnHoldPres;
+        
+        /// <summary>
+        /// btnExpiredPres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExpiredPres;
+        
+        /// <summary>
+        /// btnCocktailPres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCocktailPres;
+        
+        /// <summary>
+        /// btnShowAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShowAll;
         
         /// <summary>
         /// gvPrepList control.

@@ -111,12 +111,26 @@ namespace PharmaCare.Models
                 "ON Prescription.DrugId = Drugs.DrugId " +
                 "WHERE Prescription.PrescriptionStatus = @status " +
                 "ORDER BY Prescription.PrescriptionDate ASC";
-
+            
             using (var command = new SqlCommand(sql, con))
             {
                 command.Parameters.AddWithValue("status", status);
                 return command.ExecuteReader();
             }  
+        }
+
+        public static SqlDataReader BindAllPrescriptionType(SqlConnection con)
+        {
+            string sql = "SELECT Prescription.PrescriptionId, Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
+                "FROM Prescription " +
+                "LEFT JOIN Drugs " +
+                "ON Prescription.DrugId = Drugs.DrugId " +
+                "ORDER BY Prescription.PrescriptionDate ASC";
+
+            using (var command = new SqlCommand(sql, con))
+            {
+                return command.ExecuteReader();
+            }
         }
 
         public static void UpdatePrescriptionStatus(int prescriptionId, string status)
@@ -126,7 +140,7 @@ namespace PharmaCare.Models
 
             string sql = "UPDATE Prescription " +
                 "SET PrescriptionStatus = @status " +
-                "Where PrescriptionId = @prescriptionId";
+                "WHERE PrescriptionId = @prescriptionId";
 
             try
             {
