@@ -12,15 +12,23 @@
                 <label class="col-sm-1">Username:</label>
                 <div class="col-sm-3">
                    <asp:textbox id="txtUsername" runat="server" 
-                    cssclass="form-control" placeholder="Email"></asp:textbox>
-                 
-                       
+                    cssclass="form-control" placeholder="Email"></asp:textbox>     
                 </div>
+                <div class="col-sm-6">
+            <asp:RequiredFieldValidator ID="rfvUsername" runat="server" 
+                ErrorMessage="Username Required" ControlToValidate="txtUsername" 
+                CssClass="text-danger" Display="Dynamic" OnDataBinding="Page_Load">Username Required</asp:RequiredFieldValidator>
+                   </div>
                 <label class="col-sm-1">Password:</label>
-                <div class="col-sm-3">
+                <div class="col-sm-5">
                     <asp:textbox id="txtPassword" runat="server"
-                        cssclass="form-control" placeholder="Password"></asp:textbox>
+                        cssclass="form-control" placeholder="Password" type="password"></asp:textbox>
                 </div>
+                <div class="col-sm-6">
+            <asp:RequiredFieldValidator ID="rfvPassword" runat="server" 
+                ErrorMessage="Email address" ControlToValidate="txtPassword" 
+                CssClass="text-danger" Display="Dynamic">Password Required</asp:RequiredFieldValidator>
+        </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">

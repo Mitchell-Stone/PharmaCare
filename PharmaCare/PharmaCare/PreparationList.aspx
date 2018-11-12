@@ -6,16 +6,16 @@
     <div class="container">
         <div class="row">
             <asp:Label runat="server" ID="table_header" AutoPostBack="true" CssClass="h1"
-                Text="Displaying Verified Prescriptions"></asp:Label>
+                Text="Displaying Non-Verified Prescriptions"></asp:Label>
         </div>
         <div class="row">
             <p>This page is to assist with the preperation of patient prescriptions.
-                Use the buttons below to toggle between all active and verified prescriptions</p>
+                Use the buttons below to toggle between all active and non-verified prescriptions</p>
         </div>
         <div class="row">
             <div class="mx-auto">
-                <asp:Button runat="server" Text="Show Verified Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnVerifiedPres" OnClick="btnVerifiedPres_Click"/>
+                <asp:Button runat="server" Text="Show Non-Verified Prescriptions" 
+                    CssClass="btn btn-outline-primary m-2" ID="btnNonVerifiedPres" OnClick="btnNonVerifiedPres_Click"/>
                 <asp:Button runat="server" Text="Show Active Prescriptions" 
                     CssClass="btn btn-outline-primary m-2" ID="btnActivePres" OnClick="btnActivePres_Click"/>         
             </div>
