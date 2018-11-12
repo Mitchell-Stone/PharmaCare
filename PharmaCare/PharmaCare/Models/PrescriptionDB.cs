@@ -9,51 +9,29 @@ namespace PharmaCare.Models
 {
     public class PrescriptionDB
     {
-        public static List<Prescription> GetPrescription(int PatientID)
+        /// <summary>
+        /// gets the prescriptions depending on patients id
+        /// </summary>
+        /// <param name="con"></param>
+        /// <param name="PatientID"></param>
+        /// <returns></returns>
+        public static SqlDataReader GetPrescription(SqlConnection con, int PatientID)
         {
-            //set connection to schoolDB class GetConnection method
+            //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
             //select statement
-            string selectStatement = "SELECT Prescription.*, Patients.Name AS PatName FROM Prescription " +
-                "INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID WHERE(Patients.PatientID = @PatientID)";
-             //"SELECT * FROM Prescription WHERE PatientID = @PatientID";
-            //select command
-            SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
-            selectCommand.Parameters.AddWithValue("@PatientID", PatientID);
-            try
+            string selectStatement = "SELECT Prescription.PrescriptionId, Drugs.DrugName, Patients.Name, Doctors.DoctorName, " +
+                "Prescription.PrescriptionDate, Prescription.AdditionalInformation, Prescription.PrescriptionStatus, Prescription.DrugDose, " +
+                "Prescription.FirstTime, Prescription.LastTime, Prescription.TimesPerDay, Prescription.StatusOfDose FROM Prescription " +
+                "INNER JOIN Drugs ON Prescription.DrugId = Drugs.DrugId " +
+                "INNER JOIN Doctors ON Prescription.DoctorID = Doctors.DoctorID " +
+                "INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID " +
+                "WHERE Patients.PatientID = @PatientID";
+            
+            using (var selectCommand = new SqlCommand(selectStatement, con))
             {
-                //open sql connection
-                connection.Open();
-                SqlDataReader PrescriptionReader = selectCommand.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-                List<Prescription> patientPrescription = new List<Prescription>();
-                while (PrescriptionReader.Read())
-                {
-                    Prescription prescription = new Prescription();
-                    prescription.PrescriptionID = (int)PrescriptionReader["PrescriptionId"];
-                    prescription.DrugID = (int)PrescriptionReader["DrugId"];
-                    prescription.PatientID = (int)PrescriptionReader["PatientID"];
-                    prescription.DoctorID = (int)PrescriptionReader["DoctorID"];
-                    prescription.PrescribingDate = PrescriptionReader["PrescriptionDate"].ToString();
-                    prescription.InformationExtra = PrescriptionReader["AdditionalInformation"].ToString();
-                    prescription.StatusPrescription = PrescriptionReader["PrescriptionStatus"].ToString();
-                    prescription.Doses = PrescriptionReader["DrugDose"].ToString();
-                    prescription.FirstTimeUse = PrescriptionReader["FirstTime"].ToString();
-                    prescription.LastTimeUse = PrescriptionReader["LastTime"].ToString();
-                    prescription.FrequenseUseInADay = PrescriptionReader["TimesPerDay"].ToString();
-                    prescription.DoseStatus = PrescriptionReader["StatusOfDose"].ToString();
-                    patientPrescription.Add(prescription);
-                }
-                //return patientPrescription
-                return patientPrescription;
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                //close connection
-                connection.Close();
+                selectCommand.Parameters.AddWithValue("@PatientID", PatientID);
+                return selectCommand.ExecuteReader();
             }
         }
 

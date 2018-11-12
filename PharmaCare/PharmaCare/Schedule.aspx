@@ -13,7 +13,7 @@
                     </asp:DropDownList>
                     <asp:SqlDataSource ID="NurseStationSource" runat="server" 
                         ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>' 
-                        SelectCommand="SELECT [NursingStationId] 
+                        SelectCommand="SELECT DISTINCT [NursingStationId] 
                         FROM [IndoorPrescriptions] 
                         ORDER BY [NursingStationId]" OnSelecting="NurseStationSource_Selecting">
                     </asp:SqlDataSource>

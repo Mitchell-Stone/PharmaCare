@@ -31,24 +31,6 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Button btnPatient;
         
         /// <summary>
-        /// PatientDetails control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PatientDetails;
-        
-        /// <summary>
-        /// PatientId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PatientId;
-        
-        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>
@@ -157,15 +139,6 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDrugID;
         
         /// <summary>
-        /// cvDrugID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cvDrugID;
-        
-        /// <summary>
         /// PresPatientID control.
         /// </summary>
         /// <remarks>
@@ -184,15 +157,6 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPatientID;
         
         /// <summary>
-        /// cvPatientID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cvPatientID;
-        
-        /// <summary>
         /// PresDocID control.
         /// </summary>
         /// <remarks>
@@ -209,15 +173,6 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDocID;
-        
-        /// <summary>
-        /// cvDocID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cvDocID;
         
         /// <summary>
         /// PresDate control.

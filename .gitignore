@@ -13,3 +13,7 @@ PharmaCare/PharmaCare/bin/PharmaCare.pdb
 PharmaCare/PharmaCare/App_Data/PharmaCareDB.mdf
 PharmaCare/PharmaCare/bin/PharmaCare.dll
 PharmaCare/PharmaCare/obj/Debug/PharmaCare.dll
+*.config
+*.cache
+*.dll
+*.config
