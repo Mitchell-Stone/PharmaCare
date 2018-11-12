@@ -5,12 +5,10 @@ PharmaCare/.vs/PharmaCare/v15/Server/sqlite3/db.lock
 PharmaCare/.vs/PharmaCare/v15/.suo
 PharmaCare/PharmaCare/obj/Debug/PharmaCare.csproj.FileListAbsolute.txt
 PharmaCare/PharmaCare/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-PharmaCare/PharmaCare/App_Data/PharmaCareDB_log.ldf
 PharmaCare/.vs/config/applicationhost.config
 PharmaCare/PharmaCare/obj/Debug/PharmaCare.pdb
 PharmaCare/PharmaCare/obj/Debug/PharmaCare.csproj.CoreCompileInputs.cache
 PharmaCare/PharmaCare/bin/PharmaCare.pdb
-PharmaCare/PharmaCare/App_Data/PharmaCareDB.mdf
 PharmaCare/PharmaCare/bin/PharmaCare.dll
 PharmaCare/PharmaCare/obj/Debug/PharmaCare.dll
 *.config
