@@ -4,26 +4,36 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceholder" runat="server">
     <h1>Outdoor Patient Prescription Page</h1>
     <div class="row">
-        <div class="col-sm-2">
-            <label>Search Patient : </label>
-            <asp:TextBox ID="txtSearchPatient" runat="server"></asp:TextBox>
-            <asp:Button ID="btnFindPatient" runat="server" Text="Find Patient" />
-            <label>Search Prescription by ID : </label>
-            <asp:TextBox ID="txtFindPrescription" runat="server"></asp:TextBox>
-            <asp:Button ID="btnFindPrescription" runat="server" Text="Find Prescription" />            
+        <div class="col-md-4">
+            <label class="float-left">Search Patient : </label>
+            <asp:TextBox ID="txtSearchPatient" runat="server" CssClass="float-center"></asp:TextBox>
+            <asp:Button ID="btnFindPatient" runat="server" Text="Find Patient" CssClass="right"/>
         </div>
-        <div class="col-sm-2">
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <label class="float-left">Search Prescription by ID : </label>
+            <asp:TextBox ID="txtFindPrescription" runat="server" CssClass="float-none"></asp:TextBox>
+            <asp:Button ID="btnFindPrescription" runat="server" Text="Find Prescription" CssClass="float-right" />            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
             <label> First Name : </label>
-            <asp:TextBox ID="txtPFname" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtPFname" runat="server" ></asp:TextBox>
             <label> Last Name : </label>
-            <asp:TextBox ID="txtPLname" runat="server"></asp:TextBox>
-        </div>          
-        <div class="col-sm-2">
+            <asp:TextBox ID="txtPLname" runat="server" ></asp:TextBox>
+        </div>   
+    </div>
+
+        <div class="col-xl-12">
             <asp:SqlDataSource runat="server" ID="Prescriptions"
                 ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>'
                 SelectCommand="SELECT * FROM [Prescription] ORDER BY [PatientID]">
     </asp:SqlDataSource>
-            <asp:GridView ID="DgvPrescriptions" runat="server" AutoGenerateColumns="false" DataSourceID="Prescriptions"
+            <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="false" 
+                DataSourceID="Prescriptions" AllowSorting="true" Allowpaging="true"
+                UseAccessibleHeader="true"
                 CssClass="table table-bordered table-striped table-condensed"
                 OnPreRender="DgvPrescriptions_PreRender">
                 <Columns>
@@ -44,19 +54,19 @@
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DrugDose" HeaderText="Dose"
-                        ReadOnly="true" SortExpression="DrugDose" >
+                        ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="AdditionalInformation" HeaderText="Information"
-                        ReadOnly="true" SortExpression="AdditionalInformation" >
+                        ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="StatusOfDose" HeaderText="Dose Status"
-                        ReadOnly="true" SortExpression="StatusOfDose" >
+                        ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day"
-                        ReadOnly="true" SortExpression="TimesPerDay" >
+                        ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="FirstTime" HeaderText="First Time"
@@ -76,9 +86,9 @@
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                 </Columns>
+                <PagerStyle CssClass="pagerStyle" HorizontalAlign="Center" />
                 <PagerSettings Mode="NumericFirstLast" />
                 
             </asp:GridView>
         </div>
-    </div>
 </asp:Content>
