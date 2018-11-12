@@ -103,19 +103,20 @@ namespace PharmaCare.Models
             }
         }
 
-        public static SqlDataReader BindPrescriptionType(SqlConnection con, string scriptStatus)
+        public static SqlDataReader BindPrescriptionType(SqlConnection con, string status)
         {
-            SqlCommand command = con.CreateCommand();
-
-            command.CommandText = "SELECT Prescription.PrescriptionId, Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
+            string sql = "SELECT Prescription.PrescriptionId, Prescription.PrescriptionDate, Drugs.DrugName, Drugs.DrugForm, Prescription.DrugDose, Prescription.TimesPerDay " +
                 "FROM Prescription " +
                 "LEFT JOIN Drugs " +
                 "ON Prescription.DrugId = Drugs.DrugId " +
                 "WHERE Prescription.PrescriptionStatus = @status " +
                 "ORDER BY Prescription.PrescriptionDate ASC";
-            command.Parameters.AddWithValue("status", scriptStatus);
 
-            return command.ExecuteReader();
+            using (var command = new SqlCommand(sql, con))
+            {
+                command.Parameters.AddWithValue("status", status);
+                return command.ExecuteReader();
+            }  
         }
 
         public static void UpdatePrescriptionStatus(int prescriptionId, string status)

@@ -1,6 +1,14 @@
-﻿using PharmaCare.Models;
+﻿/*
+ *      Student ID = 451381461
+ *      Student Name = Mitchell Stone
+ * 
+ * 
+ */
+
+
+
+using PharmaCare.Models;
 using System;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Web.UI.WebControls;
@@ -13,19 +21,20 @@ namespace PharmaCare
         {
             if (!Page.IsPostBack)
             {
-                BindVerifiedData();
+                BindNonVerifiedData();
             }          
         }
 
-
-        private void BindVerifiedData()
+        private void BindNonVerifiedData()
         {
             //open connection to the local database
             SqlConnection con = PharmaCareDB.GetLocalConnection();
+
             try
             {
+                //open the connection, populate the datasource and then bind it to the gridview
                 con.Open();
-                gvPrepList.DataSource = PrescriptionDB.BindPrescriptionType(con, "verified");
+                gvPrepList.DataSource = PrescriptionDB.BindPrescriptionType(con, "nonverified");
                 gvPrepList.DataBind();
             }
             catch (SqlException ex)
@@ -79,14 +88,6 @@ namespace PharmaCare
             }
         }
 
-        protected void btnVerifiedPres_Click(object sender, EventArgs e)
-        {
-            BindVerifiedData();
-
-            //update the heading to indicate what is being shown
-            table_header.Text = "Displaying Verified Prescriptions";
-        }
-
         protected void gvPrepList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "SetPrescriptionActive")
@@ -102,7 +103,15 @@ namespace PharmaCare
             }
 
             //show the udpated data
-            BindVerifiedData();
+            BindNonVerifiedData();
+        }
+
+        protected void btnNonVerifiedPres_Click(object sender, EventArgs e)
+        {
+            BindNonVerifiedData();
+
+            //update the heading to indicate what is being shown
+            table_header.Text = "Displaying Non-Verified Prescriptions";
         }
     }
 }
