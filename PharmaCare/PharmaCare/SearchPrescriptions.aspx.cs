@@ -11,7 +11,7 @@ namespace PharmaCare
 
     public partial class SearchPrescriptions : System.Web.UI.Page
     {
-        private object patient;
+        
         List<Prescription> prescription = new List<Prescription>();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -27,19 +27,14 @@ namespace PharmaCare
         }
         protected void BtnFindPatient_Click(object sender, EventArgs e)
         {
-            string search = txtSearchPatient.Text;
+            
 
         }
-        private void GetPatientByName(string PatientID)
+        private void SearchPatientIDbyName()
         {
-            try
-            {
-                //patient = PatientDB.getPatientByName();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            int patientID = PatientDB.SearchPatientIDbyName(txtSearchPatient.Text);
+
         }
+
     }
 }

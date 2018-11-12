@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -8,7 +9,7 @@ namespace PharmaCare.Models
 {
     public class HospitalDB
     {
-    public static MySqlConnection GetConnection()
+    public static SqlConnection GetConnection()
             {
                 string server;
                 string database;
@@ -28,7 +29,7 @@ namespace PharmaCare.Models
                 connectionString = "SERVER=" + server + ";" + "DATABASE=" +
                 database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
                 //set the connection string to the mysql connecter
-                MySqlConnection connection = new MySqlConnection(connectionString);
+                SqlConnection connection = new SqlConnection(connectionString);
                 //return the sqlconnection
                 return connection;
             }

@@ -110,5 +110,22 @@ namespace PharmaCare.Models
                 connection.Close();
             }
         }
+
+        public static int SearchPatientIDbyName(string name)
+        {
+            string sql = "SELECT PatientId FROM Patients WHERE PatientName = @name";
+            SqlConnection con = PharmaCareDB.GetLocalConnection();
+
+            using (var command = new SqlCommand(sql, con))
+            {
+                command.Parameters.AddWithValue("name", name);
+
+                con.Open();
+
+                return command.ExecuteNonQuery();
+            }
+
+        }
+
     }
 }
