@@ -34,7 +34,7 @@
                 <div class="col-sm-12">
                     <asp:button id="btnLogin" runat="server" text="Login"
                         onclick="btnLogin_Click" cssclass="btn" />
-                    <asp:Button class="btnsignup" runat="server" Text="SignUp" ID="btn_Signup" OnClick="btn_SignUp" />
+                    <asp:Button class="btnsignup" runat="server" Text="SignUp" ID="btn_Signup" OnClick="btn_SignUp" CausesValidation="false" />
                 </div>
             </div>
                 

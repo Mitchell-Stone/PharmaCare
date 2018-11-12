@@ -19,8 +19,8 @@ namespace PharmaCare
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            //SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Conn"].ConnectionString);
-            SqlConnection conn = HospitalDB.GetConnection();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString);
+            //SqlConnection conn = HospitalDB.GetConnection();
             conn.Open();
             string checkuser = "select count (*) from Staff where UserName ='" + txtUsername.Text + "'";
             SqlCommand com = new SqlCommand(checkuser, conn);
@@ -35,7 +35,8 @@ namespace PharmaCare
                 if(password == txtPassword.Text)
                 {
                     Session["New"] = txtUsername.Text;
-                    Response.Write("Password is correct");
+                    //Response.Write("Password is correct");
+                    Response.Write("<script>alert('login successful');</script>");
                 }
                 else
                 {

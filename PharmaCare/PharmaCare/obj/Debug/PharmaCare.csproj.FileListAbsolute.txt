@@ -46,3 +46,7 @@ E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\Pha
 E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.csproj.CoreCompileInputs.cache
 E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.dll
 E:\SoftWareDevelopment_Sem2_term2\PharmaCare\PharmaCare\PharmaCare\obj\Debug\PharmaCare.pdb
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\Google.Protobuf.dll
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\MySql.Data.dll
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\Google.Protobuf.xml
+C:\Users\1102634617\Desktop\GitHub\PharmaCare\PharmaCare\bin\MySql.Data.xml

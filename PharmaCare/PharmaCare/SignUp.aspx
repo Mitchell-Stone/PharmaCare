@@ -28,12 +28,12 @@
                 </div>
             
                 <div class="contents">
-                <div class="label-textstwo">Email</div>
+                <div class="label-textstwo">UserName</div>
                 <input class="Text" type="text" />
                 </div>
 
                 <div class="contents">
-                <div class="label-textstwo">Job</div>
+                <div class="label-textstwo">SecurityLevel</div>
                  <input class="Text" type="text" />
                 </div>
 
