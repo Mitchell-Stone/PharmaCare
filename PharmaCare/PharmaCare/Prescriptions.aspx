@@ -69,7 +69,7 @@
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="Date" />
                     <asp:BoundField DataField="AdditionalInformation" HeaderText="Additional Information" NullDisplayText=" " />
                     <asp:BoundField DataField="PrescriptionStatus" HeaderText="Prescription Status" />
-                    <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose" />
+                    <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose(mg)" />
                     <asp:BoundField DataField="FirstTime" HeaderText="First Time" />
                     <asp:BoundField DataField="LastTime" HeaderText="Last Time" />
                     <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day" />

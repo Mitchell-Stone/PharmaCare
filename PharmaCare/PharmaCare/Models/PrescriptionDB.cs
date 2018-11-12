@@ -26,7 +26,7 @@ namespace PharmaCare.Models
                 "INNER JOIN Drugs ON Prescription.DrugId = Drugs.DrugId " +
                 "INNER JOIN Doctors ON Prescription.DoctorID = Doctors.DoctorID " +
                 "INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID " +
-                "WHERE Patients.PatientID = @PatientID";
+                "WHERE Prescription.PatientID = @PatientID";
             
             using (var selectCommand = new SqlCommand(selectStatement, con))
             {
@@ -155,16 +155,19 @@ namespace PharmaCare.Models
             SqlConnection connection = PharmaCareDB.GetConnection();
 
             //update statement
-            string updateStatement = "UPDATE Prescription SET DrugId = @DrugId, PatientID = @PatientId, DoctorID = @DoctorId, PrescriptionDate = @PresDate, " +
-            "AdditionalInformation = @AddInfo, PrescriptionStatus = @PresStatus, DrugDose = @DrugDose, FirstTime = @FirstTime, LastTime = @LastTime, " +
-            "TimesPerDay = @TimesPerDay, StatusOfDose = @StatusOfDose WHERE PrescriptionId = @PrescriptionId";
+            string updateStatement = "UPDATE Prescription SET DrugId = (SELECT DrugId FROM Drugs WHERE DrugName = @DrugId), " +
+                "PatientID = (SELECT PatientID FROM Patients WHERE Name = @PatientId), " +
+                "DoctorID = (SELECT DoctorID FROM Doctors WHERE DoctorName = @DoctorId), " +
+                "PrescriptionDate = @PresDate, AdditionalInformation = @AddInfo, PrescriptionStatus = @PresStatus, " +
+                "DrugDose = @DrugDose, FirstTime = @FirstTime, LastTime = @LastTime, TimesPerDay = @TimesPerDay, " +
+                "StatusOfDose = @StatusOfDose WHERE PrescriptionId = @PrescriptionId";
 
             //update command
             SqlCommand updateCommand = new SqlCommand(updateStatement, connection);
 
-            updateCommand.Parameters.AddWithValue("@DrugId", pres.DrugID);
-            updateCommand.Parameters.AddWithValue("@PatientId", pres.PatientID);
-            updateCommand.Parameters.AddWithValue("@DoctorId", pres.DoctorID);
+            updateCommand.Parameters.AddWithValue("@DrugId", pres.DrugName);
+            updateCommand.Parameters.AddWithValue("@PatientId", pres.PatientName);
+            updateCommand.Parameters.AddWithValue("@DoctorId", pres.DoctorName);
             updateCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
             if (!string.IsNullOrEmpty(pres.InformationExtra))
             {

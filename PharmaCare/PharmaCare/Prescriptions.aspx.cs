@@ -198,18 +198,23 @@ namespace PharmaCare
             PresDoseStatus.Text = null;
         }
 
+        /// <summary>
+        /// updates the prescription
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnModifyPres_Click(object sender, EventArgs e)
         {
             Prescription pres = new Prescription();
 
-            if (validateInt(presID.Text) && validateInt(PresDrugID.Text) && validateInt(PresPatientID.Text) && validateInt(PresDocID.Text) &&
-                !string.IsNullOrEmpty(PresDate.Text + PresStatus.Text + PresDrugDose.Text +
+            if (validateInt(presID.Text) && !string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text + 
+                PresDate.Text + PresStatus.Text + PresDrugDose.Text +
                 PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
             {
                 pres.PrescriptionID = Convert.ToInt32(presID.Text);
-                pres.DrugID = Convert.ToInt32(PresDrugID.Text);
-                pres.PatientID = Convert.ToInt32(PresPatientID.Text);
-                pres.DoctorID = Convert.ToInt32(PresDocID.Text);
+                pres.DrugName = PresDrugID.Text;
+                pres.PatientName = PresPatientID.Text;
+                pres.DoctorName = PresDocID.Text;
                 pres.PrescribingDate = PresDate.Text;
                 pres.InformationExtra = PresAddInfo.InnerText;
                 pres.StatusPrescription = PresStatus.Text;
@@ -223,9 +228,6 @@ namespace PharmaCare
             {
                 PrescriptionDB.updatePrescription(pres);
                 clearPrescription();
-                GetPatient(pres.PatientID);
-                DisplayPatientPrescriptions();
-                populatePatientDetails();
                 btnInsertPres.Enabled = true;
             }
             catch (Exception ex)
@@ -234,6 +236,11 @@ namespace PharmaCare
             }
         }
 
+        /// <summary>
+        /// clear prescription button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnClearPres_Click(object sender, EventArgs e)
         {
             clearPrescription();
@@ -253,6 +260,9 @@ namespace PharmaCare
             getDgvPrescriptionData();
         }
 
+        /// <summary>
+        /// gets the prescription datagrid information depending on row
+        /// </summary>
         private void getDgvPrescriptionData()
         {
             foreach (GridViewRow row in DgvPrescriptions.Rows)
