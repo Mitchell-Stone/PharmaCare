@@ -82,6 +82,8 @@ namespace PharmaCare
                     GetPatient(patient.PatientID);
                     DisplayPatientPrescriptions();
                     populatePatientDetails();
+                    clearPrescription();
+                    btnInsertPres.Enabled = true;
                 }
             }
             else
@@ -157,9 +159,7 @@ namespace PharmaCare
             {
                 if (pres != null)
                 {
-                    PrescriptionDB.insertPrescription(pres.DrugID, pres.PatientID, pres.DoctorID,
-                   pres.PrescribingDate, pres.InformationExtra, pres.StatusPrescription, pres.DoseStatus,
-                   pres.FirstTimeUse, pres.LastTimeUse, pres.FrequenseUseInADay, pres.DoseStatus);
+                    PrescriptionDB.insertPrescription(pres);
                     clearPrescription();
                 }
                 else
@@ -191,5 +191,84 @@ namespace PharmaCare
             PresTimesADay.Text = null;
             PresDoseStatus.Text = null;
         }
+
+        protected void btnModifyPres_Click(object sender, EventArgs e)
+        {
+            Prescription pres = new Prescription();
+
+            if (validateInt(presID.Text) && validateInt(PresDrugID.Text) && validateInt(PresPatientID.Text) && validateInt(PresDocID.Text) &&
+                !string.IsNullOrEmpty(PresDate.Text + PresStatus.Text + PresDrugDose.Text +
+                PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
+            {
+                pres.PrescriptionID = Convert.ToInt32(presID.Text);
+                pres.DrugID = Convert.ToInt32(PresDrugID.Text);
+                pres.PatientID = Convert.ToInt32(PresPatientID.Text);
+                pres.DoctorID = Convert.ToInt32(PresDocID.Text);
+                pres.PrescribingDate = PresDate.Text;
+                pres.InformationExtra = PresAddInfo.InnerText;
+                pres.StatusPrescription = PresStatus.Text;
+                pres.Doses = PresDrugDose.Text;
+                pres.FirstTimeUse = PresFirst.Text;
+                pres.LastTimeUse = PresLast.Text;
+                pres.FrequenseUseInADay = PresTimesADay.Text;
+                pres.DoseStatus = PresDoseStatus.Text;
+            }
+            try
+            {
+                PrescriptionDB.updatePrescription(pres);
+                clearPrescription();
+                GetPatient(pres.PatientID);
+                DisplayPatientPrescriptions();
+                populatePatientDetails();
+                btnInsertPres.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        protected void btnClearPres_Click(object sender, EventArgs e)
+        {
+            clearPrescription();
+            btnInsertPres.Enabled = true;
+        }
+
+        protected void DgvPrescriptions_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(DgvPrescriptions, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void DgvPrescriptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getDgvPrescriptionData();
+        }
+
+        private void getDgvPrescriptionData()
+        {
+            foreach (GridViewRow row in DgvPrescriptions.Rows)
+            {
+                if (row.RowIndex == DgvPrescriptions.SelectedIndex)
+                {
+                    presID.Text = row.Cells[0].Text;
+                    PresDrugID.Text = row.Cells[1].Text;
+                    PresPatientID.Text = row.Cells[2].Text;
+                    PresDocID.Text = row.Cells[3].Text;
+                    PresDate.Text = row.Cells[4].Text;
+                    PresAddInfo.InnerText = row.Cells[5].Text;
+                    PresStatus.Text = row.Cells[6].Text;
+                    PresDrugDose.Text = row.Cells[7].Text;
+                    PresFirst.Text = row.Cells[8].Text;
+                    PresLast.Text = row.Cells[9].Text;
+                    PresTimesADay.Text = row.Cells[10].Text;
+                    PresDoseStatus.Text = row.Cells[11].Text;
+                    btnInsertPres.Enabled = false;
+                }
+            }
+        }
+
     }
 }
