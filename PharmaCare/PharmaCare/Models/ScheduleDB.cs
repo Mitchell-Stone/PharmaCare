@@ -43,8 +43,12 @@ namespace PharmaCare.Models
 
             "ON Prescription.DrugId = Drugs.DrugId " +
 
-            "WHERE IndoorPrescriptions.NursingStationId = @NursingStationID";
-
+            "WHERE IndoorPrescriptions.NursingStationId = @NursingStationID " +
+            
+            "AND Prescription.PrescriptionStatus = 'active' " +
+            
+            "ORDER BY Ward";
+            
             string connection = ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connection))
