@@ -29,4 +29,8 @@
         <SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
     </asp:DataGrid>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
+
+    <asp:Button ID="btnPrintbtn" runat="server" Text="Print" OnClientClick="javascript:window.print();" />
+
 </asp:Content>
+
