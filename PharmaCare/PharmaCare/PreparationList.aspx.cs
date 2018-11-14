@@ -33,7 +33,7 @@ namespace PharmaCare
         {
             if (!Page.IsPostBack)
             {
-                BindToGridView("Non-Verified");    
+                BindToGridView("All");    
             }    
         }
 
