@@ -29,7 +29,7 @@
                 <asp:Button runat="server" Text="Show All Prescriptions" 
                     CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>
             </div>
-        </div>   
+        </div>
     </div>
     <asp:GridView ID="gvPrepList" runat="server" AutoPostBack="True" 
         AutoGenerateColumns="false" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
@@ -50,12 +50,12 @@
                 SortExpression="PrescriptionStatus"></asp:BoundField>
             <asp:TemplateField HeaderText="Set Prescription Status">
                 <ItemTemplate>
-                    <asp:DropDownList runat="server" ID="ddlStatusTypes" AutoPostBack="true" 
+                    <asp:DropDownList runat="server" ID="ddlStatusTypes" AutoPostBack="false" 
                         CssClass="form-control"></asp:DropDownList>                    
                     <asp:Button runat="server" Text="Apply Status" CommandName="SetPrescriptionStatus" 
                         CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
                         CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnSetStatus"
-                        AutoPostBack="True"/>
+                        AutoPostBack="false"/>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
