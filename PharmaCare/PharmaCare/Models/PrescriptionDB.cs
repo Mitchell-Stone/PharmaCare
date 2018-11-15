@@ -83,6 +83,23 @@ namespace PharmaCare.Models
             }
         }
 
+        public static SqlDataReader LabelsToPrint(SqlConnection con)
+        {
+            string sql = "SELECT Patients.PatientID, Patients.Name, Doctors.DoctorName, " +
+                "Drugs.DrugName, Prescription.DrugDose, Prescription.TimesPerDay " +
+                "FROM Prescription " +
+                "RIGHT JOIN Doctors ON Prescription.DoctorID = Doctors.DoctorID " +
+                "RIGHT JOIN Patients ON Prescription.PatientID = Patients.PatientID " +
+                "LEFT JOIN Drugs ON Prescription.DrugId = Drugs.DrugId " +
+                "WHERE Prescription.PrescriptionStatus = 'Active' " +
+                "ORDER BY Patients.Name";
+
+            using (var command = new SqlCommand(sql, con))
+            {
+                return command.ExecuteReader();
+            }
+        }
+
         public static SqlDataReader BindPrescriptionType(SqlConnection con, string status)
         {
             string sql = "SELECT Prescription.PrescriptionStatus, Prescription.PrescriptionId, Prescription.PrescriptionDate, " +
