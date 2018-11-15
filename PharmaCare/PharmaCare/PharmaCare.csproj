@@ -97,6 +97,7 @@
     <Content Include="Schedule.aspx" />
     <Content Include="SearchPrescriptions.aspx" />
     <Content Include="PreparationList.aspx" />
+    <Content Include="PrintLabels.aspx" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -219,6 +220,13 @@
     </Compile>
     <Compile Include="PreparationList.aspx.designer.cs">
       <DependentUpon>PreparationList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PrintLabels.aspx.cs">
+      <DependentUpon>PrintLabels.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrintLabels.aspx.designer.cs">
+      <DependentUpon>PrintLabels.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
