@@ -16,6 +16,7 @@ namespace PharmaCare
         protected void Page_Load(object sender, EventArgs e)
         {
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
+            btnModifyPres.Enabled = false;
         }
 
         /// <summary>
@@ -87,7 +88,6 @@ namespace PharmaCare
                 if (patient != null)
                 {
                     GetPatient(patient.PatientID);
-                    //DisplayPatientPrescriptions();
                     populatePatientDetails();
                     clearPrescription();
                     btnInsertPres.Enabled = true;
@@ -165,6 +165,7 @@ namespace PharmaCare
             {
                 if (pres != null)
                 {
+                    PrescriptionDB.checkCocktail(pres.DrugName);
                     PrescriptionDB.insertPrescription(pres);
                     clearPrescription();
                 }
@@ -225,10 +226,11 @@ namespace PharmaCare
                 pres.DoseStatus = PresDoseStatus.Text;
             }
             try
-            {
+            {                
                 PrescriptionDB.updatePrescription(pres);
                 clearPrescription();
                 btnInsertPres.Enabled = true;
+                btnModifyPres.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -245,6 +247,7 @@ namespace PharmaCare
         {
             clearPrescription();
             btnInsertPres.Enabled = true;
+            btnModifyPres.Enabled = false;
         }
 
         protected void DgvPrescriptions_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -258,6 +261,8 @@ namespace PharmaCare
         protected void DgvPrescriptions_SelectedIndexChanged(object sender, EventArgs e)
         {
             getDgvPrescriptionData();
+            btnInsertPres.Enabled = false;
+            btnModifyPres.Enabled = true;
         }
 
         /// <summary>
@@ -271,20 +276,35 @@ namespace PharmaCare
                 {
                     presID.Text = row.Cells[0].Text;
                     PresDrugID.Text = row.Cells[1].Text;
-                    PresPatientID.Text = row.Cells[2].Text;
-                    PresDocID.Text = row.Cells[3].Text;
-                    PresDate.Text = row.Cells[4].Text;
-                    PresAddInfo.InnerText = row.Cells[5].Text;
-                    PresStatus.Text = row.Cells[6].Text;
-                    PresDrugDose.Text = row.Cells[7].Text;
-                    PresFirst.Text = row.Cells[8].Text;
-                    PresLast.Text = row.Cells[9].Text;
-                    PresTimesADay.Text = row.Cells[10].Text;
-                    PresDoseStatus.Text = row.Cells[11].Text;
+                    PresPatientID.Text = row.Cells[3].Text;
+                    PresDocID.Text = row.Cells[4].Text;
+                    PresDate.Text = row.Cells[5].Text;
+                    PresAddInfo.InnerText = row.Cells[6].Text;
+                    PresStatus.Text = row.Cells[7].Text;
+                    PresDrugDose.Text = row.Cells[8].Text;
+                    PresFirst.Text = row.Cells[9].Text;
+                    PresLast.Text = row.Cells[10].Text;
+                    PresTimesADay.Text = row.Cells[11].Text;
+                    PresDoseStatus.Text = row.Cells[12].Text;
                     btnInsertPres.Enabled = false;
                 }
             }
         }
 
+        protected void btnCheckCocktail_Click(object sender, EventArgs e)
+        {
+            //Prescription pres = new Prescription();
+            //PrescriptionDB.checkCocktail(pres.DrugName);
+            //if (pres.Danger == 1)
+            //{
+            //    txtCocktail.Text = "This drug is dangerous!";
+            //    txtCocktail.ForeColor = Color.Red;
+            //}
+            //else
+            //{
+            //    txtCocktail.Text = "This drug is Safe!";
+            //    txtCocktail.ForeColor = Color.Green;
+            //}
+        }
     }
 }

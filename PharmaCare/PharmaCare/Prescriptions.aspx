@@ -64,6 +64,7 @@
                 <Columns>
                     <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription" ItemStyle-CssClass="d-none" HeaderStyle-CssClass="d-none" />
                     <asp:BoundField DataField="DrugName" HeaderText="Drug" />
+                    <asp:BoundField DataField="DrugForm" HeaderText="Drug Form" />
                     <asp:BoundField DataField="Name" HeaderText="Patient" />
                     <asp:BoundField DataField="DoctorName" HeaderText="Doctor" />
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="Date" />
@@ -85,19 +86,20 @@
                 <asp:Label runat="server" ID="presID" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Drug:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresDrugID" ValidationGroup="presValidation"></asp:TextBox><br />
-                <asp:RequiredFieldValidator ID="rfvDrugID" runat="server" ErrorMessage="Drug ID is required"
+                <asp:Label runat="server" ID="txtCocktail"></asp:Label>
+                <asp:RequiredFieldValidator ID="rfvDrugID" runat="server" ErrorMessage="Drug is required"
                     ControlToValidate="PresDrugID" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
             </div>
             <div class="col-md-4">
                 <label class="font-weight-bold">Patient:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresPatientID" ValidationGroup="presValidation"></asp:TextBox><br />
-                <asp:RequiredFieldValidator ID="rfvPatientID" runat="server" ErrorMessage="Patient ID is required"
+                <asp:RequiredFieldValidator ID="rfvPatientID" runat="server" ErrorMessage="Patient is required"
                     ControlToValidate="PresPatientID" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
             </div>
             <div class="col-md-4">
                 <label class="font-weight-bold">Doctor:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresDocID" ValidationGroup="presValidation"></asp:TextBox><br />
-                <asp:RequiredFieldValidator ID="rfvDocID" runat="server" ErrorMessage="Doctor ID is required"
+                <asp:RequiredFieldValidator ID="rfvDocID" runat="server" ErrorMessage="Doctor is required"
                     ControlToValidate="PresDocID" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
             </div>
         </div>
@@ -163,6 +165,7 @@
         </div>
         <div class="row">
             <div class="mx-auto">
+                <asp:Button runat="server" Text="Check Cocktail" CssClass="btn btn-outline-primary m-2" ID="btnCheckCocktail" OnClick="btnCheckCocktail_Click" />
                 <asp:Button runat="server" Text="Create" CssClass="btn btn-outline-primary m-2" ID="btnInsertPres" OnClick="btnInsertPres_Click" ValidationGroup="presValidation" />
                 <asp:Button runat="server" Text="Modify" CssClass="btn btn-outline-primary m-2" ID="btnModifyPres" OnClick="btnModifyPres_Click" ValidationGroup="presValidation" />
                 <asp:Button runat="server" Text="Clear" CssClass="btn btn-outline-primary m-2" ID="btnClearPres" OnClick="btnClearPres_Click" />

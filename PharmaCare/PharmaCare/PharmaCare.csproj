@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Doctor.cs" />
+    <Compile Include="Models\HospitalDB.cs" />
     <Compile Include="Models\Nurse.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PatientDB.cs" />
