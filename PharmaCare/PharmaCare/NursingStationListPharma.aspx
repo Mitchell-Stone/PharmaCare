@@ -1,38 +1,41 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NursingStationListPharma.aspx.cs" Inherits="PharmaCare.NursingStationListPharma" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NursingStationListPharma.aspx.cs"
+    Inherits="PharmaCare.NursingStationListPharma" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="headPlaceholder" runat="server">
+</asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="mainPlaceholder" runat="server">
 
-<!DOCTYPE html>
+    
+            <h2>Nursing Station List
+            </h2>
+    Select a Nursing Station:
+     
+    <asp:DropDownList ID="DropDownListNurse" runat="server" CssClass="form-control"></asp:DropDownList>
+    <br />
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" AllowSorting="True" CellPadding="4" ForeColor="#333333" GridLines="None">
+        <AlternatingRowStyle BackColor="White" />
+        <Columns>
+            <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+            <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
+            <asp:BoundField DataField="WardID" HeaderText="WardID" SortExpression="WardID" />
+            <asp:BoundField DataField="PrescriptionDate" HeaderText="PrescriptionDate" SortExpression="PrescriptionDate" />
+            <asp:BoundField DataField="PrescriptionStatus" HeaderText="PrescriptionStatus" SortExpression="PrescriptionStatus" />
+            <asp:BoundField DataField="DrugDose" HeaderText="DrugDose" SortExpression="DrugDose" />
+            <asp:BoundField DataField="StatusOfDose" HeaderText="StatusOfDose" SortExpression="StatusOfDose" />
+            <asp:BoundField DataField="RoomID" HeaderText="RoomID" SortExpression="RoomID" />
+        </Columns>
+        <EditRowStyle BackColor="#2461BF" />
+        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+        <RowStyle BackColor="#EFF3FB" />
+        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+        <SortedDescendingHeaderStyle BackColor="#4870BE" />
+</asp:GridView> 
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT Patients.Name, Patients.Address, Patients.WardID, Prescription.PrescriptionDate, Prescription.PrescriptionStatus, Prescription.DrugDose, Prescription.StatusOfDose, Patients.RoomID FROM Patients INNER JOIN Prescription ON Patients.PatientID = Prescription.PatientID"></asp:SqlDataSource>
+    <br />
+      <asp:Button ID="Printbtn" runat="server" Text="Print" OnClientClick="javascript:window.print();" />
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Nursing Staion List</title>
-     <link href="Content/site.css" rel="stylesheet" />
-    <link href="Content/bootstrap.min.css" rel="content/stylesheet" />
-    <style type="text/css">
-        .auto-style1 {
-            width: 19px;
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="jumbotron text-center">
-            <h1>Nursing Station List</h1>
-        </div>
-        <div class="container">
-  <h2>Basic Table</h2>           
-  
-    </div>
-        <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3">
-            <FooterStyle BackColor="White" ForeColor="#000066" />
-            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
-            <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
-            <RowStyle ForeColor="#000066" />
-            <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
-            <SortedAscendingCellStyle BackColor="#F1F1F1" />
-            <SortedAscendingHeaderStyle BackColor="#007DBB" />
-            <SortedDescendingCellStyle BackColor="#CAC9C9" />
-            <SortedDescendingHeaderStyle BackColor="#00547E" />
-        </asp:GridView>
-    </form>
-</body>
-</html>
+   </asp:Content>

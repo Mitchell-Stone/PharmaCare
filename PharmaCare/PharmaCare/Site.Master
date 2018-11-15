@@ -41,7 +41,7 @@
                                     <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Print Labels</asp:Hyperlink>
                                     <asp:Hyperlink NavigateUrl="~/PreparationList.aspx" runat="server" CssClass="dropdown-content">Preperation List</asp:Hyperlink>
                                     <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Distribution Schedule</asp:Hyperlink>
-                                    <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Nursing Station List</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/NursingStationListPharma.aspx" runat="server" CssClass="dropdown-content">Nursing Station List</asp:Hyperlink>
                                 </div>
                             </li>
                             <li runat="server" class="dropdown">
