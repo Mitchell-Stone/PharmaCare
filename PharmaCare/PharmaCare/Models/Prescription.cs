@@ -25,5 +25,8 @@ namespace PharmaCare.Models
         public string DrugName { get; set; }
         public string PatientName { get; set; }
         public string DoctorName { get; set; }
+
+        //for checking if a drug is dangerous (cocktail system if no api)
+        public int Danger { get; set; }
     }
 }
