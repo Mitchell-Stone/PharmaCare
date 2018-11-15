@@ -16,6 +16,7 @@ namespace PharmaCare
         protected void Page_Load(object sender, EventArgs e)
         {
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
+            btnModifyPres.Enabled = false;
         }
 
         /// <summary>
@@ -87,7 +88,6 @@ namespace PharmaCare
                 if (patient != null)
                 {
                     GetPatient(patient.PatientID);
-                    //DisplayPatientPrescriptions();
                     populatePatientDetails();
                     clearPrescription();
                     btnInsertPres.Enabled = true;
@@ -229,6 +229,7 @@ namespace PharmaCare
                 PrescriptionDB.updatePrescription(pres);
                 clearPrescription();
                 btnInsertPres.Enabled = true;
+                btnModifyPres.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -245,6 +246,7 @@ namespace PharmaCare
         {
             clearPrescription();
             btnInsertPres.Enabled = true;
+            btnModifyPres.Enabled = false;
         }
 
         protected void DgvPrescriptions_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -258,6 +260,8 @@ namespace PharmaCare
         protected void DgvPrescriptions_SelectedIndexChanged(object sender, EventArgs e)
         {
             getDgvPrescriptionData();
+            btnInsertPres.Enabled = false;
+            btnModifyPres.Enabled = true;
         }
 
         /// <summary>

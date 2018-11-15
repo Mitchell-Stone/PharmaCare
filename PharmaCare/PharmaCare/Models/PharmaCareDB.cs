@@ -15,7 +15,7 @@ namespace PharmaCare.Models
             return connection;
         }
 
-        public static SqlConnection GetLocalConnection()
+        public static SqlConnection GetODPprescription()
         {
             //get the connection string from the config file to connect to the local database
             string connectionString = ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString;
