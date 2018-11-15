@@ -2,15 +2,26 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="headPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceholder" runat="server">
-    <div class="row">
-        <h1>Patient Labels</h1>
+    <div class="col-6">
+        <div class="row">
+            <h1>Patient Labels</h1>       
+        </div>
+        <div class="row">
+            <h2>Listing Currently Active Prescriptions</h2>
+        </div>
+    </div>
+    <div class="col-6">
         <div class="prescription-label">
-            <asp:Label runat="server" ID="lblPatientId" Text=""></asp:Label>
-            <asp:Label runat="server" ID="lblDoctorName" Text=""></asp:Label>
-            <asp:Label runat="server" ID="lblPatientName" Text=""></asp:Label>
-            <asp:Label runat="server" ID="lblDrugName" Text=""></asp:Label>
-            <asp:Label runat="server" ID="lblDrugDose" Text=""></asp:Label>
-            <asp:Label runat="server" ID="lblTimesPerDay" Text=""></asp:Label>
+            <div class="col-6">
+                <asp:Label runat="server" ID="lblPatientId" Text="Patient ID: "></asp:Label>
+                <asp:Label runat="server" ID="lblPatientName" Text="Patient Name: "></asp:Label>            
+                <asp:Label runat="server" ID="lblDoctorName" Text="Prescribing Doctor: "></asp:Label>
+            </div>
+            <div class="col-6">
+                <asp:Label runat="server" ID="lblDrugName" Text="Drug Prescribed: "></asp:Label>
+                <asp:Label runat="server" ID="lblDrugDose" Text="Dose Prescribed: "></asp:Label>
+                <asp:Label runat="server" ID="lblTimesPerDay" Text="Take prescribed dose 0 time/s per day"></asp:Label>
+            </div>
         </div>
     </div>
     <asp:GridView ID="gvLabelList" runat="server" AutoPostBack="True" 
