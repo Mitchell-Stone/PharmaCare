@@ -20,7 +20,7 @@ namespace PharmaCare.Models
             //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
             //select statement
-            string selectStatement = "SELECT Prescription.PrescriptionId, Drugs.DrugName, Patients.Name, Doctors.DoctorName, " +
+            string selectStatement = "SELECT Prescription.PrescriptionId, Drugs.DrugName, Drugs.DrugForm, Patients.Name, Doctors.DoctorName, " +
                 "Prescription.PrescriptionDate, Prescription.AdditionalInformation, Prescription.PrescriptionStatus, Prescription.DrugDose, " +
                 "Prescription.FirstTime, Prescription.LastTime, Prescription.TimesPerDay, Prescription.StatusOfDose FROM Prescription " +
                 "INNER JOIN Drugs ON Prescription.DrugId = Drugs.DrugId " +
@@ -33,6 +33,55 @@ namespace PharmaCare.Models
                 selectCommand.Parameters.AddWithValue("@PatientID", PatientID);
                 return selectCommand.ExecuteReader();
             }
+        }
+
+        /// <summary>
+        /// Used for checking if a drug is dangerous
+        /// </summary>
+        /// <param name="con"></param>
+        /// <param name="DrugName"></param>
+        /// <returns></returns>
+        public static Prescription checkCocktail(string DrugName)
+        {
+            //set connection to PharmaCareDB class GetConnection Method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+            //select statement
+            string selectStatement = "SELECT * FROM Drugs WHERE DrugName = @DrugName";
+
+            SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
+
+             selectCommand.Parameters.AddWithValue("@DrugName", DrugName);
+                try
+                {
+                    //open connection
+                    connection.Open();
+
+                    SqlDataReader DrugReader = selectCommand.ExecuteReader();
+
+                if (DrugReader.Read())
+                {
+                    Prescription pres = new Prescription();
+                    pres.DrugName = DrugReader["DrugName"].ToString();
+                    pres.Danger = (int)DrugReader["Dangerous"];
+
+                    return pres;
+                }
+                else
+                {
+                    return null;
+                }                
+
+                }
+                catch (Exception ex)
+                {
+                    //throw error
+                    throw ex;
+                }
+                finally
+                {
+                    //close the connection
+                    connection.Close();
+                } 
         }
 
         public static void insertPrescription(Prescription pres)
