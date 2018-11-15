@@ -118,7 +118,7 @@ namespace PharmaCare.Models
         public static void UpdatePrescriptionStatus(int prescriptionId, string status)
         {
             //open connection to the local database
-            SqlConnection con = PharmaCareDB.GetLocalConnection();
+            SqlConnection con = PharmaCareDB.GetODPprescription();
 
             string sql = "UPDATE Prescription " +
                 "SET PrescriptionStatus = @status " +
@@ -203,6 +203,22 @@ namespace PharmaCare.Models
                 connection.Close();
             }
 
+        }
+        public static SqlDataReader GetODPprescription(SqlConnection con, string status)
+        {
+            string sql = "SELECT OPDPrescriptions.OPDId, OPDPrescriptions.PrescriptionId, OPDPrescriptions.Filled&Dispatched, " +
+                "OPDPrescriptions.DateDispatched, OPDPrescriptions.TimeDispatched, OPDPrescriptions.IndoorEmergency, OPDPrescriptions.ToFill " +
+                "FROM OPDPrescriptions " +
+                "LEFT JOIN Prescription " +
+                "ON OPDPrescriptions.prescriptionId = Prescription.PrescriptionId " +
+                "WHERE Prescription.PrescriptionStatus = @status " +
+                "ORDER BY Prescription.PrescriptionDate ASC";
+
+            using (var command = new SqlCommand(sql, con))
+            {
+                command.Parameters.AddWithValue("status", status);
+                return command.ExecuteReader();
+            }
         }
 
     }

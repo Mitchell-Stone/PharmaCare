@@ -49,8 +49,7 @@ namespace PharmaCare
 
         private void BindToGridView(string status)
         {
-            //open connection to the local database
-            SqlConnection con = PharmaCareDB.GetLocalConnection();
+            SqlConnection con = PharmaCareDB.GetConnection();
             List<string> tempList = new List<string>();
 
             try

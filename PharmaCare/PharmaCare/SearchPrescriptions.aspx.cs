@@ -1,17 +1,23 @@
-﻿using PharmaCare.Models;
+﻿/* 
+ *          Page Create By Hsuan-Yi Lin(a.k.a Alex Pasalic) 
+ *
+ *          Student ID= 452400286
+ *
+ */
+using PharmaCare.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 
 namespace PharmaCare
 {
 
     public partial class SearchPrescriptions : System.Web.UI.Page
     {
-        private object patient;
         List<Prescription> prescription = new List<Prescription>();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,15 +36,28 @@ namespace PharmaCare
             string search = txtSearchPatient.Text;
 
         }
-        private void GetPatientByName(string PatientID)
+        private void PresentDataInTheList (string status)
         {
+            SqlConnection con = PharmaCareDB.GetODPprescription();
+            List<string> tempList = new List<string>();
+
             try
             {
-                //patient = PatientDB.getPatientByName();
+                con.Open();
+                if (status == "All")
+                {
+                    SqlDataReader reader = PrescriptionDB.BindAllPrescriptionType(con);
+                    dgvPrescriptions.DataSource = reader;
+                    dgvPrescriptions.DataBind();
+                }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                con.Close();
             }
         }
     }
