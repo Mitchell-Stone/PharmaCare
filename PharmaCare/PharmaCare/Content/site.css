@@ -166,3 +166,10 @@ li .dropdown {
 .dropdown {
     width: 165px;
 }
+
+.prescription-label {
+    display: block;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
