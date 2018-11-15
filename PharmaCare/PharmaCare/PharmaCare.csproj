@@ -92,6 +92,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="NursingStationListPharma.aspx" />
     <Content Include="Prescriptions.aspx" />
     <Content Include="Schedule.aspx" />
     <Content Include="SearchPrescriptions.aspx" />
@@ -162,6 +163,13 @@
     <Compile Include="Models\PrescriptionDB.cs" />
     <Compile Include="Models\ScheduleDB.cs" />
     <Compile Include="Models\Staff.cs" />
+    <Compile Include="NursingStationListPharma.aspx.cs">
+      <DependentUpon>NursingStationListPharma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NursingStationListPharma.aspx.designer.cs">
+      <DependentUpon>NursingStationListPharma.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Prescriptions.aspx.cs">
       <DependentUpon>Prescriptions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

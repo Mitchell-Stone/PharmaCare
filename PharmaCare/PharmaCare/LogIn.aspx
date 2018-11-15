@@ -11,7 +11,7 @@
             <div class="form-group">
                 <label class="col-sm-1">Username:</label>
                 <div class="col-sm-3">
-                   <asp:textbox id="txtUsername" runat="server" 
+                 <asp:textbox id="txtUsername" runat="server" 
                     cssclass="form-control" placeholder="Email"></asp:textbox>     
                 </div>
                 <div class="col-sm-6">
