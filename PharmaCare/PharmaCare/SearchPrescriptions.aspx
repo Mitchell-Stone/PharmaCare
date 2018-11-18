@@ -51,6 +51,10 @@
                         ReadOnly="True" SortExpression="PatientID" >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
+                    <asp:BoundField DataField="Name" HeaderText="Patient Name"
+                        ReadOnly="True" SortExpression="Name" >
+                        <ItemStyle CssClass="col-xs-2" />
+                    </asp:BoundField>
                     <asp:BoundField DataField="DoctorID" HeaderText="Doctor ID"
                         ReadOnly="true" SortExpression="DoctorID" >
                         <ItemStyle CssClass="col-xs-2" />
@@ -59,11 +63,15 @@
                         ReadOnly="True" SortExpression="DrugID" >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="DrugDose" HeaderText="Dose"
+                    <asp:BoundField DataField="DrugName" HeaderText="Drug Name"
+                        ReadOnly="True" SortExpression="DrugName" >
+                        <ItemStyle CssClass="col-xs-2" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="DrugForm" HeaderText="Drug Form"
                         ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="AdditionalInformation" HeaderText="Information"
+                    <asp:BoundField DataField="DrugDose" HeaderText="Dose"
                         ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
@@ -71,6 +79,10 @@
                         ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
+                    <asp:BoundField DataField="Filled&Dispatched" HeaderText="Information"
+                        ReadOnly="true" SortExpression="Filled&Dispatched" >
+                        <ItemStyle CssClass="col-xs-2" />
+                    </asp:BoundField>                    
                     <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day"
                         ReadOnly="true"  >
                         <ItemStyle CssClass="col-xs-2" />
@@ -85,6 +97,14 @@
                     </asp:BoundField>
                     <asp:BoundField DataField="PrescriptionStatus" HeaderText="Prescription Status"
                         ReadOnly="true" SortExpression="PrescriptionStatus" >
+                        <ItemStyle CssClass="col-xs-2" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="DateDispatched" HeaderText="Dispatch Date"
+                        ReadOnly="true" SortExpression="DateDispatched" >
+                        <ItemStyle CssClass="col-xs-2" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="ToFill" HeaderText="To Fill"
+                        ReadOnly="true" SortExpression="ToFill" >
                         <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
