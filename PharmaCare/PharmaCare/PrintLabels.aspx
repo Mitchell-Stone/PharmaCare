@@ -12,15 +12,18 @@
     </div>
     <div class="col-6">
         <div class="prescription-label">
-            <div class="col-6">
-                <asp:Label runat="server" ID="lblPatientId" Text="Patient ID: "></asp:Label>
-                <asp:Label runat="server" ID="lblPatientName" Text="Patient Name: "></asp:Label>            
-                <asp:Label runat="server" ID="lblDoctorName" Text="Prescribing Doctor: "></asp:Label>
+            <h2 class="label-heading">Pharmacare Prescription Label</h2>
+            <div class="row col-lg-12">
+                <asp:Label CssClass="label-content" runat="server" ID="lblPatientId" Text="Patient ID:    "></asp:Label>
+                <asp:Label CssClass="label-content" runat="server" ID="lblPatientName" Text="Patient Name:    "></asp:Label> 
             </div>
-            <div class="col-6">
-                <asp:Label runat="server" ID="lblDrugName" Text="Drug Prescribed: "></asp:Label>
-                <asp:Label runat="server" ID="lblDrugDose" Text="Dose Prescribed: "></asp:Label>
-                <asp:Label runat="server" ID="lblTimesPerDay" Text="Take prescribed dose 0 time/s per day"></asp:Label>
+            <div class="row col-lg-12">
+                <asp:Label CssClass="label-content" runat="server" ID="lblDoctorName" Text="Prescribing Doctor:    "></asp:Label>
+                <asp:Label CssClass="label-content" runat="server" ID="lblDrugName" Text="Drug Prescribed:    "></asp:Label>
+            </div>
+            <div class="row col-lg-12">
+                <asp:Label CssClass="label-content" runat="server" ID="lblDrugDose" Text="Dose Prescribed:    "></asp:Label>
+                <asp:Label CssClass="label-content" runat="server" ID="lblTimesPerDay" Text="Take prescribed dose 0 time/s per day"></asp:Label>
             </div>
         </div>
     </div>
@@ -41,10 +44,14 @@
                 SortExpression="TimesPerDay"></asp:BoundField>
             <asp:TemplateField HeaderText="Printing Options">
                 <ItemTemplate>
+                    <asp:Button runat="server" Text="Preview Label" CommandName="ViewLabel" 
+                        CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
+                        CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnViewLabel"
+                        AutoPostBack="True"/>
                     <asp:Button runat="server" Text="Print Label" CommandName="PrintLabel" 
                         CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
                         CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnPrintLabel"
-                        AutoPostBack="True"/>
+                        AutoPostBack="True" OnClientClick="javascript:window.print();"/>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

@@ -172,4 +172,14 @@ li .dropdown {
     padding: 3px;
     border: 1px solid black;
     border-radius: 4px;
+    float: left;
+}
+
+.label-heading {
+    text-align: center;
+}
+
+.label-content {
+    padding-left: 1em;
+    margin-left: 1em;
 }
