@@ -28,13 +28,16 @@
                     CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>              
                 <asp:Button runat="server" Text="Show All Prescriptions" 
                     CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>
+                <asp:TextBox runat="server" ID="tbPrescriptionIdSearch" OnTextChanged="tbPrescriptionIdSearch_TextChanged"></asp:TextBox>
+                <asp:CompareValidator runat="server" ID="vvPrescriptionId" Type="Integer" ControlToValidate="tbPrescriptionIdSearch"
+                    ErrorMessage="A prescription ID must be entered" Operator="DataTypeCheck"></asp:CompareValidator>
             </div>
         </div>
     </div>
     <asp:GridView ID="gvPrepList" runat="server" AutoPostBack="True" 
         AutoGenerateColumns="false" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
         <Columns>
-            <asp:BoundField DataField="PrescriptionId" HeaderText="ID"
+            <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID"
                 SortExpression="PrescriptionId"></asp:BoundField>
             <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
                 SortExpression="PrescriptionDate"></asp:BoundField>

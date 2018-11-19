@@ -10,10 +10,10 @@ namespace PharmaCare
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
+
             if (!IsPostBack)
             {
-                UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
-
                 BindToGridView();
             }                
         }
@@ -28,9 +28,9 @@ namespace PharmaCare
                 gvLabelList.DataSource = reader;
                 gvLabelList.DataBind();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
