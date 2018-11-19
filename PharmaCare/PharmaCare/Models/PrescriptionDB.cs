@@ -11,7 +11,7 @@ namespace PharmaCare.Models
         /// <param name="con"></param>
         /// <param name="PatientID"></param>
         /// <returns></returns>
-        public static SqlDataReader GetPrescription(SqlConnection con, int PatientID)
+        public static SqlDataReader GetIndoorPrescriptions(SqlConnection con, int PatientID)
         {
             //select statement
             string selectStatement = "SELECT Prescription.PrescriptionId, Patients.Name, Doctors.DoctorName, " +
@@ -95,31 +95,32 @@ namespace PharmaCare.Models
         //        } 
         //}
 
-        public static void insertPrescription(Prescription pres)
+        public static void insertIndoorPrescription(Indoor pres)
         {
             //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
-
-            //insert statement
+            int newId;
+            //insert prescription statement
             string insertStatement = "INSERT INTO Prescription (PatientID,DoctorID,PrescriptionDate," +
             "AdditionalInformation,PrescriptionStatus) " +
             "VALUES ((SELECT PatientID FROM Patients WHERE Name = @PatientName), " +
             "(SELECT DoctorID FROM Doctors WHERE DoctorName = @DoctorName), " +
-            "@PresDate, @AddInfo, @PresStatus)";
-
-            //insert command
-            SqlCommand insertCommand = new SqlCommand(insertStatement, connection);
-
-            insertCommand.Parameters.AddWithValue("@PatientName", pres.PatientName);
-            insertCommand.Parameters.AddWithValue("@DoctorName", pres.DoctorName);
-            insertCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
-            insertCommand.Parameters.AddWithValue("@AddInfo", pres.InformationExtra);
-            insertCommand.Parameters.AddWithValue("@PresStatus", pres.StatusPrescription);
+            "@PresDate, @AddInfo, @PresStatus) SELECT CAST (scope_identity() AS int)";
 
             try
             {
+                //insert command
+                SqlCommand insertCommand = new SqlCommand(insertStatement, connection);
+
+                insertCommand.Parameters.AddWithValue("@PatientName", pres.PatientName);
+                insertCommand.Parameters.AddWithValue("@DoctorName", pres.DoctorName);
+                insertCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
+                insertCommand.Parameters.AddWithValue("@AddInfo", pres.InformationExtra);
+                insertCommand.Parameters.AddWithValue("@PresStatus", pres.StatusPrescription);
                 //open sql connection
                 connection.Open();
+                //get new prescription id
+                newId = (int)insertCommand.ExecuteScalar();
                 //execute insert query
                 insertCommand.ExecuteNonQuery();
             }
@@ -133,40 +134,69 @@ namespace PharmaCare.Models
                 //close sql connection
                 connection.Close();
             }
+
+            //insert indoor prescription
+            string insertIndoorStatement = "INSERT INTO IndoorPrescriptions (PrescriptionId, RoomNumber, WingNumber, FloorNumber, NursingStationId) " +
+                "VALUES (@PrescriptionId, @RoomNumber, @WingNumber, @FloorNumber, @NursingStationId)";
+            //insert command
+            SqlCommand insertIndoorCommand = new SqlCommand(insertIndoorStatement, connection);
+            insertIndoorCommand.Parameters.AddWithValue("@PrescriptionId", newId);
+            insertIndoorCommand.Parameters.AddWithValue("@RoomNumber", pres.RoomNumber);
+            insertIndoorCommand.Parameters.AddWithValue("@WingNumber", pres.WingNumber);
+            insertIndoorCommand.Parameters.AddWithValue("@FloorNumber", pres.FloorNumber);
+            insertIndoorCommand.Parameters.AddWithValue("@NursingStationId", pres.NursingStationId);
+            try
+            {
+                //open connection
+                connection.Open();
+                //execute insert query
+                insertIndoorCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql query
+                throw ex;
+            }
+            finally
+            {
+                //close connection
+                connection.Close();
+            }
         }
 
-        public static void insertPrescriptionDrugs(int PrescriptionId, string DrugId)
+        public static void insertPrescriptionDrugs(Details pres)
         {
             //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
+            int linkId;
             //insert statement
-            string insertStatement = "INSERT INTO PrescriptionDrugs (PrescriptionId, DrugId) VALUES " +
-                "(@PrescriptionId, (SELECT DrugId FROM Drugs WHERE DrugName = @DrugId))";
-            //insert command
-            SqlCommand insertCommand = new SqlCommand(insertStatement, connection);
-            insertCommand.Parameters.AddWithValue("@PrescriptionId", PrescriptionId);
-            insertCommand.Parameters.AddWithValue("@DrugId", DrugId);
+            string insertStatement = "INSERT INTO PrescriptionDrugs (PrescriptionId, DrugId) " +
+                "VALUES (@PrescriptionId, (SELECT DrugId FROM Drugs Where DrugName = @DrugId)) " +
+                "SELECT CAST (scope_identity() AS int)";
 
+
+            SqlCommand insertPresDrugsCommand = new SqlCommand(insertStatement, connection);
+            insertPresDrugsCommand.Parameters.AddWithValue("@PrescriptionId", pres.PrescriptionID);
+            insertPresDrugsCommand.Parameters.AddWithValue("@DrugId", pres.DrugName);
             try
             {
-                //open sql connection
                 connection.Open();
-                //execute insert query
-                insertCommand.ExecuteNonQuery();
+                linkId = (int)insertPresDrugsCommand.ExecuteScalar();
+                insertPresDrugsCommand.ExecuteNonQuery();
+                insertDrugDetails(pres, linkId);
             }
-            catch (SqlException ex)
+            catch (Exception)
             {
-                //throw sql error
-                throw ex;
+
+                throw;
             }
             finally
             {
-                //close sql connection
                 connection.Close();
             }
         }
 
-        public static void insertDrugDetails(Prescription pres, int linkId)
+        public static void insertDrugDetails(Details pres, int linkId)
         {
             //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
@@ -322,7 +352,7 @@ namespace PharmaCare.Models
         /// updates prescription
         /// </summary>
         /// <param name="pres"></param>
-        public static void updatePrescription(Prescription pres)
+        public static void updatePrescription(Indoor pres)
         {
             //set connection to PharmaCareDB class getConneciton method
             SqlConnection connection = PharmaCareDB.GetConnection();
@@ -356,6 +386,7 @@ namespace PharmaCare.Models
                 connection.Open();
                 //execute insert query
                 updateCommand.ExecuteNonQuery();
+                updateIndoorPrescription(pres);
             }
             catch (SqlException ex)
             {

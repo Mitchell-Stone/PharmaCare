@@ -30,6 +30,16 @@ namespace PharmaCare.Models
         public string DoseStatus { get; set; }
     }
 
+    public class Details : Prescription
+    {
+        public int LinkId { get; set; }
+        public string DrugDose { get; set; }
+        public string FirstTime { get; set; }
+        public string LastTime { get; set; }
+        public string TimesPerDay { get; set; }
+        public string StatusOfDose { get; set; }
+    }
+
     public class Indoor : Prescription
     {
         public int IndoorId { get; set; }

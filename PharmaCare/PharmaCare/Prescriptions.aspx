@@ -145,7 +145,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label class="font-weight-bold">Prescription Status:</label>
+                <label class="font-weight-bold">Status:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresStatus" ValidationGroup="presValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvStatus" runat="server" ErrorMessage="Prescription status is required"
                     ControlToValidate="PresStatus" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
@@ -171,7 +171,7 @@
                     ControlToValidate="txtFloor" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>
             </div>
             <div class="col-md-4">
-                <label class="font-weight-bold">Nursing Station Id:</label>
+                <label class="font-weight-bold">Nursing Station:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtNursingStationId" ValidationGroup="presValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvNursingStationId" runat="server" ErrorMessage="Nursing Station Id is required"
                     ControlToValidate="txtNursingStationId" CssClass="text-danger float-right" ValidationGroup="presValidation"></asp:RequiredFieldValidator>

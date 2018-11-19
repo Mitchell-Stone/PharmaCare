@@ -21,6 +21,7 @@ namespace PharmaCare
         {
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
             btnModify.Enabled = false;
+            btnEditPresDetails.Enabled = false;
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace PharmaCare
             {
                 con.Open();
                 patient = PatientDB.getPatientById(patientID);
-                DgvPrescriptions.DataSource = PrescriptionDB.GetPrescription(con, patientID);
+                DgvPrescriptions.DataSource = PrescriptionDB.GetIndoorPrescriptions(con, patientID);
                 DgvPrescriptions.DataBind();
             }
             catch (Exception ex)
@@ -146,22 +147,28 @@ namespace PharmaCare
         /// <param name="e"></param>
         protected void btnInsertPres_Click(object sender, EventArgs e)
         {
-            Prescription pres = new Prescription();
+            Indoor pres = new Indoor();
             if (!string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text + 
-                PresDate.Text + PresStatus.Text + PresDrugDose.Text +
-                PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
+                PresDate.Text + PresStatus.Text))
             {
-                pres.DrugName = PresDrugID.Text;
+                //prescription
                 pres.PatientName = PresPatientID.Text;
                 pres.DoctorName = PresDocID.Text;
                 pres.PrescribingDate = PresDate.Text;
                 pres.InformationExtra = PresAddInfo.InnerText;
                 pres.StatusPrescription = PresStatus.Text;
+                //drug details
+                pres.DrugName = PresDrugID.Text;
                 pres.Doses = PresDrugDose.Text;
                 pres.FirstTimeUse = PresFirst.Text;
                 pres.LastTimeUse = PresLast.Text;
                 pres.FrequenseUseInADay = PresTimesADay.Text;
                 pres.DoseStatus = PresDoseStatus.Text;
+                //indoor details
+                pres.RoomNumber = Convert.ToInt32(txtRoom.Text);
+                pres.WingNumber = Convert.ToInt32(txtWing.Text);
+                pres.FloorNumber = Convert.ToInt32(txtFloor.Text);
+                pres.NursingStationId = txtNursingStationId.Text;
             }
             else
             {
@@ -172,7 +179,7 @@ namespace PharmaCare
             {
                 if (pres != null)
                 {
-                    PrescriptionDB.insertPrescription(pres);
+                    PrescriptionDB.insertIndoorPrescription(pres);
                     clearPrescription();
                 }
                 else
@@ -235,12 +242,12 @@ namespace PharmaCare
                 pres.InformationExtra = PresAddInfo.InnerText;
                 pres.StatusPrescription = PresStatus.Text;
                 //prescription details
-                pres.DrugName = PresDrugID.Text;
-                pres.Doses = PresDrugDose.Text;
-                pres.FirstTimeUse = PresFirst.Text;
-                pres.LastTimeUse = PresLast.Text;
-                pres.FrequenseUseInADay = PresTimesADay.Text;
-                pres.DoseStatus = PresDoseStatus.Text;
+                //pres.DrugName = PresDrugID.Text;
+                //pres.Doses = PresDrugDose.Text;
+                //pres.FirstTimeUse = PresFirst.Text;
+                //pres.LastTimeUse = PresLast.Text;
+                //pres.FrequenseUseInADay = PresTimesADay.Text;
+                //pres.DoseStatus = PresDoseStatus.Text;
                 //indoor
                 pres.RoomNumber = Convert.ToInt32(txtRoom.Text);
                 pres.WingNumber = Convert.ToInt32(txtWing.Text);
@@ -250,7 +257,6 @@ namespace PharmaCare
             try
             {                
                 PrescriptionDB.updatePrescription(pres);
-                PrescriptionDB.updateIndoorPrescription(pres);
                 clearPrescription();
                 btnInsert.Enabled = true;
                 btnModify.Enabled = false;
@@ -337,11 +343,42 @@ namespace PharmaCare
             btnModify.Enabled = true;
         }
 
+        /// <summary>
+        /// adds drugs to an indoor prescription
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnAddPresDetails_Click(object sender, EventArgs e)
         {
+            Details pres = new Details();
 
+            if (!string.IsNullOrEmpty(PresDrugID.Text + PresDrugDose.Text +
+                PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
+            {
+                pres.PrescriptionID = Convert.ToInt32(presID.Text);
+                pres.DrugName = PresDrugID.Text;
+                pres.Doses = PresDrugDose.Text;
+                pres.FirstTimeUse = PresFirst.Text;
+                pres.LastTimeUse = PresLast.Text;
+                pres.FrequenseUseInADay = PresTimesADay.Text;
+                pres.DoseStatus = PresDoseStatus.Text;
+            }
+            try
+            {
+                PrescriptionDB.insertPrescriptionDrugs(pres);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
+        /// <summary>
+        /// disables outdoor tools and enable indoor tools
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnIndoor_Click(object sender, EventArgs e)
         {
             Outdoor.Visible = false;
@@ -352,6 +389,11 @@ namespace PharmaCare
             IndoorBtns.Visible = true;
         }
 
+        /// <summary>
+        /// disables indoor tools and enable outdoor tools
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnOutdoor_Click(object sender, EventArgs e)
         {
             Outdoor.Visible = true;
