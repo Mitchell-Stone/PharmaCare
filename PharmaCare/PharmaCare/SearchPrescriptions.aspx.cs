@@ -27,13 +27,7 @@ namespace PharmaCare
                 PresentDataInTheList("All");
             }
         }
-        protected void DgvPrescriptions_PreRender(object sender, EventArgs e)
-        {
-            if (dgvPrescriptions.HeaderRow != null)
-            {
-                dgvPrescriptions.HeaderRow.TableSection = TableRowSection.TableHeader;
-            }
-        }
+        
         protected void BtnFindPatient_Click(object sender, EventArgs e)
         {
             string search = txtSearchPatient.Text;
@@ -41,7 +35,7 @@ namespace PharmaCare
         }
         private void PresentDataInTheList (string status)
         {
-            SqlConnection con = PharmaCareDB.GetODPprescription();
+            SqlConnection con = PharmaCareDB.GetConnection();
             List<string> tempList = new List<string>();
 
             try
@@ -49,7 +43,7 @@ namespace PharmaCare
                 con.Open();
                 if (status == "All")
                 {
-                    SqlDataReader reader = PrescriptionDB.BindAllPrescriptionType(con);
+                    SqlDataReader reader = PrescriptionDB.GetODPprescription(con, status);
                     dgvPrescriptions.DataSource = reader;
                     dgvPrescriptions.DataBind();
                 }

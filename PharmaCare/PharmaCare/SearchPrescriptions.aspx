@@ -31,90 +31,59 @@
             <asp:TextBox ID="txtPLname" runat="server" ></asp:TextBox>
         </div>   
     </div>
-
-        <div class="col-xl-12">
-            <asp:SqlDataSource runat="server" ID="Prescriptions"
-                ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>'
-                SelectCommand="SELECT * FROM [Prescription] ORDER BY [PatientID]">
-    </asp:SqlDataSource>
+        <div class="col-xl-12">            
             <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="false" 
-                DataSourceID="Prescriptions" AllowSorting="true" Allowpaging="true"
+                AllowSorting="true"
                 UseAccessibleHeader="true"
-                CssClass="table table-bordered table-striped table-condensed"
-                OnPreRender="DgvPrescriptions_PreRender">
+                CssClass="table table-bordered table-striped table-condensed"                >
                 <Columns>
                     <asp:BoundField DataField="PrescriptionID" HeaderText="Presciption ID"
                         ReadOnly="True" SortExpression="PrescriptionID" >
-                        <ItemStyle CssClass="col-xs-1" />
                     </asp:BoundField>
                     <asp:BoundField DataField="PatientID" HeaderText="Patient ID"
                         ReadOnly="True" SortExpression="PatientID" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="Name" HeaderText="Patient Name"
                         ReadOnly="True" SortExpression="Name" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DoctorID" HeaderText="Doctor ID"
                         ReadOnly="true" SortExpression="DoctorID" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DrugID" HeaderText="Drug ID"
                         ReadOnly="True" SortExpression="DrugID" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DrugName" HeaderText="Drug Name"
                         ReadOnly="True" SortExpression="DrugName" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DrugForm" HeaderText="Drug Form"
                         ReadOnly="true"  >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DrugDose" HeaderText="Dose"
                         ReadOnly="true"  >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="StatusOfDose" HeaderText="Dose Status"
                         ReadOnly="true"  >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="Filled&Dispatched" HeaderText="Information"
-                        ReadOnly="true" SortExpression="Filled&Dispatched" >
-                        <ItemStyle CssClass="col-xs-2" />
+                    <asp:BoundField DataField="FilledAndDispatched" HeaderText="Information"
+                        ReadOnly="true" SortExpression="FilledAndDispatched" >
                     </asp:BoundField>                    
                     <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day"
                         ReadOnly="true"  >
-                        <ItemStyle CssClass="col-xs-2" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="FirstTime" HeaderText="First Time"
-                        ReadOnly="true" SortExpression="FirstTime" >
-                        <ItemStyle CssClass="col-xs-2" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="LastTime" HeaderText="Last Time"
-                        ReadOnly="true" SortExpression="LastTime" >
-                        <ItemStyle CssClass="col-xs-2" />
-                    </asp:BoundField>
+                    </asp:BoundField>             
                     <asp:BoundField DataField="PrescriptionStatus" HeaderText="Prescription Status"
                         ReadOnly="true" SortExpression="PrescriptionStatus" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="DateDispatched" HeaderText="Dispatch Date"
                         ReadOnly="true" SortExpression="DateDispatched" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="ToFill" HeaderText="To Fill"
                         ReadOnly="true" SortExpression="ToFill" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
                         ReadOnly="true" SortExpression="PrescriptionDate" >
-                        <ItemStyle CssClass="col-xs-2" />
                     </asp:BoundField>
-                </Columns>
-                <PagerStyle CssClass="pagerStyle" HorizontalAlign="Center" />
-                <PagerSettings Mode="NumericFirstLast" />
-                
+                </Columns>                
+                <PagerSettings Mode="NumericFirstLast" />                
             </asp:GridView>
         </div>
 </asp:Content>
