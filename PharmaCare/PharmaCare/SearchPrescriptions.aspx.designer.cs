@@ -67,15 +67,6 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.TextBox txtPLname;
         
         /// <summary>
-        /// Prescriptions control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource Prescriptions;
-        
-        /// <summary>
         /// dgvPrescriptions control.
         /// </summary>
         /// <remarks>

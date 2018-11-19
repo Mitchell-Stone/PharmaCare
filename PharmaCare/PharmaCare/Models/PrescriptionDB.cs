@@ -304,20 +304,22 @@ namespace PharmaCare.Models
         {
             try
             {
-                string sql = "SELECT OPDPrescriptions.OPDId, OPDPrescriptions.PrescriptionId, OPDPrescriptions.Filled&Dispatched, " +
-                    "OPDPrescriptions.DateDispatched, OPDPrescriptions.TimeDispatched, OPDPrescriptions.IndoorEmergency, OPDPrescriptions.ToFill, Drugs.DrugId, " +
-                    "Drugs.DrugName, Drugs.DrugForm, Patients.PatientsID, Patients.Name, Prescription.PrescriptionId, Prescription.DrugId, Prescription.PatientID, " +
-                    "Prescription.DoctorID, Prescription.PrescriptionDate, Prescription.AdditionalInformation, Prescription.PrescriptionStatus, Prescription.DrugDose, " +
-                    "Prescription.FirstTime, Prescription.LastTime, Prescription.TimesPerDay, Prescription.StatusOfDose " +
+                string sql = "SELECT OPDId, FilledAndDispatched, DateDispatched, TimeDispatched, IndoorEmergency, ToFill, Drugs.DrugId, " +
+                    "DrugName, DrugForm, Patients.PatientID, Patients.Name, Prescription.PrescriptionId, " +
+                    "Prescription.DoctorID, PrescriptionDate, AdditionalInformation, PrescriptionStatus, DrugDose " +
                     "FROM OPDPrescriptions " +
                     "LEFT JOIN Prescription " +
                     "ON OPDPrescriptions.prescriptionId = Prescription.PrescriptionId " +
-                    "LEFT JOIN Patients" +
-                    "ON Prescription.PatientID = Patients.PatientID" +
-                    "LEFT JOIN Drugs" +
-                    "ON Prescription.DrigId = Drugs.DrugId" +
-                    "WHERE Prescription.PrescriptionStatus = @status " +
-                    "ORDER BY Prescription.PrescriptionDate ASC";
+                    "LEFT JOIN Patients " +
+                    "ON Prescription.PatientID = Patients.PatientID " +
+                    "LEFT JOIN PrescriptionDrugs " +
+                    "ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId " +
+                    "LEFT JOIN Drugs " +
+                    "ON PrescriptionDrugs.DrugId = Drugs.DrugId " +
+                    "LEFT JOIN DrugDetails " +
+                    "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
+                    "WHERE PrescriptionStatus = @status " +
+                    "ORDER BY PrescriptionDate ASC";
                 using (var command = new SqlCommand(sql, con))
                 {
                     command.Parameters.AddWithValue("status", status);
@@ -330,6 +332,7 @@ namespace PharmaCare.Models
             }
 
         }
+
 
     }
 
