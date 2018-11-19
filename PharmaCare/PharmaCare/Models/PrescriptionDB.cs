@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace PharmaCare.Models
 {
@@ -135,9 +131,16 @@ namespace PharmaCare.Models
             string sql = "SELECT Patients.PatientID, Name, DoctorName, " +
                 "DrugName, DrugDose, TimesPerDay " +
                 "FROM Prescription " +
-                "RIGHT JOIN Doctors ON Prescription.DoctorID = Doctors.DoctorID " +
-                "RIGHT JOIN Patients ON Prescription.PatientID = Patients.PatientID " +
-                "LEFT JOIN Drugs ON Prescription.DrugId = Drugs.DrugId " +
+                "RIGHT JOIN Doctors " +
+                "ON Prescription.DoctorID = Doctors.DoctorID " +
+                "RIGHT JOIN Patients " +
+                "ON Prescription.PatientID = Patients.PatientID " +
+                "LEFT JOIN PrescriptionDrugs " +
+                "ON PrescriptionDrugs.PrescriptionId = Prescription.PrescriptionId " +
+                "LEFT JOIN Drugs " +
+                "ON Drugs.DrugId = PrescriptionDrugs.DrugId " +
+                "LEFT JOIN DrugDetails " +
+                "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "WHERE PrescriptionStatus = 'Active' " +
                 "ORDER BY Name";
 

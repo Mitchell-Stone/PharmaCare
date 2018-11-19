@@ -34,7 +34,7 @@
     <asp:GridView ID="gvPrepList" runat="server" AutoPostBack="True" 
         AutoGenerateColumns="false" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
         <Columns>
-            <asp:BoundField DataField="PrescriptionId" HeaderText="ID"
+            <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID"
                 SortExpression="PrescriptionId"></asp:BoundField>
             <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
                 SortExpression="PrescriptionDate"></asp:BoundField>
