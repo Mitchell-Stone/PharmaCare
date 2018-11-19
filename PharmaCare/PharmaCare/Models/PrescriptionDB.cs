@@ -151,11 +151,15 @@ namespace PharmaCare.Models
 
         public static SqlDataReader BindPrescriptionType(SqlConnection con, string status)
         {
-            string sql = "SELECT PrescriptionStatus, PrescriptionId, PrescriptionDate, " +
+            string sql = "SELECT PrescriptionStatus, Prescription.PrescriptionId, PrescriptionDate, " +
                 "DrugName, DrugForm, DrugDose, TimesPerDay " +
                 "FROM Prescription " +
+                "LEFT JOIN PrescriptionDrugs " +
+                "ON PrescriptionDrugs.PrescriptionId = Prescription.PrescriptionId " +
                 "LEFT JOIN Drugs " +
-                "ON Prescription.DrugId = Drugs.DrugId " +
+                "ON Drugs.DrugId = PrescriptionDrugs.DrugId " +
+                "RIGHT JOIN DrugDetails " +
+                "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "WHERE PrescriptionStatus = @status " +
                 "ORDER BY PrescriptionDate ASC";
             
@@ -168,11 +172,15 @@ namespace PharmaCare.Models
 
         public static SqlDataReader BindAllPrescriptionType(SqlConnection con)
         {
-            string sql = "SELECT PrescriptionStatus, PrescriptionId, PrescriptionDate, " +
+            string sql = "SELECT PrescriptionStatus, Prescription.PrescriptionId, PrescriptionDate, " +
                 "DrugName, DrugForm, DrugDose, TimesPerDay " +
                 "FROM Prescription " +
+                "LEFT JOIN PrescriptionDrugs " +
+                "ON PrescriptionDrugs.PrescriptionId = Prescription.PrescriptionId " +
                 "LEFT JOIN Drugs " +
-                "ON Prescription.DrugId = Drugs.DrugId " +
+                "ON Drugs.DrugId = PrescriptionDrugs.DrugId " +
+                "RIGHT JOIN DrugDetails " +
+                "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "ORDER BY PrescriptionDate ASC";
 
             using (var command = new SqlCommand(sql, con))
