@@ -17,8 +17,6 @@ namespace PharmaCare.Models
         /// <returns></returns>
         public static SqlDataReader GetPrescription(SqlConnection con, int PatientID)
         {
-            //set connection to PharmaCareDB class GetConnection method
-            SqlConnection connection = PharmaCareDB.GetConnection();
             //select statement
             string selectStatement = "SELECT Prescription.PrescriptionId, Drugs.DrugName, Drugs.DrugForm, Patients.Name, Doctors.DoctorName, " +
                 "Prescription.PrescriptionDate, Prescription.AdditionalInformation, Prescription.PrescriptionStatus, Prescription.DrugDose, " +

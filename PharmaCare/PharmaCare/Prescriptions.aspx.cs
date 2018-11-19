@@ -1,4 +1,8 @@
-﻿using PharmaCare.Models;
+﻿/*
+ *      Student ID: 450950837
+ *      Student Name: Kaitlyn Parsons
+ */
+using PharmaCare.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -16,11 +20,11 @@ namespace PharmaCare
         protected void Page_Load(object sender, EventArgs e)
         {
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
-            btnModifyPres.Enabled = false;
+            btnModify.Enabled = false;
         }
 
         /// <summary>
-        /// get patient by patientID
+        /// get patient by patientID and populates their prescriptions
         /// </summary>
         /// <param name="patientID"></param>
         private void GetPatient(int patientID)
@@ -57,6 +61,29 @@ namespace PharmaCare
                 throw ex;
             }
         }
+        
+        /// <summary>
+        /// get patient by name
+        /// </summary>
+        /// <param name="patientID"></param>
+        private void getPatients(string patientID)
+        {
+            SqlConnection con = PharmaCareDB.GetConnection();
+            try
+            {
+                con.Open();
+                SqlDataReader reader = PatientDB.getPatients(con, patientID);
+                dgvPatients.DataSource = reader;
+                dgvPatients.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            } finally
+            {
+                con.Close();
+            }
+        }
 
         /// <summary>
         /// display patients prescriptions in datagrid
@@ -84,18 +111,7 @@ namespace PharmaCare
         {
             if (txtPatient.Text != "" && txtPatient.Text != null)
             {
-                GetPatientByName(txtPatient.Text);
-                if (patient != null)
-                {
-                    GetPatient(patient.PatientID);
-                    populatePatientDetails();
-                    clearPrescription();
-                    btnInsertPres.Enabled = true;
-                }
-            }
-            else
-            {
-                return;
+                getPatients(txtPatient.Text);
             }
         }
 
@@ -165,7 +181,6 @@ namespace PharmaCare
             {
                 if (pres != null)
                 {
-                    PrescriptionDB.checkCocktail(pres.DrugName);
                     PrescriptionDB.insertPrescription(pres);
                     clearPrescription();
                 }
@@ -229,8 +244,8 @@ namespace PharmaCare
             {                
                 PrescriptionDB.updatePrescription(pres);
                 clearPrescription();
-                btnInsertPres.Enabled = true;
-                btnModifyPres.Enabled = false;
+                btnInsert.Enabled = true;
+                btnModify.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -246,33 +261,125 @@ namespace PharmaCare
         protected void btnClearPres_Click(object sender, EventArgs e)
         {
             clearPrescription();
-            btnInsertPres.Enabled = true;
-            btnModifyPres.Enabled = false;
+            btnInsert.Enabled = true;
+            btnModify.Enabled = false;
         }
 
         protected void DgvPrescriptions_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                // Hiding the Select Button Cell in Header Row.
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+            }
+
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                // Hiding the Select Button Cells showing for each Data Row. 
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+
+                // Attaching one onclick event for the entire row, so that it will
+                // fire SelectedIndexChanged, while we click anywhere on the row.
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(DgvPrescriptions, "Select$" + e.Row.RowIndex);
             }
         }
 
         protected void DgvPrescriptions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            getDgvPrescriptionData();
-            btnInsertPres.Enabled = false;
-            btnModifyPres.Enabled = true;
-        }
-
-        /// <summary>
-        /// gets the prescription datagrid information depending on row
-        /// </summary>
-        private void getDgvPrescriptionData()
-        {
+            clearPrescription();
             foreach (GridViewRow row in DgvPrescriptions.Rows)
             {
                 if (row.RowIndex == DgvPrescriptions.SelectedIndex)
+                {
+                    //set row cells to text fields
+                    presID.Text = row.Cells[1].Text;
+                    PresDrugID.Text = row.Cells[2].Text;
+                    PresPatientID.Text = row.Cells[4].Text;
+                    PresDocID.Text = row.Cells[5].Text;
+                    PresDate.Text = row.Cells[6].Text;
+                    PresAddInfo.InnerText = row.Cells[7].Text;
+                    PresStatus.Text = row.Cells[8].Text;
+                    PresDrugDose.Text = row.Cells[9].Text;
+                    PresFirst.Text = row.Cells[10].Text;
+                    PresLast.Text = row.Cells[11].Text;
+                    PresTimesADay.Text = row.Cells[12].Text;
+                    PresDoseStatus.Text = row.Cells[13].Text;
+                }
+            }
+            btnInsert.Enabled = false;
+            btnModify.Enabled = true;
+        }
+
+        protected void btnCheckCocktail_Click(object sender, EventArgs e)
+        {
+            btnModify.Enabled = true;
+        }
+
+        protected void btnAddPresDetails_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnIndoor_Click(object sender, EventArgs e)
+        {
+            Outdoor.Visible = false;
+            OutdoorTable.Visible = false;
+            OutdoorBtns.Visible = false;
+            Indoor.Visible = true;
+            IndoorTable.Visible = true;
+            IndoorBtns.Visible = true;
+        }
+
+        protected void btnOutdoor_Click(object sender, EventArgs e)
+        {
+            Outdoor.Visible = true;
+            OutdoorTable.Visible = true;
+            OutdoorBtns.Visible = true;
+            Indoor.Visible = false;
+            IndoorTable.Visible = false;
+            IndoorBtns.Visible = false;
+        }
+
+        protected void dgvPatients_PreRender(object sender, EventArgs e)
+        {
+            if (dgvPatients.HeaderRow != null)
+            {
+                dgvPatients.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void DgvOutdoorPrescriptions_PreRender(object sender, EventArgs e)
+        {
+            if (DgvOutdoorPrescriptions.HeaderRow != null)
+            {
+                DgvOutdoorPrescriptions.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void DgvOutdoorPrescriptions_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                // Hiding the Select Button Cell in Header Row.
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+            }
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Hiding the Select Button Cells showing for each Data Row. 
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+
+                // Attaching one onclick event for the entire row, so that it will
+                // fire SelectedIndexChanged, while we click anywhere on the row.
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(DgvOutdoorPrescriptions, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void DgvOutdoorPrescriptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in DgvOutdoorPrescriptions.Rows)
+            {
+                if (row.RowIndex == DgvOutdoorPrescriptions.SelectedIndex)
                 {
                     presID.Text = row.Cells[0].Text;
                     PresDrugID.Text = row.Cells[1].Text;
@@ -286,25 +393,67 @@ namespace PharmaCare
                     PresLast.Text = row.Cells[10].Text;
                     PresTimesADay.Text = row.Cells[11].Text;
                     PresDoseStatus.Text = row.Cells[12].Text;
-                    btnInsertPres.Enabled = false;
+                }
+            }
+            btnInsertOutdoor.Enabled = false;
+            btnModifyOutdoor.Enabled = true;
+        }
+
+        protected void dgvPatients_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                // Hiding the Select Button Cell in Header Row.
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+            }
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Hiding the Select Button Cells showing for each Data Row. 
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+
+                // Attaching one onclick event for the entire row, so that it will
+                // fire SelectedIndexChanged, while we click anywhere on the row.
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(dgvPatients, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void dgvPatients_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in dgvPatients.Rows)
+            {
+                if (row.RowIndex == dgvPatients.SelectedIndex)
+                {
+                    string id = row.Cells[1].Text;
+                    GetPatient(Convert.ToInt32(id));
+                    populatePatientDetails();
                 }
             }
         }
 
-        protected void btnCheckCocktail_Click(object sender, EventArgs e)
+        protected void btnAddOutPresDetails_Click(object sender, EventArgs e)
         {
-            //Prescription pres = new Prescription();
-            //PrescriptionDB.checkCocktail(pres.DrugName);
-            //if (pres.Danger == 1)
-            //{
-            //    txtCocktail.Text = "This drug is dangerous!";
-            //    txtCocktail.ForeColor = Color.Red;
-            //}
-            //else
-            //{
-            //    txtCocktail.Text = "This drug is Safe!";
-            //    txtCocktail.ForeColor = Color.Green;
-            //}
+
+        }
+
+        protected void btnCheckOutCocktail_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnInsertOutdoor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnModifyOutdoor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnClearOutdoor_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

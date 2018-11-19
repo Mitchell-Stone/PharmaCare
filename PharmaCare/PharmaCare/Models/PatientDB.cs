@@ -59,6 +59,26 @@ namespace PharmaCare.Models
                 connection.Close();
             }
         }
+
+        /// <summary>
+        /// gets all Patients with matching name
+        /// </summary>
+        /// <param name="con"></param>
+        /// <param name="PatientName"></param>
+        /// <returns></returns>
+        public static SqlDataReader getPatients(SqlConnection con, string PatientName)
+        {
+            //select statement
+            string selectStatement = "SELECT * FROM Patients WHERE Name = @PatientName";
+
+            //select command
+            using (var selectCommand = new SqlCommand(selectStatement, con))
+            {
+                selectCommand.Parameters.AddWithValue("@PatientName", PatientName);
+                return selectCommand.ExecuteReader();
+            }
+        }
+
         /// <summary>
         /// Gets the patient by ID
         /// </summary>
