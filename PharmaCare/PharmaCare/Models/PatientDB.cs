@@ -15,7 +15,7 @@ namespace PharmaCare.Models
         /// <returns></returns>
         public static Patient getPatientByName(string PatientName)
         {
-            //set connection to schoolDB class GetConnection method
+            //set connection to PharmaCareDB class GetConnection method
             SqlConnection connection = PharmaCareDB.GetConnection();
             //select statement
             string selectStatement = "SELECT * FROM Patients WHERE Name = @PatientName";

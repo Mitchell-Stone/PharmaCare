@@ -85,15 +85,6 @@ namespace PharmaCare
             }
         }
 
-        /// <summary>
-        /// display patients prescriptions in datagrid
-        /// </summary>
-        private void DisplayPatientPrescriptions()
-        {
-            DgvPrescriptions.DataSource = prescription;
-            DgvPrescriptions.DataBind();
-        }
-
         protected void DgvPrescriptions_PreRender(object sender, EventArgs e)
         {
             if (DgvPrescriptions.HeaderRow != null)
@@ -201,17 +192,26 @@ namespace PharmaCare
         /// </summary>
         private void clearPrescription()
         {
-            PresDrugID.Text = null;
+            //prescription
             PresPatientID.Text = null;
             PresDocID.Text = null;
             PresDate.Text = null;
             PresAddInfo.InnerText = null;
             PresStatus.Text = null;
+            //details
+            PresDrugID.Text = null;
             PresDrugDose.Text = null;
             PresFirst.Text = null;
             PresLast.Text = null;
             PresTimesADay.Text = null;
             PresDoseStatus.Text = null;
+            //indoor
+            txtRoom.Text = null;
+            txtWing.Text = null;
+            txtFloor.Text = null;
+            txtNursingStationId.Text = null;
+            dgvAddPrescriptionDetails.DataSource = null;
+            dgvAddPrescriptionDetails.DataBind();
         }
 
         /// <summary>
@@ -221,28 +221,36 @@ namespace PharmaCare
         /// <param name="e"></param>
         protected void btnModifyPres_Click(object sender, EventArgs e)
         {
-            Prescription pres = new Prescription();
+            Indoor pres = new Indoor();
 
             if (validateInt(presID.Text) && !string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text + 
                 PresDate.Text + PresStatus.Text + PresDrugDose.Text +
                 PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
             {
-                pres.PrescriptionID = Convert.ToInt32(presID.Text);
-                pres.DrugName = PresDrugID.Text;
+                //prescription
+                pres.PrescriptionID = Convert.ToInt32(presID.Text);                
                 pres.PatientName = PresPatientID.Text;
                 pres.DoctorName = PresDocID.Text;
                 pres.PrescribingDate = PresDate.Text;
                 pres.InformationExtra = PresAddInfo.InnerText;
                 pres.StatusPrescription = PresStatus.Text;
+                //prescription details
+                pres.DrugName = PresDrugID.Text;
                 pres.Doses = PresDrugDose.Text;
                 pres.FirstTimeUse = PresFirst.Text;
                 pres.LastTimeUse = PresLast.Text;
                 pres.FrequenseUseInADay = PresTimesADay.Text;
                 pres.DoseStatus = PresDoseStatus.Text;
+                //indoor
+                pres.RoomNumber = Convert.ToInt32(txtRoom.Text);
+                pres.WingNumber = Convert.ToInt32(txtWing.Text);
+                pres.FloorNumber = Convert.ToInt32(txtFloor.Text);
+                pres.NursingStationId = txtNursingStationId.Text;
             }
             try
             {                
                 PrescriptionDB.updatePrescription(pres);
+                PrescriptionDB.updateIndoorPrescription(pres);
                 clearPrescription();
                 btnInsert.Enabled = true;
                 btnModify.Enabled = false;
@@ -277,7 +285,7 @@ namespace PharmaCare
             {
                 // Hiding the Select Button Cells showing for each Data Row. 
                 e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
-
+                
                 // Attaching one onclick event for the entire row, so that it will
                 // fire SelectedIndexChanged, while we click anywhere on the row.
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(DgvPrescriptions, "Select$" + e.Row.RowIndex);
@@ -293,17 +301,31 @@ namespace PharmaCare
                 {
                     //set row cells to text fields
                     presID.Text = row.Cells[1].Text;
-                    PresDrugID.Text = row.Cells[2].Text;
-                    PresPatientID.Text = row.Cells[4].Text;
-                    PresDocID.Text = row.Cells[5].Text;
-                    PresDate.Text = row.Cells[6].Text;
-                    PresAddInfo.InnerText = row.Cells[7].Text;
-                    PresStatus.Text = row.Cells[8].Text;
-                    PresDrugDose.Text = row.Cells[9].Text;
-                    PresFirst.Text = row.Cells[10].Text;
-                    PresLast.Text = row.Cells[11].Text;
-                    PresTimesADay.Text = row.Cells[12].Text;
-                    PresDoseStatus.Text = row.Cells[13].Text;
+                    PresPatientID.Text = row.Cells[2].Text;
+                    PresDocID.Text = row.Cells[3].Text;
+                    PresDate.Text = row.Cells[4].Text;
+                    PresAddInfo.InnerText = row.Cells[5].Text;
+                    PresStatus.Text = row.Cells[6].Text;
+                    txtRoom.Text = row.Cells[7].Text;
+                    txtWing.Text = row.Cells[8].Text;
+                    txtFloor.Text = row.Cells[9].Text;
+                    txtNursingStationId.Text = row.Cells[10].Text;
+                    SqlConnection con = PharmaCareDB.GetConnection();
+                    try
+                    {
+                        con.Open();
+                        dgvAddPrescriptionDetails.DataSource = PrescriptionDB.getDrugDetails(con, Convert.ToInt32(presID.Text));
+                        dgvAddPrescriptionDetails.DataBind();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
                 }
             }
             btnInsert.Enabled = false;
@@ -426,6 +448,7 @@ namespace PharmaCare
                 {
                     string id = row.Cells[1].Text;
                     GetPatient(Convert.ToInt32(id));
+                    
                     populatePatientDetails();
                 }
             }
@@ -452,6 +475,11 @@ namespace PharmaCare
         }
 
         protected void btnClearOutdoor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnEditPresDetails_Click(object sender, EventArgs e)
         {
 
         }
