@@ -85,6 +85,24 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Button btnShowAll;
         
         /// <summary>
+        /// tbPrescriptionIdSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbPrescriptionIdSearch;
+        
+        /// <summary>
+        /// vvPrescriptionId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator vvPrescriptionId;
+        
+        /// <summary>
         /// gvPrepList control.
         /// </summary>
         /// <remarks>

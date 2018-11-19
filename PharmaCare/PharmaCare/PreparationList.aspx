@@ -28,6 +28,9 @@
                     CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>              
                 <asp:Button runat="server" Text="Show All Prescriptions" 
                     CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>
+                <asp:TextBox runat="server" ID="tbPrescriptionIdSearch" OnTextChanged="tbPrescriptionIdSearch_TextChanged"></asp:TextBox>
+                <asp:CompareValidator runat="server" ID="vvPrescriptionId" Type="Integer" ControlToValidate="tbPrescriptionIdSearch"
+                    ErrorMessage="A prescription ID must be entered" Operator="DataTypeCheck"></asp:CompareValidator>
             </div>
         </div>
     </div>
