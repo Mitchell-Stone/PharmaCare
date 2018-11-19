@@ -36,8 +36,7 @@ namespace PharmaCare
 
         protected void gvLabelList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
-            if (e.CommandName == "PrintLabel")
+            if (e.CommandName == "ViewLabel")
             {
                 //get the index of the row
                 int index = Convert.ToInt32(e.CommandArgument);
@@ -56,6 +55,11 @@ namespace PharmaCare
                 lblDrugName.Text = String.Format("Drug Prescribed: {0}", drugName);
                 lblDrugDose.Text = String.Format("Drug Dosage: {0}mg", drugDose);
                 lblTimesPerDay.Text = String.Format("Take prescribed dose {0} time/s per day", timesPerDay);
+            }
+
+            if (e.CommandName == "PrintLabel")
+            {
+                Console.WriteLine("PRINTING LABEL");       
             }
         }
     }
