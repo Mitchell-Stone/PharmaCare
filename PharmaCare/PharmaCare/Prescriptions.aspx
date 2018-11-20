@@ -125,6 +125,7 @@
         <h5 class="font-weight-bold">Indoor Prescription:</h5>
         <div class="row">
             <div class="col-md-4">
+                <asp:Label runat="server" ID="presID" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Patient:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresPatientID" ValidationGroup="presValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvPatientID" runat="server" ErrorMessage="Patient is required"
@@ -213,7 +214,6 @@
         <h5 class="font-weight-bold">Add/Edit Drug:</h5>
         <div class="row">
             <div class="col-md-4">
-                <asp:Label runat="server" ID="presID" CssClass="d-none"></asp:Label>
                 <asp:Label runat="server" ID="txtDrugDetailsId" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Drug:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresDrugID" ValidationGroup="InValidation"></asp:TextBox><br />
@@ -268,6 +268,7 @@
         <h5 class="font-weight-bold">Outdoor Prescription:</h5>
         <div class="row">
             <div class="col-md-4">
+                <asp:Label runat="server" ID="txtOutPresId" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Patient:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtOutPatient" ValidationGroup="presOutValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvOutPatient" runat="server" ErrorMessage="Patient is required"
@@ -357,7 +358,7 @@
         <h5 class="font-weight-bold">Add/Edit Drug:</h5>
         <div class="row">
             <div class="col-md-4">
-                <asp:Label runat="server" ID="txtOutPresId" CssClass="d-none"></asp:Label>
+                <asp:Label runat="server" ID="txtOutDrugId" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Drug:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtOutDrug" ValidationGroup="OutDrugValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvOutDrug" runat="server" ErrorMessage="Drug is required"
@@ -400,6 +401,8 @@
             <div class="mx-auto">
                 <asp:Button runat="server" Text="Add" CssClass="btn btn-outline-primary m-2" ID="btnAddOutPresDetails"
                     OnClick="btnAddOutPresDetails_Click" ValidationGroup="OutDrugValidation" />
+                <asp:Button runat="server" Text="Edit" CssClass="btn btn-outline-primary m-2" ID="btnEditOutPresDetails"
+                    OnClick="btnEditOutPresDetails_Click" ValidationGroup="OutDrugValidation" />
             </div>
         </div>
     </div>

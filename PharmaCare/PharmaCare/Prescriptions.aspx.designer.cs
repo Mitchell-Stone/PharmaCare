@@ -175,6 +175,15 @@ namespace PharmaCare {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Indoor;
         
         /// <summary>
+        /// presID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label presID;
+        
+        /// <summary>
         /// PresPatientID control.
         /// </summary>
         /// <remarks>
@@ -382,15 +391,6 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Button btnClear;
         
         /// <summary>
-        /// presID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label presID;
-        
-        /// <summary>
         /// txtDrugDetailsId control.
         /// </summary>
         /// <remarks>
@@ -533,6 +533,15 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Outdoor;
+        
+        /// <summary>
+        /// txtOutPresId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtOutPresId;
         
         /// <summary>
         /// txtOutPatient control.
@@ -760,13 +769,13 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Button btnClearOutdoor;
         
         /// <summary>
-        /// txtOutPresId control.
+        /// txtOutDrugId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtOutPresId;
+        protected global::System.Web.UI.WebControls.Label txtOutDrugId;
         
         /// <summary>
         /// txtOutDrug control.
@@ -884,5 +893,14 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddOutPresDetails;
+        
+        /// <summary>
+        /// btnEditOutPresDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEditOutPresDetails;
     }
 }
