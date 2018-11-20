@@ -37,6 +37,10 @@ namespace PharmaCare
                 patient = PatientDB.getPatientById(patientID);
                 DgvPrescriptions.DataSource = PrescriptionDB.GetIndoorPrescriptions(con, patientID);
                 DgvPrescriptions.DataBind();
+                con.Close();
+                con.Open();
+                DgvOutdoorPrescriptions.DataSource = PrescriptionDB.GetOutdoorPrescriptions(con, patientID);
+                DgvOutdoorPrescriptions.DataBind();
             }
             catch (Exception ex)
             {
@@ -448,18 +452,17 @@ namespace PharmaCare
             {
                 if (row.RowIndex == DgvOutdoorPrescriptions.SelectedIndex)
                 {
-                    presID.Text = row.Cells[0].Text;
-                    PresDrugID.Text = row.Cells[1].Text;
-                    PresPatientID.Text = row.Cells[3].Text;
-                    PresDocID.Text = row.Cells[4].Text;
-                    PresDate.Text = row.Cells[5].Text;
-                    PresAddInfo.InnerText = row.Cells[6].Text;
-                    PresStatus.Text = row.Cells[7].Text;
-                    PresDrugDose.Text = row.Cells[8].Text;
-                    PresFirst.Text = row.Cells[9].Text;
-                    PresLast.Text = row.Cells[10].Text;
-                    PresTimesADay.Text = row.Cells[11].Text;
-                    PresDoseStatus.Text = row.Cells[12].Text;
+                    txtOutPresId.Text = row.Cells[1].Text;
+                    txtOutPatient.Text = row.Cells[2].Text;
+                    txtOutDoctor.Text = row.Cells[3].Text;
+                    txtOutDate.Text = row.Cells[4].Text;
+                    txtOutPresDetails.InnerText = row.Cells[5].Text;
+                    txtOutPresStatus.Text = row.Cells[6].Text;
+                    txtFilledDispatched.Text = row.Cells[7].Text;
+                    txtDateDispatched.Text = row.Cells[8].Text;
+                    txtTimeDispatched.Text = row.Cells[9].Text;
+                    txtInEmergency.Text = row.Cells[10].Text;
+                    txtToFill.Text = row.Cells[11].Text;
                 }
             }
             btnInsertOutdoor.Enabled = false;

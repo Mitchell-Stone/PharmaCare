@@ -29,6 +29,30 @@ namespace PharmaCare.Models
                 return selectCommand.ExecuteReader();
             }
         }
+        /// <summary>
+        /// gets the outdoor prescriptions depending on patients id
+        /// </summary>
+        /// <param name="con"></param>
+        /// <param name="PatientID"></param>
+        /// <returns></returns>
+        public static SqlDataReader GetOutdoorPrescriptions(SqlConnection con, int PatientID)
+        {
+            //select statement
+            string selectStatement = "SELECT Prescription.PrescriptionId, Patients.Name, Doctors.DoctorName, " +
+                "Prescription.PrescriptionDate, Prescription.AdditionalInformation, Prescription.PrescriptionStatus, " +
+                "OPDPrescriptions.FilledAndDispatched, OPDPrescriptions.DateDispatched, OPDPrescriptions.TimeDispatched, " +
+                "OPDPrescriptions.IndoorEmergency, OPDPrescriptions.ToFill FROM Prescription " +
+                "INNER JOIN OPDPrescriptions ON Prescription.PrescriptionId = OPDPrescriptions.PrescriptionId " +
+                "INNER JOIN Doctors ON Prescription.DoctorID = Doctors.DoctorID " +
+                "INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID " +
+                "WHERE Prescription.PatientID = @PatientID";
+            
+            using (var selectCommand = new SqlCommand(selectStatement, con))
+            {
+                selectCommand.Parameters.AddWithValue("@PatientID", PatientID);
+                return selectCommand.ExecuteReader();
+            }
+        }
 
         /// <summary>
         /// gets drug details depending on prescription id

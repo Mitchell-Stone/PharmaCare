@@ -110,7 +110,7 @@
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="Date" />
                     <asp:BoundField DataField="AdditionalInformation" HeaderText="Additional Information" NullDisplayText=" " />
                     <asp:BoundField DataField="PrescriptionStatus" HeaderText="Prescription Status" />
-                    <asp:BoundField DataField="Filled&Dispatched" HeaderText="Filled & Dispatched" />
+                    <asp:BoundField DataField="FilledAndDispatched" HeaderText="Filled & Dispatched" />
                     <asp:BoundField DataField="DateDispatched" HeaderText="Date Dispatched" />
                     <asp:BoundField DataField="TimeDispatched" HeaderText="Date Dispatched" />
                     <asp:BoundField DataField="IndoorEmergency" HeaderText="Indoor Emergency" />
