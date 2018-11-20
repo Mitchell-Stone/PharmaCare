@@ -99,7 +99,7 @@
         <%-- Outdoor Table --%>
         <div class="table-responsive" id="OutdoorTable" runat="server" visible="false">
             <h5 class="font-weight-bold">Patient Outdoor Prescriptions:</h5>
-            <asp:GridView ID="DgvOutdoorPrescriptions" runat="server" AutoGenerateColumns="false"
+            <asp:GridView ID="DgvOutdoorPrescriptions" runat="server" AutoGenerateColumns="false" AutoGenerateSelectButton="true"
                 CssClass="table table-striped table-bordered table-hover" EmptyDataText="There Are No Outdoor Prescriptions For This Patient"
                 EmptyDataRowStyle-ForeColor="Red" OnPreRender="DgvOutdoorPrescriptions_PreRender"
                 OnRowDataBound="DgvOutdoorPrescriptions_RowDataBound" OnSelectedIndexChanged="DgvOutdoorPrescriptions_SelectedIndexChanged">
@@ -185,8 +185,12 @@
         </div>
         <div class="row col-md table-responsive">
             <label class="font-weight-bold">Drug Details:</label><br />
-            <asp:GridView runat="server" ID="dgvAddPrescriptionDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover">
+            <asp:GridView runat="server" ID="dgvAddPrescriptionDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover" 
+                EmptyDataText="No Drug Details for this Indoor Prescription" EmptyDataRowStyle-ForeColor="Red" AutoGenerateSelectButton="true"
+                OnRowDataBound="dgvAddPrescriptionDetails_RowDataBound" OnSelectedIndexChanged="dgvAddPrescriptionDetails_SelectedIndexChanged" 
+                OnPreRender="dgvAddPrescriptionDetails_PreRender">
                 <Columns>
+                    <asp:BoundField DataField="DrugDetailsId" HeaderText="ID" />
                     <asp:BoundField DataField="DrugName" HeaderText="Drug" />
                     <asp:BoundField DataField="DrugForm" HeaderText="Drug Form" />
                     <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose(mg)" />
@@ -194,6 +198,7 @@
                     <asp:BoundField DataField="LastTime" HeaderText="Last Time" />
                     <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day" />
                     <asp:BoundField DataField="StatusOfDose" HeaderText="Dose Status" />
+                    
                 </Columns>
             </asp:GridView>
         </div>
@@ -209,6 +214,7 @@
         <div class="row">
             <div class="col-md-4">
                 <asp:Label runat="server" ID="presID" CssClass="d-none"></asp:Label>
+                <asp:Label runat="server" ID="txtDrugDetailsId" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Drug:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresDrugID" ValidationGroup="InValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvDrugID" runat="server" ErrorMessage="Drug is required"

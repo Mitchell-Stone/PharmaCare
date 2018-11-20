@@ -6,7 +6,7 @@ namespace PharmaCare.Models
     public class PrescriptionDB
     {
         /// <summary>
-        /// gets the prescriptions depending on patients id
+        /// gets the indoor prescriptions depending on patients id
         /// </summary>
         /// <param name="con"></param>
         /// <param name="PatientID"></param>
@@ -30,9 +30,15 @@ namespace PharmaCare.Models
             }
         }
 
+        /// <summary>
+        /// gets drug details depending on prescription id
+        /// </summary>
+        /// <param name="con"></param>
+        /// <param name="PrescriptionId"></param>
+        /// <returns></returns>
         public static SqlDataReader getDrugDetails(SqlConnection con, int PrescriptionId)
         {
-            string selectStatement = "SELECT PrescriptionDrugs.PrescriptionId, Drugs.DrugName, Drugs.DrugForm, DrugDetails.DrugDose, " +
+            string selectStatement = "SELECT PrescriptionDrugs.PrescriptionId, Drugs.DrugName, Drugs.DrugForm, DrugDetails.DrugDetailsId, DrugDetails.DrugDose, " +
                 "DrugDetails.FirstTime, DrugDetails.LastTime, DrugDetails.TimesPerDay, DrugDetails.StatusOfDose " +
                 "FROM PrescriptionDrugs " +
                 "INNER JOIN Drugs ON PrescriptionDrugs.DrugId = Drugs.DrugId " +
@@ -52,49 +58,53 @@ namespace PharmaCare.Models
         /// <param name="con"></param>
         /// <param name="DrugName"></param>
         /// <returns></returns>
-        //public static Prescription checkCocktail(string DrugName)
-        //{
-        //    //set connection to PharmaCareDB class GetConnection Method
-        //    SqlConnection connection = PharmaCareDB.GetConnection();
-        //    //select statement
-        //    string selectStatement = "SELECT * FROM Drugs WHERE DrugName = @DrugName";
+        public static Prescription checkCocktail(string DrugName)
+        {
+            //set connection to PharmaCareDB class GetConnection Method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+            //select statement
+            string selectStatement = "SELECT * FROM Drugs WHERE DrugName = @DrugName";
 
-        //    SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
+            SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
 
-        //     selectCommand.Parameters.AddWithValue("@DrugName", DrugName);
-        //        try
-        //        {
-        //            //open connection
-        //            connection.Open();
+            selectCommand.Parameters.AddWithValue("@DrugName", DrugName);
+            try
+            {
+                //open connection
+                connection.Open();
 
-        //            SqlDataReader DrugReader = selectCommand.ExecuteReader();
+                SqlDataReader DrugReader = selectCommand.ExecuteReader();
 
-        //        if (DrugReader.Read())
-        //        {
-        //            Prescription pres = new Prescription();
-        //            pres.DrugName = DrugReader["DrugName"].ToString();
-        //            //pres.Danger = (int)DrugReader["Dangerous"];
+                if (DrugReader.Read())
+                {
+                    Prescription pres = new Prescription();
+                    pres.DrugName = DrugReader["DrugName"].ToString();
+                    //pres.Danger = (int)DrugReader["Dangerous"];
 
-        //            return pres;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }                
+                    return pres;
+                }
+                else
+                {
+                    return null;
+                }
 
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            //throw error
-        //            throw ex;
-        //        }
-        //        finally
-        //        {
-        //            //close the connection
-        //            connection.Close();
-        //        } 
-        //}
+            }
+            catch (Exception ex)
+            {
+                //throw error
+                throw ex;
+            }
+            finally
+            {
+                //close the connection
+                connection.Close();
+            }
+        }
 
+        /// <summary>
+        /// inserts an indoor prescription
+        /// </summary>
+        /// <param name="pres"></param>
         public static void insertIndoorPrescription(Indoor pres)
         {
             //set connection to PharmaCareDB class GetConnection method
@@ -164,6 +174,10 @@ namespace PharmaCare.Models
             }
         }
 
+        /// <summary>
+        /// Inserts Prescription drugs and drug details
+        /// </summary>
+        /// <param name="pres"></param>
         public static void insertPrescriptionDrugs(Details pres)
         {
             //set connection to PharmaCareDB class GetConnection method
@@ -196,6 +210,11 @@ namespace PharmaCare.Models
             }
         }
 
+        /// <summary>
+        /// inserts drug details depending on linkid
+        /// </summary>
+        /// <param name="pres"></param>
+        /// <param name="linkId"></param>
         public static void insertDrugDetails(Details pres, int linkId)
         {
             //set connection to PharmaCareDB class GetConnection method
@@ -220,6 +239,49 @@ namespace PharmaCare.Models
                 connection.Open();
                 //execute insert query
                 insertCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql error
+                throw ex;
+            }
+            finally
+            {
+                //close sql connection
+                connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// updates selected drug details
+        /// </summary>
+        /// <param name="details"></param>
+        public static void updateDrugDetails(Details details)
+        {
+            //set connection to PharmaCareDB class GetConnection method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+
+            //update statement
+            string updateStatement = "UPDATE DrugDetails SET DrugDose = @DrugDose, FirstTime = @FirstTime, LastTime = @LastTime, " +
+                "TimesPerDay = @TimesPerDay, StatusOfDose = @StatusOfDose WHERE DrugDetailsId = @DrugDetailsId";
+
+            //update command
+            SqlCommand updateCommand = new SqlCommand(updateStatement, connection);
+            updateCommand.Parameters.AddWithValue("@DrugDose", details.DrugDose);
+            updateCommand.Parameters.AddWithValue("@FirstTime", details.FirstTime);
+            updateCommand.Parameters.AddWithValue("@LastTime", details.LastTime);
+            updateCommand.Parameters.AddWithValue("@TimesPerDay", details.TimesPerDay);
+            updateCommand.Parameters.AddWithValue("@StatusOfDose", details.StatusOfDose);
+            updateCommand.Parameters.AddWithValue("@DrugDetailsId", details.DrugdetailsId);
+
+            //try/catch block
+            try
+            {
+                //open sql connection
+                connection.Open();
+
+                //execute insert query
+                updateCommand.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {

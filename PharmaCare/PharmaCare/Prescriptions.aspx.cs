@@ -41,7 +41,8 @@ namespace PharmaCare
             catch (Exception ex)
             {
                 throw ex;
-            } finally
+            }
+            finally
             {
                 con.Close();
             }
@@ -62,7 +63,7 @@ namespace PharmaCare
                 throw ex;
             }
         }
-        
+
         /// <summary>
         /// get patient by name
         /// </summary>
@@ -80,7 +81,8 @@ namespace PharmaCare
             catch (Exception ex)
             {
                 throw ex;
-            } finally
+            }
+            finally
             {
                 con.Close();
             }
@@ -148,7 +150,7 @@ namespace PharmaCare
         protected void btnInsertPres_Click(object sender, EventArgs e)
         {
             Indoor pres = new Indoor();
-            if (!string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text + 
+            if (!string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text +
                 PresDate.Text + PresStatus.Text))
             {
                 //prescription
@@ -186,7 +188,7 @@ namespace PharmaCare
                 {
                     return;
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -230,24 +232,18 @@ namespace PharmaCare
         {
             Indoor pres = new Indoor();
 
-            if (validateInt(presID.Text) && !string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text + 
-                PresDate.Text + PresStatus.Text + PresDrugDose.Text +
-                PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
+            if (validateInt(presID.Text) && validateInt(txtRoom.Text) && validateInt(txtWing.Text) && validateInt(txtFloor.Text) && 
+                !string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text +
+                PresDate.Text + PresStatus.Text + txtNursingStationId.Text))
             {
                 //prescription
-                pres.PrescriptionID = Convert.ToInt32(presID.Text);                
+                pres.PrescriptionID = Convert.ToInt32(presID.Text);
                 pres.PatientName = PresPatientID.Text;
                 pres.DoctorName = PresDocID.Text;
                 pres.PrescribingDate = PresDate.Text;
                 pres.InformationExtra = PresAddInfo.InnerText;
                 pres.StatusPrescription = PresStatus.Text;
-                //prescription details
-                //pres.DrugName = PresDrugID.Text;
-                //pres.Doses = PresDrugDose.Text;
-                //pres.FirstTimeUse = PresFirst.Text;
-                //pres.LastTimeUse = PresLast.Text;
-                //pres.FrequenseUseInADay = PresTimesADay.Text;
-                //pres.DoseStatus = PresDoseStatus.Text;
+
                 //indoor
                 pres.RoomNumber = Convert.ToInt32(txtRoom.Text);
                 pres.WingNumber = Convert.ToInt32(txtWing.Text);
@@ -255,7 +251,7 @@ namespace PharmaCare
                 pres.NursingStationId = txtNursingStationId.Text;
             }
             try
-            {                
+            {
                 PrescriptionDB.updatePrescription(pres);
                 clearPrescription();
                 btnInsert.Enabled = true;
@@ -291,7 +287,7 @@ namespace PharmaCare
             {
                 // Hiding the Select Button Cells showing for each Data Row. 
                 e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
-                
+
                 // Attaching one onclick event for the entire row, so that it will
                 // fire SelectedIndexChanged, while we click anywhere on the row.
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(DgvPrescriptions, "Select$" + e.Row.RowIndex);
@@ -316,26 +312,32 @@ namespace PharmaCare
                     txtWing.Text = row.Cells[8].Text;
                     txtFloor.Text = row.Cells[9].Text;
                     txtNursingStationId.Text = row.Cells[10].Text;
-                    SqlConnection con = PharmaCareDB.GetConnection();
-                    try
-                    {
-                        con.Open();
-                        dgvAddPrescriptionDetails.DataSource = PrescriptionDB.getDrugDetails(con, Convert.ToInt32(presID.Text));
-                        dgvAddPrescriptionDetails.DataBind();
-                    }
-                    catch (Exception)
-                    {
 
-                        throw;
-                    }
-                    finally
-                    {
-                        con.Close();
-                    }
                 }
             }
+            BindDrugDetailsToDGV();
             btnInsert.Enabled = false;
             btnModify.Enabled = true;
+        }
+
+        private void BindDrugDetailsToDGV()
+        {
+            SqlConnection con = PharmaCareDB.GetConnection();
+            try
+            {
+                con.Open();
+                dgvAddPrescriptionDetails.DataSource = PrescriptionDB.getDrugDetails(con, Convert.ToInt32(presID.Text));
+                dgvAddPrescriptionDetails.DataBind();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         protected void btnCheckCocktail_Click(object sender, EventArgs e)
@@ -366,6 +368,7 @@ namespace PharmaCare
             try
             {
                 PrescriptionDB.insertPrescriptionDrugs(pres);
+                BindDrugDetailsToDGV();
             }
             catch (Exception)
             {
@@ -490,7 +493,7 @@ namespace PharmaCare
                 {
                     string id = row.Cells[1].Text;
                     GetPatient(Convert.ToInt32(id));
-                    
+
                     populatePatientDetails();
                 }
             }
@@ -523,7 +526,73 @@ namespace PharmaCare
 
         protected void btnEditPresDetails_Click(object sender, EventArgs e)
         {
+            Details pres = new Details();
 
+            if (validateInt(txtDrugDetailsId.Text) && !string.IsNullOrEmpty(PresDrugID.Text + PresDrugDose.Text + 
+                PresFirst.Text + PresLast.Text + PresTimesADay.Text + PresDoseStatus.Text))
+            {
+                //drug details
+                pres.DrugdetailsId = Convert.ToInt32(txtDrugDetailsId.Text);
+                pres.DrugName = PresDrugID.Text;
+                pres.DrugDose = PresDrugDose.Text;
+                pres.FirstTime = PresFirst.Text;
+                pres.LastTime = PresLast.Text;
+                pres.TimesPerDay = PresTimesADay.Text;
+                pres.StatusOfDose = PresDoseStatus.Text;
+            }
+            try
+            {
+                PrescriptionDB.updateDrugDetails(pres);
+                BindDrugDetailsToDGV();
+                btnAddPresDetails.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        protected void dgvAddPrescriptionDetails_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                // Hiding the Select Button Cell in Header Row.
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+            }
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Hiding the Select Button Cells showing for each Data Row. 
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+
+                // Attaching one onclick event for the entire row, so that it will
+                // fire SelectedIndexChanged, while we click anywhere on the row.
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(dgvAddPrescriptionDetails, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void dgvAddPrescriptionDetails_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = dgvAddPrescriptionDetails.SelectedRow;
+            //populate text fields 
+            txtDrugDetailsId.Text = row.Cells[1].Text;
+            PresDrugID.Text = row.Cells[2].Text;
+            PresDrugDose.Text = row.Cells[4].Text;
+            PresFirst.Text = row.Cells[5].Text;
+            PresLast.Text = row.Cells[6].Text;
+            PresTimesADay.Text = row.Cells[7].Text;
+            PresDoseStatus.Text = row.Cells[8].Text;
+            btnModify.Enabled = true;
+            btnAddPresDetails.Enabled = false;
+            btnEditPresDetails.Enabled = true;
+        }
+
+        protected void dgvAddPrescriptionDetails_PreRender(object sender, EventArgs e)
+        {
+            if (dgvAddPrescriptionDetails.HeaderRow != null)
+            {
+                dgvAddPrescriptionDetails.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
         }
     }
 }

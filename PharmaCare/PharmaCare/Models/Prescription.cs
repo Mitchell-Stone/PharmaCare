@@ -32,6 +32,7 @@ namespace PharmaCare.Models
 
     public class Details : Prescription
     {
+        public int DrugdetailsId { get; set; }
         public int LinkId { get; set; }
         public string DrugDose { get; set; }
         public string FirstTime { get; set; }
