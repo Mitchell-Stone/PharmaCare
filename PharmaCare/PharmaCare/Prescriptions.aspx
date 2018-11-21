@@ -100,7 +100,7 @@
         <div class="table-responsive" id="OutdoorTable" runat="server" visible="false">
             <h5 class="font-weight-bold">Patient Outdoor Prescriptions:</h5>
             <asp:GridView ID="DgvOutdoorPrescriptions" runat="server" AutoGenerateColumns="false" AutoGenerateSelectButton="true"
-                CssClass="table table-striped table-bordered table-hover" EmptyDataText="There Are No Outdoor Prescriptions For This Patient"
+                CssClass="table table-bordered table-hover" EmptyDataText="There Are No Outdoor Prescriptions For This Patient"
                 EmptyDataRowStyle-ForeColor="Red" OnPreRender="DgvOutdoorPrescriptions_PreRender"
                 OnRowDataBound="DgvOutdoorPrescriptions_RowDataBound" OnSelectedIndexChanged="DgvOutdoorPrescriptions_SelectedIndexChanged">
                 <Columns>
