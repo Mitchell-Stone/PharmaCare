@@ -187,9 +187,8 @@
         <div class="row col-md table-responsive">
             <label class="font-weight-bold">Drug Details:</label><br />
             <asp:GridView runat="server" ID="dgvAddPrescriptionDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover" 
-                EmptyDataText="No Drug Details for this Indoor Prescription" EmptyDataRowStyle-ForeColor="Red" AutoGenerateSelectButton="true"
-                OnRowDataBound="dgvAddPrescriptionDetails_RowDataBound" OnSelectedIndexChanged="dgvAddPrescriptionDetails_SelectedIndexChanged" 
-                OnPreRender="dgvAddPrescriptionDetails_PreRender">
+                AutoGenerateSelectButton="true" OnRowDataBound="dgvAddPrescriptionDetails_RowDataBound" 
+                OnSelectedIndexChanged="dgvAddPrescriptionDetails_SelectedIndexChanged" OnPreRender="dgvAddPrescriptionDetails_PreRender">
                 <Columns>
                     <asp:BoundField DataField="DrugDetailsId" HeaderText="ID" />
                     <asp:BoundField DataField="DrugName" HeaderText="Drug" />
@@ -335,8 +334,11 @@
         </div>
         <div class="row col-md table-responsive">
             <label class="font-weight-bold">Drug Details:</label><br />
-            <asp:GridView runat="server" ID="dgvOutdoorDrugDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover">
+            <asp:GridView runat="server" ID="dgvOutdoorDrugDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover" 
+                 AutoGenerateSelectButton="true" OnRowDataBound="dgvOutdoorDrugDetails_RowDataBound" 
+                OnSelectedIndexChanged="dgvOutdoorDrugDetails_SelectedIndexChanged" OnPreRender="dgvOutdoorDrugDetails_PreRender">
                 <Columns>
+                    <asp:BoundField DataField="DrugDetailsId" HeaderText="ID" />
                     <asp:BoundField DataField="DrugName" HeaderText="Drug" />
                     <asp:BoundField DataField="DrugForm" HeaderText="Drug Form" />
                     <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose(mg)" />

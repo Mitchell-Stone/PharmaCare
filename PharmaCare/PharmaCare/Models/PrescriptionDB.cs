@@ -197,6 +197,81 @@ namespace PharmaCare.Models
                 connection.Close();
             }
         }
+        
+        /// <summary>
+        /// inserts an outdoor prescription
+        /// </summary>
+        /// <param name="pres"></param>
+        public static void insertOutdoorPrescription(Outdoor pres)
+        {
+            //set connection to PharmaCareDB class GetConnection method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+            int newId;
+            //insert prescription statement
+            string insertStatement = "INSERT INTO Prescription (PatientID,DoctorID,PrescriptionDate," +
+            "AdditionalInformation,PrescriptionStatus) " +
+            "VALUES ((SELECT PatientID FROM Patients WHERE Name = @PatientName), " +
+            "(SELECT DoctorID FROM Doctors WHERE DoctorName = @DoctorName), " +
+            "@PresDate, @AddInfo, @PresStatus) SELECT CAST (scope_identity() AS int)";
+
+            try
+            {
+                //insert command
+                SqlCommand insertCommand = new SqlCommand(insertStatement, connection);
+
+                insertCommand.Parameters.AddWithValue("@PatientName", pres.PatientName);
+                insertCommand.Parameters.AddWithValue("@DoctorName", pres.DoctorName);
+                insertCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
+                insertCommand.Parameters.AddWithValue("@AddInfo", pres.InformationExtra);
+                insertCommand.Parameters.AddWithValue("@PresStatus", pres.StatusPrescription);
+                //open sql connection
+                connection.Open();
+                //get new prescription id
+                newId = (int)insertCommand.ExecuteScalar();
+                //execute insert query
+                insertCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql error
+                throw ex;
+            }
+            finally
+            {
+                //close sql connection
+                connection.Close();
+            }
+
+            //insert outdoor prescription
+            string insertIndoorStatement = "INSERT INTO OPDPrescriptions (PrescriptionId, FilledAndDispatched, DateDispatched, " +
+                "TimeDispatched, IndoorEmergency, ToFill) " +
+                "VALUES (@PrescriptionId, @FilledAndDispatched, @DateDispatched, @TimeDispatched, @IndoorEmergency, @ToFill)";
+            //insert command
+            SqlCommand insertIndoorCommand = new SqlCommand(insertIndoorStatement, connection);
+            insertIndoorCommand.Parameters.AddWithValue("@PrescriptionId", newId);
+            insertIndoorCommand.Parameters.AddWithValue("@FilledAndDispatched", pres.FilledDispatched);
+            insertIndoorCommand.Parameters.AddWithValue("@DateDispatched", pres.DateDispatched);
+            insertIndoorCommand.Parameters.AddWithValue("@TimeDispatched", pres.TimeDispatched);
+            insertIndoorCommand.Parameters.AddWithValue("@IndoorEmergency", pres.IndoorEmergency);
+            insertIndoorCommand.Parameters.AddWithValue("@ToFill", pres.ToFill);
+            try
+            {
+                //open connection
+                connection.Open();
+                //execute insert query
+                insertIndoorCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql query
+                throw ex;
+            }
+            finally
+            {
+                //close connection
+                connection.Close();
+            }
+        }
 
         /// <summary>
         /// Inserts Prescription drugs and drug details
@@ -435,10 +510,10 @@ namespace PharmaCare.Models
         }
 
         /// <summary>
-        /// updates prescription
+        /// updates prescription and indoor prescription details
         /// </summary>
-        /// <param name="pres"></param>
-        public static void updatePrescription(Indoor pres)
+        /// <param name="indoor"></param>
+        public static void updatePrescription(Indoor indoor)
         {
             //set connection to PharmaCareDB class getConneciton method
             SqlConnection connection = PharmaCareDB.GetConnection();
@@ -452,19 +527,19 @@ namespace PharmaCare.Models
             //update command
             SqlCommand updateCommand = new SqlCommand(updateStatement, connection);
 
-            updateCommand.Parameters.AddWithValue("@PatientId", pres.PatientName);
-            updateCommand.Parameters.AddWithValue("@DoctorId", pres.DoctorName);
-            updateCommand.Parameters.AddWithValue("@PresDate", pres.PrescribingDate);
-            if (!string.IsNullOrEmpty(pres.InformationExtra))
+            updateCommand.Parameters.AddWithValue("@PatientId", indoor.PatientName);
+            updateCommand.Parameters.AddWithValue("@DoctorId", indoor.DoctorName);
+            updateCommand.Parameters.AddWithValue("@PresDate", indoor.PrescribingDate);
+            if (!string.IsNullOrEmpty(indoor.InformationExtra))
             {
-                updateCommand.Parameters.AddWithValue("@AddInfo", pres.InformationExtra);
+                updateCommand.Parameters.AddWithValue("@AddInfo", indoor.InformationExtra);
             }
             else
             {
                 updateCommand.Parameters.AddWithValue("@AddInfo", DBNull.Value);
             }
-            updateCommand.Parameters.AddWithValue("@PresStatus", pres.StatusPrescription);
-            updateCommand.Parameters.AddWithValue("@PrescriptionId", pres.PrescriptionID);
+            updateCommand.Parameters.AddWithValue("@PresStatus", indoor.StatusPrescription);
+            updateCommand.Parameters.AddWithValue("@PrescriptionId", indoor.PrescriptionID);
 
             try
             {
@@ -472,7 +547,38 @@ namespace PharmaCare.Models
                 connection.Open();
                 //execute insert query
                 updateCommand.ExecuteNonQuery();
-                updateIndoorPrescription(pres);
+            }
+            catch (SqlException ex)
+            {
+                //throw sql error
+                throw ex;
+            }
+            finally
+            {
+                //close sql connection
+                connection.Close();
+            }
+
+            //update statement
+            string updateInStatement = "UPDATE IndoorPrescriptions SET RoomNumber = @RoomNumber, " +
+                "WingNumber = @WingNumber, FloorNumber = @FloorNumber, NursingStationId = @NursingStationId " +
+                "WHERE PrescriptionId = @PrescriptionId";
+
+            //update command
+            SqlCommand updateInCommand = new SqlCommand(updateInStatement, connection);
+
+            updateInCommand.Parameters.AddWithValue("@PrescriptionId", indoor.PrescriptionID);
+            updateInCommand.Parameters.AddWithValue("@RoomNumber", indoor.RoomNumber);
+            updateInCommand.Parameters.AddWithValue("@WingNumber", indoor.WingNumber);
+            updateInCommand.Parameters.AddWithValue("@FloorNumber", indoor.FloorNumber);
+            updateInCommand.Parameters.AddWithValue("@NursingStationid", indoor.NursingStationId);
+
+            try
+            {
+                //open sql connection
+                connection.Open();
+                //execute insert query
+                updateInCommand.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {
@@ -486,24 +592,37 @@ namespace PharmaCare.Models
             }
         }
 
-        public static void updateIndoorPrescription(Indoor Indoor)
+        /// <summary>
+        /// updates outdoor prescription
+        /// </summary>
+        /// <param name="Indoor"></param>
+        public static void updateOutdoorPrescription(Outdoor outdoor)
         {
             //set connection to PharmaCareDB class getConneciton method
             SqlConnection connection = PharmaCareDB.GetConnection();
 
             //update statement
-            string updateStatement = "UPDATE IndoorPrescriptions SET RoomNumber = @RoomNumber, " +
-                "WingNumber = @WingNumber, FloorNumber = @FloorNumber, NursingStationId = @NursingStationId " +
+            string updateStatement = "UPDATE Prescription SET PatientID = (SELECT PatientID FROM Patients WHERE Name = @PatientId), " +
+                "DoctorID = (SELECT DoctorID FROM Doctors WHERE DoctorName = @DoctorId), " +
+                "PrescriptionDate = @PresDate, AdditionalInformation = @AddInfo, PrescriptionStatus = @PresStatus " +
                 "WHERE PrescriptionId = @PrescriptionId";
 
             //update command
             SqlCommand updateCommand = new SqlCommand(updateStatement, connection);
 
-            updateCommand.Parameters.AddWithValue("@PrescriptionId", Indoor.PrescriptionID);
-            updateCommand.Parameters.AddWithValue("@RoomNumber", Indoor.RoomNumber);
-            updateCommand.Parameters.AddWithValue("@WingNumber", Indoor.WingNumber);
-            updateCommand.Parameters.AddWithValue("@FloorNumber", Indoor.FloorNumber);
-            updateCommand.Parameters.AddWithValue("@NursingStationid", Indoor.NursingStationId);
+            updateCommand.Parameters.AddWithValue("@PatientId", outdoor.PatientName);
+            updateCommand.Parameters.AddWithValue("@DoctorId", outdoor.DoctorName);
+            updateCommand.Parameters.AddWithValue("@PresDate", outdoor.PrescribingDate);
+            if (!string.IsNullOrEmpty(outdoor.InformationExtra))
+            {
+                updateCommand.Parameters.AddWithValue("@AddInfo", outdoor.InformationExtra);
+            }
+            else
+            {
+                updateCommand.Parameters.AddWithValue("@AddInfo", DBNull.Value);
+            }
+            updateCommand.Parameters.AddWithValue("@PresStatus", outdoor.StatusPrescription);
+            updateCommand.Parameters.AddWithValue("@PrescriptionId", outdoor.PrescriptionID);
 
             try
             {
@@ -511,6 +630,39 @@ namespace PharmaCare.Models
                 connection.Open();
                 //execute insert query
                 updateCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql error
+                throw ex;
+            }
+            finally
+            {
+                //close sql connection
+                connection.Close();
+            }
+
+            //update statement
+            string updateOutStatement = "UPDATE OPDPrescriptions SET FilledAndDispatched = @FilledAndDispatched, " +
+                "DateDispatched = @DateDispatched, TimeDispatched = @TimeDispatched, IndoorEmergency = @IndoorEmergency, " +
+                "ToFill = @ToFill WHERE PrescriptionId = @PrescriptionId";
+
+            //update command
+            SqlCommand updateOutCommand = new SqlCommand(updateOutStatement, connection);
+
+            updateOutCommand.Parameters.AddWithValue("@PrescriptionId", outdoor.PrescriptionID);
+            updateOutCommand.Parameters.AddWithValue("@FilledAndDispatched", outdoor.FilledDispatched);
+            updateOutCommand.Parameters.AddWithValue("@DateDispatched", outdoor.DateDispatched);
+            updateOutCommand.Parameters.AddWithValue("@TimeDispatched", outdoor.TimeDispatched);
+            updateOutCommand.Parameters.AddWithValue("@IndoorEmergency", outdoor.IndoorEmergency);
+            updateOutCommand.Parameters.AddWithValue("@ToFill", outdoor.ToFill);
+
+            try
+            {
+                //open sql connection
+                connection.Open();
+                //execute insert query
+                updateOutCommand.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {

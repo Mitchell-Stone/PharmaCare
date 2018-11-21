@@ -4,7 +4,9 @@
  */
 using PharmaCare.Models;
 using System;
+using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -237,13 +239,6 @@ namespace PharmaCare
                 pres.PrescribingDate = PresDate.Text;
                 pres.InformationExtra = PresAddInfo.InnerText;
                 pres.StatusPrescription = PresStatus.Text;
-                //drug details
-                pres.DrugName = PresDrugID.Text;
-                pres.Doses = PresDrugDose.Text;
-                pres.FirstTimeUse = PresFirst.Text;
-                pres.LastTimeUse = PresLast.Text;
-                pres.FrequenseUseInADay = PresTimesADay.Text;
-                pres.DoseStatus = PresDoseStatus.Text;
                 //indoor details
                 pres.RoomNumber = Convert.ToInt32(txtRoom.Text);
                 pres.WingNumber = Convert.ToInt32(txtWing.Text);
@@ -540,12 +535,80 @@ namespace PharmaCare
 
         protected void btnInsertOutdoor_Click(object sender, EventArgs e)
         {
+            Outdoor pres = new Outdoor();
+            if (!string.IsNullOrEmpty(txtOutPresId.Text + txtOutPatient.Text + txtOutDoctor.Text +
+                txtOutDate.Text + txtOutPresStatus.Text))
+            {
+                //prescription
+                pres.PatientName = txtOutPatient.Text;
+                pres.DoctorName = txtOutDoctor.Text;
+                pres.PrescribingDate = txtOutDate.Text;
+                pres.InformationExtra = txtOutPresDetails.InnerText;
+                pres.StatusPrescription = txtOutPresStatus.Text;
+                //outdoor details
+                pres.FilledDispatched = txtFilledDispatched.Text;
+                pres.DateDispatched = txtDateDispatched.Text;
+                pres.TimeDispatched = txtTimeDispatched.Text;
+                pres.IndoorEmergency = txtInEmergency.Text;
+                pres.ToFill = txtToFill.Text;
+            }
+            else
+            {
+                return;
+            }
 
+            try
+            {
+                if (pres != null)
+                {
+                    PrescriptionDB.insertOutdoorPrescription(pres);
+                    //clearPrescription();
+                }
+                else
+                {
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected void btnModifyOutdoor_Click(object sender, EventArgs e)
         {
+            Outdoor pres = new Outdoor();
 
+            if (validateInt(txtOutPresId.Text) && !string.IsNullOrEmpty(txtOutPatient.Text + txtOutDoctor.Text +
+                txtOutDate.Text + txtOutPresDetails.InnerText + txtOutPresStatus.Text))
+            {
+                //prescription
+                pres.PrescriptionID = Convert.ToInt32(txtOutPresId.Text);
+                pres.PatientName = txtOutPatient.Text;
+                pres.DoctorName = txtOutDoctor.Text;
+                pres.PrescribingDate = txtOutDate.Text;
+                pres.InformationExtra = txtOutPresDetails.InnerText;
+                pres.StatusPrescription = txtOutPresStatus.Text;
+
+                //outdoor
+                pres.FilledDispatched = txtFilledDispatched.Text;
+                pres.DateDispatched = txtDateDispatched.Text;
+                pres.TimeDispatched = txtTimeDispatched.Text;
+                pres.IndoorEmergency = txtInEmergency.Text;
+                pres.ToFill = txtToFill.Text;
+            }
+            try
+            {
+                PrescriptionDB.updateOutdoorPrescription(pres);
+                //clearPrescription();
+                btnInsertOutdoor.Enabled = true;
+                btnModifyOutdoor.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected void btnClearOutdoor_Click(object sender, EventArgs e)
@@ -628,6 +691,51 @@ namespace PharmaCare
                 con.Close();
             }
         }
+
+        protected void dgvOutdoorDrugDetails_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                // Hiding the Select Button Cell in Header Row.
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+            }
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Hiding the Select Button Cells showing for each Data Row. 
+                e.Row.Cells[0].Style.Add(HtmlTextWriterStyle.Display, "none");
+
+                // Attaching one onclick event for the entire row, so that it will
+                // fire SelectedIndexChanged, while we click anywhere on the row.
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(dgvOutdoorDrugDetails, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void dgvOutdoorDrugDetails_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = dgvOutdoorDrugDetails.SelectedRow;
+            //populate text fields 
+            txtOutDrugId.Text = row.Cells[1].Text;
+            txtOutPresId.Text = row.Cells[2].Text;
+            txtOutDrug.Text = row.Cells[3].Text;
+            txtOutDrugDose.Text = row.Cells[4].Text;
+            txtOutFTime.Text = row.Cells[5].Text;
+            txtOutLTime.Text = row.Cells[6].Text;
+            txtOutTimesPerDay.Text = row.Cells[7].Text;
+            txtOutDoseStatus.Text = row.Cells[8].Text;
+            btnModifyOutdoor.Enabled = true;
+            btnAddOutPresDetails.Enabled = false;
+            btnEditOutPresDetails.Enabled = true;
+        }
+
+        protected void dgvOutdoorDrugDetails_PreRender(object sender, EventArgs e)
+        {
+            if (dgvOutdoorDrugDetails.HeaderRow != null)
+            {
+                dgvOutdoorDrugDetails.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
         /**END OUTDOOR BUTTONS**/
     }
 }
