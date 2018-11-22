@@ -24,7 +24,7 @@ namespace PharmaCare
         {
             if (!IsPostBack)
             {
-                PresentDataInTheList("All");
+               // PresentDataInTheList("All");
             }
         }
         
@@ -33,7 +33,7 @@ namespace PharmaCare
             string search = txtSearchPatient.Text;
 
         }
-        private void PresentDataInTheList (string status)
+        /*private void PresentDataInTheList (string status)
         {
             SqlConnection con = PharmaCareDB.GetConnection();
             List<string> tempList = new List<string>();
@@ -56,6 +56,6 @@ namespace PharmaCare
             {
                 con.Close();
             }
-        }
+        }*/
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PharmaCare.Models;
 using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -20,18 +21,9 @@ namespace PharmaCare
 
         private void BindToGridView()
         {
-            SqlConnection con = PharmaCareDB.GetConnection();
-            try
-            {
-                con.Open();
-                SqlDataReader reader = PrescriptionDB.LabelsToPrint(con);
-                gvLabelList.DataSource = reader;
-                gvLabelList.DataBind();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            DataTable dt = PrescriptionDB.LabelsToPrint();
+            gvLabelList.DataSource = dt;
+            gvLabelList.DataBind();
         }
 
         protected void gvLabelList_RowCommand(object sender, GridViewCommandEventArgs e)

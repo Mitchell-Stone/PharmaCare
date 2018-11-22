@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using PharmaCare.CocktailServiceReference;
+using System.Collections.Generic;
 
 namespace PharmaCare
 {
@@ -22,7 +24,9 @@ namespace PharmaCare
             btnModify.Enabled = false;
             btnModifyOutdoor.Enabled = false;
             btnEditPresDetails.Enabled = false;
-            btnEditPresDetails.Enabled = false;
+            btnEditOutPresDetails.Enabled = false;
+            btnAddPresDetails.Enabled = false;
+            btnAddOutPresDetails.Enabled = false;
         }
 
         /**GLOBAL PRESCRIPTION BUTTONS**/
@@ -270,17 +274,19 @@ namespace PharmaCare
         }
 
         /// <summary>
-        /// clear prescription 
+        /// clear indoor prescription 
         /// </summary>
         private void clearPrescription()
         {
             //prescription
+            presID.Text = null;
             PresPatientID.Text = null;
             PresDocID.Text = null;
             PresDate.Text = null;
             PresAddInfo.InnerText = null;
             PresStatus.Text = null;
             //details
+            txtDrugDetailsId.Text = null;
             PresDrugID.Text = null;
             PresDrugDose.Text = null;
             PresFirst.Text = null;
@@ -294,6 +300,36 @@ namespace PharmaCare
             txtNursingStationId.Text = null;
             dgvAddPrescriptionDetails.DataSource = null;
             dgvAddPrescriptionDetails.DataBind();
+        }
+        
+        /// <summary>
+        /// clear outdoor prescription 
+        /// </summary>
+        private void clearOutPrescription()
+        {
+            //prescription
+            txtOutPresId.Text = null;
+            txtOutPatient.Text = null;
+            txtOutDoctor.Text = null;
+            txtOutDate.Text = null;
+            txtOutPresDetails.InnerText = null;
+            txtOutPresStatus.Text = null;
+            //details
+            txtOutDrugId.Text = null;
+            txtOutDrug.Text = null;
+            txtOutDrugDose.Text = null;
+            txtOutFTime.Text = null;
+            txtOutLTime.Text = null;
+            txtOutTimesPerDay.Text = null;
+            txtOutDoseStatus.Text = null;
+            //outdoor
+            txtFilledDispatched.Text = null;
+            txtDateDispatched.Text = null;
+            txtTimeDispatched.Text = null;
+            txtInEmergency.Text = null;
+            txtToFill.Text = null;
+            dgvOutdoorDrugDetails.DataSource = null;
+            dgvOutdoorDrugDetails.DataBind();
         }
 
         /// <summary>
@@ -391,6 +427,7 @@ namespace PharmaCare
             BindDrugDetailsToDGV();
             btnInsert.Enabled = false;
             btnModify.Enabled = true;
+            btnAddPresDetails.Enabled = true;
         }
 
         private void BindDrugDetailsToDGV()
@@ -413,8 +450,49 @@ namespace PharmaCare
             }
         }
 
+        private void BindOutDrugDetailsToDGV()
+        {
+            SqlConnection con = PharmaCareDB.GetConnection();
+            try
+            {
+                con.Open();
+                dgvOutdoorDrugDetails.DataSource = PrescriptionDB.getDrugDetails(con, Convert.ToInt32(txtOutPresId.Text));
+                dgvOutdoorDrugDetails.DataBind();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         protected void btnCheckCocktail_Click(object sender, EventArgs e)
         {
+            List<string> drugs = new List<string>();
+            for (int i = 0; i < dgvAddPrescriptionDetails.Rows.Count; i++)
+            {
+                string drugName;
+                drugName = Convert.ToString(dgvAddPrescriptionDetails.Rows[i].Cells[3].Text);
+                drugs.Add(drugName);
+                
+            }
+            string drugList = string.Join(";", drugs);
+            CocktailServiceClient client = new CocktailServiceClient();
+            
+            bool check = client.checkCocktail(drugList);
+            if (check == true)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Dangerous" + "');", true);
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Safe" + "');", true);
+            }
+            client.Close();
             btnModify.Enabled = true;
         }
 
@@ -442,6 +520,7 @@ namespace PharmaCare
             {
                 PrescriptionDB.insertPrescriptionDrugs(pres);
                 BindDrugDetailsToDGV();
+                btnModify.Enabled = true;
             }
             catch (Exception)
             {
@@ -459,6 +538,8 @@ namespace PharmaCare
             {
                 //drug details
                 pres.DrugdetailsId = Convert.ToInt32(txtDrugDetailsId.Text);
+                pres.PrescriptionID = Convert.ToInt32(presID.Text);
+                pres.LinkId = Convert.ToInt32(txtLink.Text);
                 pres.DrugName = PresDrugID.Text;
                 pres.DrugDose = PresDrugDose.Text;
                 pres.FirstTime = PresFirst.Text;
@@ -468,9 +549,10 @@ namespace PharmaCare
             }
             try
             {
-                PrescriptionDB.updateDrugDetails(pres);
+                PrescriptionDB.updatePrescriptionDrugs(pres);
                 BindDrugDetailsToDGV();
                 btnAddPresDetails.Enabled = true;
+                btnModify.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -502,12 +584,13 @@ namespace PharmaCare
             GridViewRow row = dgvAddPrescriptionDetails.SelectedRow;
             //populate text fields 
             txtDrugDetailsId.Text = row.Cells[1].Text;
-            PresDrugID.Text = row.Cells[2].Text;
-            PresDrugDose.Text = row.Cells[4].Text;
-            PresFirst.Text = row.Cells[5].Text;
-            PresLast.Text = row.Cells[6].Text;
-            PresTimesADay.Text = row.Cells[7].Text;
-            PresDoseStatus.Text = row.Cells[8].Text;
+            txtLink.Text = row.Cells[2].Text;
+            PresDrugID.Text = row.Cells[3].Text;
+            PresDrugDose.Text = row.Cells[5].Text;
+            PresFirst.Text = row.Cells[6].Text;
+            PresLast.Text = row.Cells[7].Text;
+            PresTimesADay.Text = row.Cells[8].Text;
+            PresDoseStatus.Text = row.Cells[9].Text;
             btnModify.Enabled = true;
             btnAddPresDetails.Enabled = false;
             btnEditPresDetails.Enabled = true;
@@ -525,12 +608,60 @@ namespace PharmaCare
         /**OUTDOOR BUTTONS**/
         protected void btnEditOutPresDetails_Click(object sender, EventArgs e)
         {
+            Details pres = new Details();
 
+            if (validateInt(txtOutDrugId.Text) && !string.IsNullOrEmpty(txtOutDrug.Text + txtOutDrugDose.Text +
+                txtOutFTime.Text + txtOutLTime.Text + txtOutTimesPerDay.Text + txtOutDoseStatus.Text))
+            {
+                //drug details
+                pres.DrugdetailsId = Convert.ToInt32(txtOutDrugId.Text);
+                pres.LinkId = Convert.ToInt32(txtOutLink.Text);
+                pres.DrugName = txtOutDrug.Text;
+                pres.DrugDose = txtOutDrugDose.Text;
+                pres.FirstTime = txtOutFTime.Text;
+                pres.LastTime = txtOutLTime.Text;
+                pres.TimesPerDay = txtOutTimesPerDay.Text;
+                pres.StatusOfDose = txtOutDoseStatus.Text;
+            }
+            try
+            {
+                PrescriptionDB.updatePrescriptionDrugs(pres);
+                BindOutDrugDetailsToDGV();
+                btnAddOutPresDetails.Enabled = true;
+                btnModifyOutdoor.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected void btnAddOutPresDetails_Click(object sender, EventArgs e)
         {
+            Details pres = new Details();
 
+            if (!string.IsNullOrEmpty(txtOutDrug.Text + txtOutDrugDose.Text +
+                txtOutFTime.Text + txtOutLTime.Text + txtOutTimesPerDay.Text + txtOutDoseStatus.Text))
+            {
+                pres.PrescriptionID = Convert.ToInt32(txtOutPresId.Text);
+                pres.DrugName = txtOutDrug.Text;
+                pres.Doses = txtOutDrugDose.Text;
+                pres.FirstTimeUse = txtOutFTime.Text;
+                pres.LastTimeUse = txtOutLTime.Text;
+                pres.FrequenseUseInADay = txtOutTimesPerDay.Text;
+                pres.DoseStatus = txtOutDoseStatus.Text;
+            }
+            try
+            {
+                PrescriptionDB.insertPrescriptionDrugs(pres);
+                BindOutDrugDetailsToDGV();
+                btnModifyOutdoor.Enabled = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         protected void btnInsertOutdoor_Click(object sender, EventArgs e)
@@ -562,7 +693,7 @@ namespace PharmaCare
                 if (pres != null)
                 {
                     PrescriptionDB.insertOutdoorPrescription(pres);
-                    //clearPrescription();
+                    clearOutPrescription();
                 }
                 else
                 {
@@ -601,7 +732,7 @@ namespace PharmaCare
             try
             {
                 PrescriptionDB.updateOutdoorPrescription(pres);
-                //clearPrescription();
+                clearOutPrescription();
                 btnInsertOutdoor.Enabled = true;
                 btnModifyOutdoor.Enabled = false;
             }
@@ -613,12 +744,34 @@ namespace PharmaCare
 
         protected void btnClearOutdoor_Click(object sender, EventArgs e)
         {
-
+            clearOutPrescription();
+            btnInsertOutdoor.Enabled = true;
+            btnModifyOutdoor.Enabled = false;
         }
 
         protected void btnCheckOutCocktail_Click(object sender, EventArgs e)
         {
+            List<string> drugs = new List<string>();
+            for (int i = 0; i < dgvOutdoorDrugDetails.Rows.Count; i++)
+            {
+                string drugName;
+                drugName = Convert.ToString(dgvOutdoorDrugDetails.Rows[i].Cells[3].Text);
+                drugs.Add(drugName);
 
+            }
+            string drugList = string.Join(";", drugs);
+            CocktailServiceClient client = new CocktailServiceClient();
+
+            bool check = client.checkCocktail(drugList);
+            if (check == true)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Dangerous" + "');", true);
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Safe" + "');", true);
+            }
+            client.Close();
         }
 
         protected void DgvOutdoorPrescriptions_PreRender(object sender, EventArgs e)
@@ -670,6 +823,8 @@ namespace PharmaCare
             BindDrugDetailsToOutdoorDGV();
             btnInsertOutdoor.Enabled = false;
             btnModifyOutdoor.Enabled = true;
+            btnAddOutPresDetails.Enabled = true;
+
         }
 
         private void BindDrugDetailsToOutdoorDGV()
@@ -716,13 +871,13 @@ namespace PharmaCare
             GridViewRow row = dgvOutdoorDrugDetails.SelectedRow;
             //populate text fields 
             txtOutDrugId.Text = row.Cells[1].Text;
-            txtOutPresId.Text = row.Cells[2].Text;
+            txtOutLink.Text = row.Cells[2].Text;
             txtOutDrug.Text = row.Cells[3].Text;
-            txtOutDrugDose.Text = row.Cells[4].Text;
-            txtOutFTime.Text = row.Cells[5].Text;
-            txtOutLTime.Text = row.Cells[6].Text;
-            txtOutTimesPerDay.Text = row.Cells[7].Text;
-            txtOutDoseStatus.Text = row.Cells[8].Text;
+            txtOutDrugDose.Text = row.Cells[5].Text;
+            txtOutFTime.Text = row.Cells[6].Text;
+            txtOutLTime.Text = row.Cells[7].Text;
+            txtOutTimesPerDay.Text = row.Cells[8].Text;
+            txtOutDoseStatus.Text = row.Cells[9].Text;
             btnModifyOutdoor.Enabled = true;
             btnAddOutPresDetails.Enabled = false;
             btnEditOutPresDetails.Enabled = true;

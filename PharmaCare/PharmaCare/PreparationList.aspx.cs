@@ -11,6 +11,8 @@ using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace PharmaCare
 {
@@ -37,7 +39,9 @@ namespace PharmaCare
             if (!Page.IsPostBack)
             {
                 //Show all prescriptions when opening the page
-                BindToGridView("All");    
+                BindToGridView("All");
+
+                table_header.Text = "Displaying All Prescriptions";
             }    
         }
 
@@ -52,68 +56,69 @@ namespace PharmaCare
             }
         }
 
+        private List<Preperation> GetObjectList(DataTable dt)
+        {
+            var list = (from rw in dt.AsEnumerable()
+                        select new Preperation()
+                        {
+                            PrescriptionId = Convert.ToInt32(rw["PrescriptionId"]),
+                            PrescriptionDate = Convert.ToString(rw["PrescriptionDate"]),
+                            DrugName = Convert.ToString(rw["DrugName"]),
+                            DrugForm = Convert.ToString(rw["DrugForm"]),
+                            DrugDose = Convert.ToInt32(rw["DrugDose"]),
+                            PrescriptionStatus = Convert.ToString(rw["PrescriptionStatus"]),
+                            TimesPerDay = Convert.ToInt32(rw["TimesPerDay"])
+                        }).ToList();
+            return list;   
+        }
+
         private void BindToGridView(int prescriptionId)
         {
-            // Create an SQL connection
-            SqlConnection con = PharmaCareDB.GetConnection();
-            List<string> tempList = new List<string>();
+            //create a new data table and put the sql results into it
+            List<Preperation> prep = GetObjectList(PrescriptionDB.BindPrescriptionById(prescriptionId));
 
-            try
-            {
-                con.Open();
-                // Read the data from the connection and 
-                SqlDataReader reader = PrescriptionDB.BindPrescriptionById(con, prescriptionId);
-                gvPrepList.DataSource = reader;
-                gvPrepList.DataBind();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
+            var grpList = prep.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+
+            //bind the data table to the grid view
+            gvPrepList.DataSource = grpList;
+            gvPrepList.DataBind();
         }
 
         private void BindToGridView(string status)
         {
-            // Create an SQL connection
-            SqlConnection con = PharmaCareDB.GetConnection();
-            List<string> tempList = new List<string>();
-
-            try
+            // Open the connection, populate the datasource and then bind it to the gridview
+            if (status == "All")
             {
-                // Open the connection, populate the datasource and then bind it to the gridview
-                con.Open();
-                if (status == "All")
-                {
-                    // Read the data and bind it to the gridview
-                    SqlDataReader reader = PrescriptionDB.BindAllPrescriptionType(con);
-                    gvPrepList.DataSource = reader;
-                    gvPrepList.DataBind();               
+                //create a new data table and put the sql results into it
+                List<Preperation> prep = GetObjectList(PrescriptionDB.BindAllPrescriptionType());
 
-                    // Bind the selections to the dropdown list for each row
-                    SetStatusDDL();
+                var grpList = prep.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+
+                foreach (var grp in grpList)
+                {
+                    //dt.Rows.Add(grp);
                 }
-                else
-                {
-                    // Read the data and bind it to the gridview
-                    SqlDataReader reader = PrescriptionDB.BindPrescriptionType(con, status);
-                    gvPrepList.DataSource = reader;
-                    gvPrepList.DataBind();
 
-                    // Bind the selections to the dropdown list for each row
-                    SetStatusDDL();
-                }   
+                //bind the data table to the grid view
+                gvPrepList.DataSource = grpList;
+                gvPrepList.DataBind();               
+
+                // Bind the selections to the dropdown list for each row
+                SetStatusDDL();
             }
-            catch (SqlException ex)
+            else
             {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
+                //create a new data table and put the sql results into it
+                List<Preperation> prep = GetObjectList(PrescriptionDB.BindPrescriptionType(status));
+
+                var grpList = prep.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+
+                //bind the data table to the grid view
+                gvPrepList.DataSource = grpList;
+                gvPrepList.DataBind();
+
+                // Bind the selections to the dropdown list for each row
+                SetStatusDDL();
             }
         }
 
@@ -206,11 +211,23 @@ namespace PharmaCare
 
         #endregion
 
-        protected void tbPrescriptionIdSearch_TextChanged(object sender, EventArgs e)
+        protected void btnSearchForPrescription_Click(object sender, EventArgs e)
         {
             // Conducts search for prescriptions by id number when number is entered into the text box
-
-            BindToGridView(Convert.ToInt32(tbPrescriptionIdSearch.Text));
+            try
+            {
+                //get the id from the search box
+                int id = Convert.ToInt32(tbPrescriptionIdSearch.Text);
+                if (tbPrescriptionIdSearch.Text != null)
+                {
+                    //search for the id and bind to the grid view
+                    BindToGridView(id);
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("No value entered");
+            }         
         }
     }
 }
