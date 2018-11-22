@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace PharmaCare.Models
@@ -394,8 +395,14 @@ namespace PharmaCare.Models
             }
         }
 
-        public static SqlDataReader LabelsToPrint(SqlConnection con)
+        public static DataTable LabelsToPrint()
         {
+            //create a new data table for the data returned from the query
+            DataTable dt = new DataTable();
+
+            //get the sql connection
+            SqlConnection con = PharmaCareDB.GetConnection();
+
             string sql = "SELECT Patients.PatientID, Name, DoctorName, " +
                 "DrugName, DrugDose, TimesPerDay " +
                 "FROM Prescription " +
@@ -411,15 +418,37 @@ namespace PharmaCare.Models
                 "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "WHERE PrescriptionStatus = 'Active' " +
                 "ORDER BY Name";
-
-            using (var command = new SqlCommand(sql, con))
+            try
             {
-                return command.ExecuteReader();
+                //open the connection and execute the reader
+                con.Open();
+                using (var command = new SqlCommand(sql, con))
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+                    //load the reader into the data table
+                    dt.Load(reader);
+                    //return the data table
+                    return dt;
+                }
             }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //close the connection
+                con.Close();
+            }          
         }
 
-        public static SqlDataReader BindPrescriptionType(SqlConnection con, string status)
+        public static DataTable BindPrescriptionType(string status)
         {
+            //create a new data table
+            DataTable dt = new DataTable();
+            //get the connection
+            SqlConnection con = PharmaCareDB.GetConnection();
+
             string sql = "SELECT PrescriptionStatus, Prescription.PrescriptionId, PrescriptionDate, " +
                 "DrugName, DrugForm, DrugDose, TimesPerDay " +
                 "FROM Prescription " +
@@ -431,16 +460,38 @@ namespace PharmaCare.Models
                 "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "WHERE PrescriptionStatus = @status " +
                 "ORDER BY PrescriptionDate ASC";
-            
-            using (var command = new SqlCommand(sql, con))
+            try
             {
-                command.Parameters.AddWithValue("status", status);
-                return command.ExecuteReader();
-            }  
+                //open the connection and execute the reader
+                con.Open();
+                using (var command = new SqlCommand(sql, con))
+                {
+                    command.Parameters.AddWithValue("status", status);
+                    SqlDataReader reader = command.ExecuteReader();
+                    //load the reader into the data table
+                    dt.Load(reader);
+                    //return the data table
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //close the connection
+                con.Close();
+            }
         }
 
-        public static SqlDataReader BindPrescriptionById(SqlConnection con, int id)
+        public static DataTable BindPrescriptionById(int id)
         {
+            //create a new data table
+            DataTable dt = new DataTable();
+            //get the connection
+            SqlConnection con = PharmaCareDB.GetConnection();
+
             string sql = "SELECT PrescriptionStatus, Prescription.PrescriptionId, PrescriptionDate, " +
                 "DrugName, DrugForm, DrugDose, TimesPerDay " +
                 "FROM Prescription " +
@@ -452,16 +503,40 @@ namespace PharmaCare.Models
                 "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "WHERE Prescription.PrescriptionId = @id " +
                 "ORDER BY PrescriptionDate ASC";
-
-            using (var command = new SqlCommand(sql, con))
+            try
             {
-                command.Parameters.AddWithValue("id", id);
-                return command.ExecuteReader();
+                //open the connection and execute the reader
+                con.Open();
+                using (var command = new SqlCommand(sql, con))
+                {
+                    command.Parameters.AddWithValue("id", id);
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    //load the reader into the data table
+                    dt.Load(reader);
+                    //return the data table
+                    return dt;
+                }
             }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //close the connection
+                con.Close();
+            }          
         }
 
-        public static SqlDataReader BindAllPrescriptionType(SqlConnection con)
+        public static DataTable BindAllPrescriptionType()
         {
+            //create a data table to hold the data returned from the query
+            DataTable dt = new DataTable();
+
+            //create the connection
+            SqlConnection con = PharmaCareDB.GetConnection();
+
             string sql = "SELECT PrescriptionStatus, Prescription.PrescriptionId, PrescriptionDate, " +
                 "DrugName, DrugForm, DrugDose, TimesPerDay " +
                 "FROM Prescription " +
@@ -473,9 +548,27 @@ namespace PharmaCare.Models
                 "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "ORDER BY PrescriptionDate ASC";
 
-            using (var command = new SqlCommand(sql, con))
+            try
             {
-                return command.ExecuteReader();
+                //open the connection and execute the reader
+                con.Open();
+                using (var command = new SqlCommand(sql, con))
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+                    //load the reader into the data table
+                    dt.Load(reader);
+                    //return the data table
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //close the connection
+                con.Close();
             }
         }
 

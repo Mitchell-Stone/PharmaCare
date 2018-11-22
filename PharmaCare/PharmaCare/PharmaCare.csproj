@@ -166,6 +166,7 @@
     <Compile Include="Models\PatientDB.cs" />
     <Compile Include="Models\PharmaCareDB.cs" />
     <Compile Include="Models\Pharmacist.cs" />
+    <Compile Include="Models\Preperation.cs" />
     <Compile Include="Models\Prescription.cs" />
     <Compile Include="Models\PrescriptionDB.cs" />
     <Compile Include="Models\ScheduleDB.cs" />
