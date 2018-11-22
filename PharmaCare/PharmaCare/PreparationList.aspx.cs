@@ -37,7 +37,9 @@ namespace PharmaCare
             if (!Page.IsPostBack)
             {
                 //Show all prescriptions when opening the page
-                BindToGridView("All");    
+                BindToGridView("All");
+
+                table_header.Text = "Displaying All Prescriptions";
             }    
         }
 
@@ -206,11 +208,21 @@ namespace PharmaCare
 
         #endregion
 
-        protected void tbPrescriptionIdSearch_TextChanged(object sender, EventArgs e)
+        protected void btnSearchForPrescription_Click(object sender, EventArgs e)
         {
             // Conducts search for prescriptions by id number when number is entered into the text box
-
-            BindToGridView(Convert.ToInt32(tbPrescriptionIdSearch.Text));
+            try
+            {
+                int id = Convert.ToInt32(tbPrescriptionIdSearch.Text);
+                if (tbPrescriptionIdSearch.Text != null)
+                {
+                    BindToGridView(id);
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("No value entered");
+            }         
         }
     }
 }
