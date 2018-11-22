@@ -49,24 +49,6 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Button btnFindPrescription;
         
         /// <summary>
-        /// txtPFname control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPFname;
-        
-        /// <summary>
-        /// txtPLname control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPLname;
-        
-        /// <summary>
         /// dgvPrescriptions control.
         /// </summary>
         /// <remarks>

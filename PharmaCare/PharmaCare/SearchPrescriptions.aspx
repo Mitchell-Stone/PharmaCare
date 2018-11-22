@@ -11,25 +11,17 @@
     <h1>Outdoor Patient Prescription Page</h1>
     <div class="row">
         <div class="col-md-12">
-            <label class="float-left">Search Patient : </label>
-            <asp:TextBox ID="txtSearchPatient" runat="server" CssClass="float-center"></asp:TextBox>
+            <label class="float-left">Search Patient :     </label>
+            <asp:TextBox ID="txtSearchPatient" runat="server" CssClass="float-center "></asp:TextBox>
             <asp:Button ID="btnFindPatient" runat="server" Text="Find Patient" CssClass="right"/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <label class="float-left">Search Prescription by ID : </label>
+            <label class="float-left">Search Prescription by ID :     </label>
             <asp:TextBox ID="txtFindPrescription" runat="server" CssClass="float-none"></asp:TextBox>
             <asp:Button ID="btnFindPrescription" runat="server" Text="Find Prescription" CssClass="right" />            
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <label> First Name : </label>
-            <asp:TextBox ID="txtPFname" runat="server" ></asp:TextBox>
-            <label> Last Name : </label>
-            <asp:TextBox ID="txtPLname" runat="server" ></asp:TextBox>
-        </div>   
     </div>
         <div class="table-responsive">            
             <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="False" 
@@ -38,19 +30,22 @@
             <AlternatingRowStyle BackColor="White" />              
                 <Columns>
                     <asp:BoundField DataField="OPDId" HeaderText="OPDId" ReadOnly="True" SortExpression="OPDId" InsertVisible="False" />
-                    <asp:BoundField DataField="DateDispatched" HeaderText="DateDispatched" SortExpression="DateDispatched" />
-                    <asp:BoundField DataField="IndoorEmergency" HeaderText="IndoorEmergency" SortExpression="IndoorEmergency" />
-                    <asp:BoundField DataField="ToFill" HeaderText="ToFill" SortExpression="ToFill" />
-                    <asp:BoundField DataField="DrugId" HeaderText="DrugId" SortExpression="DrugId" />
-                    <asp:BoundField DataField="DrugName" HeaderText="DrugName" SortExpression="DrugName" />
-                    <asp:BoundField DataField="DrugForm" HeaderText="DrugForm" SortExpression="DrugForm"  />
+                    <asp:BoundField DataField="PrescriptionId" HeaderText="PrescriptionId" ReadOnly="true" InsertVisible="False" SortExpression="PrescriptionId"  />
                     <asp:BoundField DataField="PatientID" HeaderText="PatientID" ReadOnly="true" InsertVisible="False" SortExpression="PatientID"  />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"  />
-                    <asp:BoundField DataField="PrescriptionId" HeaderText="PrescriptionId" ReadOnly="true" InsertVisible="False" SortExpression="PrescriptionId"  />
-                    <asp:BoundField DataField="DoctorID" HeaderText="DoctorID" SortExpression="DoctorID" />
+                    <asp:BoundField DataField="IndoorEmergency" HeaderText="IndoorEmergency" SortExpression="IndoorEmergency" />
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="PrescriptionDate" SortExpression="PrescriptionDate" />
-                    <asp:BoundField DataField="PrescriptionStatus" HeaderText="PrescriptionStatus" SortExpression="PrescriptionStatus" />
+                   
+                    <asp:BoundField DataField="ToFill" HeaderText="ToFill" SortExpression="ToFill" />
+                    <asp:BoundField DataField="DateDispatched" HeaderText="DateDispatched" SortExpression="DateDispatched" />
+                    <asp:BoundField DataField="DrugId" HeaderText="DrugId" SortExpression="DrugId" />
+                    <asp:BoundField DataField="DrugName" HeaderText="DrugName" SortExpression="DrugName" />
+                    <asp:BoundField DataField="DrugForm" HeaderText="DrugForm" SortExpression="DrugForm"  />                  
                     <asp:BoundField DataField="DrugDose" HeaderText="DrugDose" SortExpression="DrugDose" />
+                   
+                    <asp:BoundField DataField="PrescriptionStatus" HeaderText="PrescriptionStatus" SortExpression="PrescriptionStatus" />
+                    <asp:BoundField DataField="DoctorID" HeaderText="DoctorID" SortExpression="DoctorID" />
+                    
                 </Columns>                             
             </asp:GridView>
             
