@@ -1,16 +1,17 @@
 ﻿/*
  *      Student ID: 450950837
  *      Student Name: Kaitlyn Parsons
+ *      Date: 22/11/2018
+ *      Bugs: Nil
  */
 using PharmaCare.Models;
 using System;
-using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using PharmaCare.CocktailServiceReference;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace PharmaCare
 {
@@ -233,6 +234,48 @@ namespace PharmaCare
         /// <param name="e"></param>
         protected void btnInsertPres_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkPatientName = new SqlCommand("SELECT COUNT(*) FROM Patients WHERE Name = @Name", conn);
+            SqlCommand checkDoctorName = new SqlCommand("SELECT COUNT(*) FROM Doctors WHERE DoctorName = @DoctorName", conn);
+            checkPatientName.Parameters.AddWithValue("@Name", PresPatientID.Text);
+            checkDoctorName.Parameters.AddWithValue("@DoctorName", PresDocID.Text);
+
+            try
+            {
+                conn.Open();
+                int patientExists = (int)checkPatientName.ExecuteScalar();
+                int doctorExists = (int)checkDoctorName.ExecuteScalar();
+                if (patientExists > 0)
+                {
+                    PresPatientID.ForeColor = Color.Black;
+                }
+                else
+                {
+                    PresPatientID.ForeColor = Color.Red;
+                    btnModify.Enabled = true;
+                    return;
+                }
+
+                if (doctorExists > 0)
+                {
+                    PresDocID.ForeColor = Color.Black;
+                }
+                else
+                {
+                    PresDocID.ForeColor = Color.Red;
+                    btnModify.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
             Indoor pres = new Indoor();
             if (!string.IsNullOrEmpty(PresDrugID.Text + PresPatientID.Text + PresDocID.Text +
                 PresDate.Text + PresStatus.Text))
@@ -287,6 +330,7 @@ namespace PharmaCare
             PresStatus.Text = null;
             //details
             txtDrugDetailsId.Text = null;
+            txtLink.Text = null;
             PresDrugID.Text = null;
             PresDrugDose.Text = null;
             PresFirst.Text = null;
@@ -301,37 +345,19 @@ namespace PharmaCare
             dgvAddPrescriptionDetails.DataSource = null;
             dgvAddPrescriptionDetails.DataBind();
         }
-        
-        /// <summary>
-        /// clear outdoor prescription 
-        /// </summary>
-        private void clearOutPrescription()
-        {
-            //prescription
-            txtOutPresId.Text = null;
-            txtOutPatient.Text = null;
-            txtOutDoctor.Text = null;
-            txtOutDate.Text = null;
-            txtOutPresDetails.InnerText = null;
-            txtOutPresStatus.Text = null;
-            //details
-            txtOutDrugId.Text = null;
-            txtOutDrug.Text = null;
-            txtOutDrugDose.Text = null;
-            txtOutFTime.Text = null;
-            txtOutLTime.Text = null;
-            txtOutTimesPerDay.Text = null;
-            txtOutDoseStatus.Text = null;
-            //outdoor
-            txtFilledDispatched.Text = null;
-            txtDateDispatched.Text = null;
-            txtTimeDispatched.Text = null;
-            txtInEmergency.Text = null;
-            txtToFill.Text = null;
-            dgvOutdoorDrugDetails.DataSource = null;
-            dgvOutdoorDrugDetails.DataBind();
-        }
 
+        private void clearPrescriptionDetails()
+        {
+            txtDrugDetailsId.Text = null;
+            txtLink.Text = null;
+            PresDrugID.Text = null;
+            PresDrugDose.Text = null;
+            PresFirst.Text = null;
+            PresLast.Text = null;
+            PresTimesADay.Text = null;
+            PresDoseStatus.Text = null;
+        }
+        
         /// <summary>
         /// updates the prescription
         /// </summary>
@@ -339,6 +365,49 @@ namespace PharmaCare
         /// <param name="e"></param>
         protected void btnModifyPres_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkPatientName = new SqlCommand("SELECT COUNT(*) FROM Patients WHERE Name = @Name", conn);
+            SqlCommand checkDoctorName = new SqlCommand("SELECT COUNT(*) FROM Doctors WHERE DoctorName = @DoctorName", conn);
+            checkPatientName.Parameters.AddWithValue("@Name", PresPatientID.Text);
+            checkDoctorName.Parameters.AddWithValue("@DoctorName", PresDocID.Text);
+            
+            try
+            {
+                conn.Open();
+                int patientExists = (int)checkPatientName.ExecuteScalar();
+                int doctorExists = (int)checkDoctorName.ExecuteScalar();
+                if (patientExists > 0)
+                {
+                    PresPatientID.ForeColor = Color.Black;
+                }
+                else
+                {
+                    PresPatientID.ForeColor = Color.Red;
+                    btnModify.Enabled = true;
+                    return;
+                }
+
+                if (doctorExists > 0)
+                {
+                    PresDocID.ForeColor = Color.Black;
+                }
+                else
+                {
+                    PresDocID.ForeColor = Color.Red;
+                    btnModify.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            
             Indoor pres = new Indoor();
 
             if (validateInt(presID.Text) && validateInt(txtRoom.Text) && validateInt(txtWing.Text) && validateInt(txtFloor.Text) &&
@@ -373,7 +442,7 @@ namespace PharmaCare
         }
 
         /// <summary>
-        /// clear prescription button
+        /// clears indoor prescription and details
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -430,6 +499,9 @@ namespace PharmaCare
             btnAddPresDetails.Enabled = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void BindDrugDetailsToDGV()
         {
             SqlConnection con = PharmaCareDB.GetConnection();
@@ -450,29 +522,15 @@ namespace PharmaCare
             }
         }
 
-        private void BindOutDrugDetailsToDGV()
-        {
-            SqlConnection con = PharmaCareDB.GetConnection();
-            try
-            {
-                con.Open();
-                dgvOutdoorDrugDetails.DataSource = PrescriptionDB.getDrugDetails(con, Convert.ToInt32(txtOutPresId.Text));
-                dgvOutdoorDrugDetails.DataBind();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            finally
-            {
-                con.Close();
-            }
-        }
-
+        /// <summary>
+        /// Checks cocktail service on indoor prescriptions details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnCheckCocktail_Click(object sender, EventArgs e)
         {
             List<string> drugs = new List<string>();
+            //adds drugNames from datagrid to drugs
             for (int i = 0; i < dgvAddPrescriptionDetails.Rows.Count; i++)
             {
                 string drugName;
@@ -480,10 +538,12 @@ namespace PharmaCare
                 drugs.Add(drugName);
                 
             }
+            //convert drugs list to a single string
             string drugList = string.Join(";", drugs);
             CocktailServiceClient client = new CocktailServiceClient();
-            
+            //checks cocktail service for dangerous drug combination
             bool check = client.checkCocktail(drugList);
+            //if true = dangerous, else false = safe
             if (check == true)
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Dangerous" + "');", true);
@@ -492,17 +552,47 @@ namespace PharmaCare
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Safe" + "');", true);
             }
+            //close the client connection
             client.Close();
             btnModify.Enabled = true;
         }
 
         /// <summary>
-        /// adds drugs to an indoor prescription
+        /// adds to an indoor prescription details
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void btnAddPresDetails_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkDrugName = new SqlCommand("SELECT COUNT(*) FROM Drugs WHERE DrugName = @Name", conn);
+            checkDrugName.Parameters.AddWithValue("@Name", PresDrugID.Text);
+
+            try
+            {
+                conn.Open();
+                int drugExists = (int)checkDrugName.ExecuteScalar();
+                if (drugExists > 0)
+                {
+                    PresDrugID.ForeColor = Color.Black;
+                }
+                else
+                {
+                    PresDrugID.ForeColor = Color.Red;
+                    btnAddPresDetails.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
             Details pres = new Details();
 
             if (!string.IsNullOrEmpty(PresDrugID.Text + PresDrugDose.Text +
@@ -520,6 +610,7 @@ namespace PharmaCare
             {
                 PrescriptionDB.insertPrescriptionDrugs(pres);
                 BindDrugDetailsToDGV();
+                clearPrescriptionDetails();
                 btnModify.Enabled = true;
             }
             catch (Exception)
@@ -529,8 +620,41 @@ namespace PharmaCare
             }
         }
 
+        /// <summary>
+        /// edits an indoor prescriptions details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnEditPresDetails_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkDrugName = new SqlCommand("SELECT COUNT(*) FROM Drugs WHERE DrugName = @Name", conn);
+            checkDrugName.Parameters.AddWithValue("@Name", PresDrugID.Text);
+
+            try
+            {
+                conn.Open();
+                int drugExists = (int)checkDrugName.ExecuteScalar();
+                if (drugExists > 0)
+                {
+                    PresDrugID.ForeColor = Color.Black;
+                }
+                else
+                {
+                    PresDrugID.ForeColor = Color.Red;
+                    btnEditPresDetails.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
             Details pres = new Details();
 
             if (validateInt(txtDrugDetailsId.Text) && !string.IsNullOrEmpty(PresDrugID.Text + PresDrugDose.Text +
@@ -551,6 +675,7 @@ namespace PharmaCare
             {
                 PrescriptionDB.updatePrescriptionDrugs(pres);
                 BindDrugDetailsToDGV();
+                clearPrescriptionDetails();
                 btnAddPresDetails.Enabled = true;
                 btnModify.Enabled = true;
             }
@@ -606,8 +731,73 @@ namespace PharmaCare
         /**END INDOOR BUTTONS**/
 
         /**OUTDOOR BUTTONS**/
+
+        /// <summary>
+        /// clear outdoor prescription and details
+        /// </summary>
+        private void clearOutPrescription()
+        {
+            //prescription
+            txtOutPresId.Text = null;
+            txtOutPatient.Text = null;
+            txtOutDoctor.Text = null;
+            txtOutDate.Text = null;
+            txtOutPresDetails.InnerText = null;
+            txtOutPresStatus.Text = null;
+            //details
+            txtOutDrugId.Text = null;
+            txtOutLink.Text = null;
+            txtOutDrug.Text = null;
+            txtOutDrugDose.Text = null;
+            txtOutFTime.Text = null;
+            txtOutLTime.Text = null;
+            txtOutTimesPerDay.Text = null;
+            txtOutDoseStatus.Text = null;
+            //outdoor
+            txtFilledDispatched.Text = null;
+            txtDateDispatched.Text = null;
+            txtTimeDispatched.Text = null;
+            txtInEmergency.Text = null;
+            txtToFill.Text = null;
+            dgvOutdoorDrugDetails.DataSource = null;
+            dgvOutdoorDrugDetails.DataBind();
+        }
+
+        /// <summary>
+        /// edits an outdoor prescriptions details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnEditOutPresDetails_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkDrugName = new SqlCommand("SELECT COUNT(*) FROM Drugs WHERE DrugName = @Name", conn);
+            checkDrugName.Parameters.AddWithValue("@Name", txtOutDrug.Text);
+
+            try
+            {
+                conn.Open();
+                int drugExists = (int)checkDrugName.ExecuteScalar();
+                if (drugExists > 0)
+                {
+                    txtOutDrug.ForeColor = Color.Black;
+                }
+                else
+                {
+                    txtOutDrug.ForeColor = Color.Red;
+                    btnEditOutPresDetails.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
             Details pres = new Details();
 
             if (validateInt(txtOutDrugId.Text) && !string.IsNullOrEmpty(txtOutDrug.Text + txtOutDrugDose.Text +
@@ -626,7 +816,8 @@ namespace PharmaCare
             try
             {
                 PrescriptionDB.updatePrescriptionDrugs(pres);
-                BindOutDrugDetailsToDGV();
+                BindDrugDetailsToOutdoorDGV();
+                clearOutPrescriptionDetails();
                 btnAddOutPresDetails.Enabled = true;
                 btnModifyOutdoor.Enabled = true;
             }
@@ -636,8 +827,56 @@ namespace PharmaCare
             }
         }
 
+        /// <summary>
+        /// clears outdoor prescription details
+        /// </summary>
+        private void clearOutPrescriptionDetails()
+        {
+            txtOutDrugId.Text = null;
+            txtOutLink.Text = null;
+            txtOutDrug.Text = null;
+            txtOutDrugDose.Text = null;
+            txtOutFTime.Text = null;
+            txtOutLTime.Text = null;
+            txtOutTimesPerDay.Text = null;
+            txtOutDoseStatus.Text = null;
+        }
+
+        /// <summary>
+        /// adds to an outdoor prescription details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnAddOutPresDetails_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkDrugName = new SqlCommand("SELECT COUNT(*) FROM Drugs WHERE DrugName = @Name", conn);
+            checkDrugName.Parameters.AddWithValue("@Name", txtOutDrug.Text);
+
+            try
+            {
+                conn.Open();
+                int drugExists = (int)checkDrugName.ExecuteScalar();
+                if (drugExists > 0)
+                {
+                    txtOutDrug.ForeColor = Color.Black;
+                }
+                else
+                {
+                    txtOutDrug.ForeColor = Color.Red;
+                    btnAddOutPresDetails.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
             Details pres = new Details();
 
             if (!string.IsNullOrEmpty(txtOutDrug.Text + txtOutDrugDose.Text +
@@ -654,7 +893,8 @@ namespace PharmaCare
             try
             {
                 PrescriptionDB.insertPrescriptionDrugs(pres);
-                BindOutDrugDetailsToDGV();
+                BindDrugDetailsToOutdoorDGV();
+                clearOutPrescriptionDetails();
                 btnModifyOutdoor.Enabled = true;
             }
             catch (Exception)
@@ -663,9 +903,55 @@ namespace PharmaCare
                 throw;
             }
         }
-
+        /// <summary>
+        /// inserts an outdoor prescription
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnInsertOutdoor_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkPatientName = new SqlCommand("SELECT COUNT(*) FROM Patients WHERE Name = @Name", conn);
+            SqlCommand checkDoctorName = new SqlCommand("SELECT COUNT(*) FROM Doctors WHERE DoctorName = @DoctorName", conn);
+            checkPatientName.Parameters.AddWithValue("@Name", txtOutPatient.Text);
+            checkDoctorName.Parameters.AddWithValue("@DoctorName", txtOutDoctor.Text);
+
+            try
+            {
+                conn.Open();
+                int patientExists = (int)checkPatientName.ExecuteScalar();
+                int doctorExists = (int)checkDoctorName.ExecuteScalar();
+                if (patientExists > 0)
+                {
+                    txtOutPatient.ForeColor = Color.Black;
+                }
+                else
+                {
+                    txtOutPatient.ForeColor = Color.Red;
+                    btnInsertOutdoor.Enabled = true;
+                    return;
+                }
+
+                if (doctorExists > 0)
+                {
+                    txtOutDoctor.ForeColor = Color.Black;
+                }
+                else
+                {
+                    txtOutDoctor.ForeColor = Color.Red;
+                    btnInsertOutdoor.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
             Outdoor pres = new Outdoor();
             if (!string.IsNullOrEmpty(txtOutPresId.Text + txtOutPatient.Text + txtOutDoctor.Text +
                 txtOutDate.Text + txtOutPresStatus.Text))
@@ -706,9 +992,55 @@ namespace PharmaCare
                 throw ex;
             }
         }
-
+        /// <summary>
+        /// updates details of outdoor prescription
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnModifyOutdoor_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = PharmaCareDB.GetConnection();
+            SqlCommand checkPatientName = new SqlCommand("SELECT COUNT(*) FROM Patients WHERE Name = @Name", conn);
+            SqlCommand checkDoctorName = new SqlCommand("SELECT COUNT(*) FROM Doctors WHERE DoctorName = @DoctorName", conn);
+            checkPatientName.Parameters.AddWithValue("@Name", txtOutPatient.Text);
+            checkDoctorName.Parameters.AddWithValue("@DoctorName", txtOutDoctor.Text);
+
+            try
+            {
+                conn.Open();
+                int patientExists = (int)checkPatientName.ExecuteScalar();
+                int doctorExists = (int)checkDoctorName.ExecuteScalar();
+                if (patientExists > 0)
+                {
+                    txtOutPatient.ForeColor = Color.Black;
+                }
+                else
+                {
+                    txtOutPatient.ForeColor = Color.Red;
+                    btnModifyOutdoor.Enabled = true;
+                    return;
+                }
+
+                if (doctorExists > 0)
+                {
+                    txtOutDoctor.ForeColor = Color.Black;
+                }
+                else
+                {
+                    txtOutDoctor.ForeColor = Color.Red;
+                    btnModifyOutdoor.Enabled = true;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
             Outdoor pres = new Outdoor();
 
             if (validateInt(txtOutPresId.Text) && !string.IsNullOrEmpty(txtOutPatient.Text + txtOutDoctor.Text +
@@ -741,14 +1073,22 @@ namespace PharmaCare
                 throw ex;
             }
         }
-
+        /// <summary>
+        /// clears prescription and details on outdoor prescriptions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnClearOutdoor_Click(object sender, EventArgs e)
         {
             clearOutPrescription();
             btnInsertOutdoor.Enabled = true;
             btnModifyOutdoor.Enabled = false;
         }
-
+        /// <summary>
+        /// Checks cocktail service on outdoor prescriptions details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnCheckOutCocktail_Click(object sender, EventArgs e)
         {
             List<string> drugs = new List<string>();
@@ -827,6 +1167,9 @@ namespace PharmaCare
 
         }
 
+        /// <summary>
+        /// binds the drug details from query to the given datagrid
+        /// </summary>
         private void BindDrugDetailsToOutdoorDGV()
         {
             SqlConnection con = PharmaCareDB.GetConnection();
