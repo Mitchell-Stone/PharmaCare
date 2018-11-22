@@ -10,27 +10,40 @@
         </div>
         <div class="row">
             <p>This page is to assist with the preperation of patient prescriptions.
-                Use the buttons below to toggle between all active and non-verified prescriptions</p>
+                Use the buttons below to toggle between all prescription status types</p>
         </div>
         <div class="row">
-            <div class="mx-auto">
-                <asp:Button runat="server" Text="Show Active Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnActivePres" OnClick="btnActivePres_Click"/>
-                <asp:Button runat="server" Text="Show Non-Verified Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnNonVerifiedPres" OnClick="btnNonVerifiedPres_Click"/>
-                <asp:Button runat="server" Text="Show Cancelled Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnCancelledPres" OnClick="btnCancelledPres_Click"/>
-                <asp:Button runat="server" Text="Show On Hold Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnOnHoldPres" OnClick="btnOnHoldPres_Click"/>
-                <asp:Button runat="server" Text="Show Expired Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnExpiredPres" OnClick="btnExpiredPres_Click"/>
-                <asp:Button runat="server" Text="Show Cocktail Conflicts" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>              
-                <asp:Button runat="server" Text="Show All Prescriptions" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>
-                <asp:TextBox runat="server" ID="tbPrescriptionIdSearch" OnTextChanged="tbPrescriptionIdSearch_TextChanged"></asp:TextBox>
-                <asp:CompareValidator runat="server" ID="vvPrescriptionId" Type="Integer" ControlToValidate="tbPrescriptionIdSearch"
-                    ErrorMessage="A prescription ID must be entered" Operator="DataTypeCheck"></asp:CompareValidator>
+            <div class="col-6">
+                <div class="row">
+                    <div class="mx-auto">
+                        <asp:Button runat="server" Text="Show Active Prescriptions" 
+                            CssClass="btn btn-outline-primary m-2" ID="btnActivePres" OnClick="btnActivePres_Click"/>
+                        <asp:Button runat="server" Text="Show Non-Verified Prescriptions" 
+                            CssClass="btn btn-outline-primary m-2" ID="btnNonVerifiedPres" OnClick="btnNonVerifiedPres_Click"/>
+                        <asp:Button runat="server" Text="Show Cancelled Prescriptions" 
+                            CssClass="btn btn-outline-primary m-2" ID="btnCancelledPres" OnClick="btnCancelledPres_Click"/>
+                        <asp:Button runat="server" Text="Show On Hold Prescriptions" 
+                            CssClass="btn btn-outline-primary m-2" ID="btnOnHoldPres" OnClick="btnOnHoldPres_Click"/>
+                        <asp:Button runat="server" Text="Show Expired Prescriptions" 
+                            CssClass="btn btn-outline-primary m-2" ID="btnExpiredPres" OnClick="btnExpiredPres_Click"/>
+                        <asp:Button runat="server" Text="Show Cocktail Conflicts" 
+                            CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>              
+                        <asp:Button runat="server" Text="Show All Prescriptions" 
+                            CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>                
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="container">
+                    <div class="row">
+                        <p>Search by Prescription ID</p>
+                        <asp:TextBox runat="server" ID="tbPrescriptionIdSearch"></asp:TextBox>
+                        <asp:Button runat="server" Text="Search for Prescription" 
+                        CssClass="btn btn-outline-primary m-2" ID="btnSearchForPrescription" OnClick="btnSearchForPrescription_Click"/>
+                        <asp:CompareValidator runat="server" ID="vvPrescriptionId" Type="Integer" ControlToValidate="tbPrescriptionIdSearch"
+                        ErrorMessage="A prescription ID must be entered" Operator="DataTypeCheck"></asp:CompareValidator>                    
+                    </div>               
+                </div>
             </div>
         </div>
     </div>
