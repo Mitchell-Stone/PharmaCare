@@ -13,6 +13,7 @@ using System.Web.UI.WebControls;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 
 namespace PharmaCare
 {
@@ -48,9 +49,9 @@ namespace PharmaCare
         private void SetStatusDDL()
         {
             // Function that is called to bind the dropdown selection values
-            for (int i = 0; i < gvPrepList.Rows.Count; i++)
+            for (int i = 0; i < gvGroupPrepList.Rows.Count; i++)
             {
-                DropDownList ddl = (DropDownList)gvPrepList.Rows[i].FindControl("ddlStatusTypes");
+                DropDownList ddl = (DropDownList)gvGroupPrepList.Rows[i].FindControl("ddlStatusTypes");
                 ddl.DataSource = allStatus;
                 ddl.DataBind();
             }
@@ -90,58 +91,60 @@ namespace PharmaCare
             if (status == "All")
             {
                 //create a new data table and put the sql results into it
-                List<Preperation> prep = GetObjectList(PrescriptionDB.BindAllPrescriptionType());
+                List<Preperation> prepList = GetObjectList(PrescriptionDB.BindAllPrescriptionType());
 
-                var grpList = prep.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+                List<GroupPreperation> tempList = new List<GroupPreperation>();
+
+                var grpList = prepList.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
 
                 foreach (var grp in grpList)
                 {
-                    //dt.Rows.Add(grp);
+                    GroupPreperation prep = new GroupPreperation();
+                    prep.PrescriptionId = grp[0].PrescriptionId;
+                    prep.PrescriptionCount = grp.Count;
+                    prep.PrescriptionDate = grp[0].PrescriptionDate;
+                    prep.PrepList = grp;
+                    
+                    tempList.Add(prep);
                 }
 
                 //bind the data table to the grid view
-                gvPrepList.DataSource = grpList;
-                gvPrepList.DataBind();               
+                gvGroupPrepList.DataSource = tempList;
+                gvGroupPrepList.DataBind();
 
-                // Bind the selections to the dropdown list for each row
                 SetStatusDDL();
             }
             else
             {
                 //create a new data table and put the sql results into it
-                List<Preperation> prep = GetObjectList(PrescriptionDB.BindPrescriptionType(status));
+                List<Preperation> prepList = GetObjectList(PrescriptionDB.BindPrescriptionType(status));
 
-                var grpList = prep.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+                List<GroupPreperation> tempList = new List<GroupPreperation>();
+
+                var grpList = prepList.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+
+                foreach (var grp in grpList)
+                {
+                    GroupPreperation prep = new GroupPreperation();
+                    prep.PrescriptionId = grp[0].PrescriptionId;
+                    prep.PrescriptionCount = grp.Count;
+                    prep.PrescriptionDate = grp[0].PrescriptionDate;
+                    prep.PrepList = grp;
+
+                    tempList.Add(prep);
+                }
 
                 //bind the data table to the grid view
-                gvPrepList.DataSource = grpList;
-                gvPrepList.DataBind();
+                gvGroupPrepList.DataSource = tempList;
+                gvGroupPrepList.DataBind();
 
-                // Bind the selections to the dropdown list for each row
                 SetStatusDDL();
             }
         }
 
         protected void gvPrepList_RowCommand(object sender, GridViewCommandEventArgs c)
         {
-            // Managed the controls for the grid view
-            if (c.CommandName == "SetPrescriptionStatus")
-            {
-                //get the index of the row
-                int index = Convert.ToInt32(c.CommandArgument);
-
-                //get the value of the prescription id column cell
-                int prescriptionId = Convert.ToInt32(gvPrepList.Rows[index].Cells[0].Text);
-
-                DropDownList drop = gvPrepList.Rows[index].FindControl("ddlStatusTypes") as DropDownList;
-                string status = drop.Text;
-
-                //update the database
-                PrescriptionDB.UpdatePrescriptionStatus(prescriptionId, status);
-
-                //show the udpated data
-                BindToGridView(status);
-            }
+            
         }
 
         #region Controls for the selection type buttons
@@ -228,6 +231,41 @@ namespace PharmaCare
             {
                 Console.WriteLine("No value entered");
             }         
+        }
+
+        protected void gvGroupPrepList_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "ViewPrescription")
+            {
+                //get the index of the row
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                //get the value of the prescription id column cell
+                int prescriptionId = Convert.ToInt32(gvGroupPrepList.Rows[index].Cells[0].Text);
+
+                DataTable dt = PrescriptionDB.BindPrescriptionById(prescriptionId);
+
+                gvPrepList.DataSource = dt;
+                gvPrepList.DataBind();
+            }
+            // Managed the controls for the grid view
+            if (e.CommandName == "SetPrescriptionStatus")
+            {
+                //get the index of the row
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                //get the value of the prescription id column cell
+                int prescriptionId = Convert.ToInt32(gvPrepList.Rows[index].Cells[0].Text);
+
+                DropDownList drop = gvPrepList.Rows[index].FindControl("ddlStatusTypes") as DropDownList;
+                string status = drop.Text;
+
+                //update the database
+                PrescriptionDB.UpdatePrescriptionStatus(prescriptionId, status);
+
+                //show the udpated data
+                BindToGridView(status);
+            }
         }
     }
 }
