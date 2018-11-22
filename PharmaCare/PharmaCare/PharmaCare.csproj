@@ -55,6 +55,8 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -78,6 +80,12 @@
     <Content Include="App_Data\PharmaCareDB_log.ldf">
       <DependentUpon>PharmaCareDB.mdf</DependentUpon>
     </Content>
+    <None Include="Connected Services\CocktailServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\CocktailServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\CocktailServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -103,6 +111,13 @@
     <Content Include="SearchPrescriptions.aspx" />
     <Content Include="PreparationList.aspx" />
     <Content Include="PrintLabels.aspx" />
+    <None Include="Connected Services\CocktailServiceReference\CocktailService.wsdl" />
+    <None Include="Connected Services\CocktailServiceReference\CocktailService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CocktailServiceReference\CocktailService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -159,6 +174,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\CocktailServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\HospitalDB.cs" />
     <Compile Include="Models\Nurse.cs" />
@@ -244,6 +264,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\CocktailServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

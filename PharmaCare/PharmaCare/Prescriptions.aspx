@@ -191,6 +191,7 @@
                 OnSelectedIndexChanged="dgvAddPrescriptionDetails_SelectedIndexChanged" OnPreRender="dgvAddPrescriptionDetails_PreRender">
                 <Columns>
                     <asp:BoundField DataField="DrugDetailsId" HeaderText="ID" />
+                    <asp:BoundField DataField="LinkId" HeaderText="Link" />
                     <asp:BoundField DataField="DrugName" HeaderText="Drug" />
                     <asp:BoundField DataField="DrugForm" HeaderText="Drug Form" />
                     <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose(mg)" />
@@ -214,6 +215,7 @@
         <div class="row">
             <div class="col-md-4">
                 <asp:Label runat="server" ID="txtDrugDetailsId" CssClass="d-none"></asp:Label>
+                <asp:Label runat="server" ID="txtLink" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Drug:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="PresDrugID" ValidationGroup="InValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvDrugID" runat="server" ErrorMessage="Drug is required"
@@ -338,7 +340,8 @@
                  AutoGenerateSelectButton="true" OnRowDataBound="dgvOutdoorDrugDetails_RowDataBound" 
                 OnSelectedIndexChanged="dgvOutdoorDrugDetails_SelectedIndexChanged" OnPreRender="dgvOutdoorDrugDetails_PreRender">
                 <Columns>
-                    <asp:BoundField DataField="DrugDetailsId" HeaderText="ID" />
+                    <asp:BoundField DataField="DrugDetailsId" HeaderText="Details ID" />
+                    <asp:BoundField DataField="LinkId" HeaderText="Link ID" />
                     <asp:BoundField DataField="DrugName" HeaderText="Drug" />
                     <asp:BoundField DataField="DrugForm" HeaderText="Drug Form" />
                     <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose(mg)" />
@@ -361,6 +364,7 @@
         <div class="row">
             <div class="col-md-4">
                 <asp:Label runat="server" ID="txtOutDrugId" CssClass="d-none"></asp:Label>
+                <asp:Label runat="server" ID="txtOutLink" CssClass="d-none"></asp:Label>
                 <label class="font-weight-bold">Drug:</label>
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtOutDrug" ValidationGroup="OutDrugValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvOutDrug" runat="server" ErrorMessage="Drug is required"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using PharmaCare.CocktailServiceReference;
 
 namespace PharmaCare.Models
 {
@@ -63,7 +64,7 @@ namespace PharmaCare.Models
         /// <returns></returns>
         public static SqlDataReader getDrugDetails(SqlConnection con, int PrescriptionId)
         {
-            string selectStatement = "SELECT PrescriptionDrugs.PrescriptionId, Drugs.DrugName, Drugs.DrugForm, DrugDetails.DrugDetailsId, DrugDetails.DrugDose, " +
+            string selectStatement = "SELECT PrescriptionDrugs.LinkId, PrescriptionDrugs.PrescriptionId, Drugs.DrugName, Drugs.DrugForm, DrugDetails.DrugDetailsId, DrugDetails.DrugDose, " +
                 "DrugDetails.FirstTime, DrugDetails.LastTime, DrugDetails.TimesPerDay, DrugDetails.StatusOfDose " +
                 "FROM PrescriptionDrugs " +
                 "INNER JOIN Drugs ON PrescriptionDrugs.DrugId = Drugs.DrugId " +
@@ -74,55 +75,6 @@ namespace PharmaCare.Models
             {
                 selectCommand.Parameters.AddWithValue("@PrescriptionId", PrescriptionId);
                 return selectCommand.ExecuteReader();
-            }
-        }
-
-        /// <summary>
-        /// Used for checking if a drug is dangerous
-        /// </summary>
-        /// <param name="con"></param>
-        /// <param name="DrugName"></param>
-        /// <returns></returns>
-        public static Prescription checkCocktail(string DrugName)
-        {
-            //set connection to PharmaCareDB class GetConnection Method
-            SqlConnection connection = PharmaCareDB.GetConnection();
-            //select statement
-            string selectStatement = "SELECT * FROM Drugs WHERE DrugName = @DrugName";
-
-            SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
-
-            selectCommand.Parameters.AddWithValue("@DrugName", DrugName);
-            try
-            {
-                //open connection
-                connection.Open();
-
-                SqlDataReader DrugReader = selectCommand.ExecuteReader();
-
-                if (DrugReader.Read())
-                {
-                    Prescription pres = new Prescription();
-                    pres.DrugName = DrugReader["DrugName"].ToString();
-                    //pres.Danger = (int)DrugReader["Dangerous"];
-
-                    return pres;
-                }
-                else
-                {
-                    return null;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                //throw error
-                throw ex;
-            }
-            finally
-            {
-                //close the connection
-                connection.Close();
             }
         }
 
@@ -348,6 +300,39 @@ namespace PharmaCare.Models
             finally
             {
                 //close sql connection
+                connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// updates Prescription drugs and drug details
+        /// </summary>
+        /// <param name="pres"></param>
+        public static void updatePrescriptionDrugs(Details pres)
+        {
+            //set connection to PharmaCareDB class GetConnection method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+            //insert statement
+            string insertStatement = "UPDATE PrescriptionDrugs SET DrugId = (SELECT DrugId FROM Drugs Where DrugName = @DrugId) " +
+                "WHERE LinkId = @LinkId";
+
+
+            SqlCommand insertPresDrugsCommand = new SqlCommand(insertStatement, connection);
+            insertPresDrugsCommand.Parameters.AddWithValue("@LinkId", pres.LinkId);
+            insertPresDrugsCommand.Parameters.AddWithValue("@DrugId", pres.DrugName);
+            try
+            {
+                connection.Open();
+                insertPresDrugsCommand.ExecuteNonQuery();
+                updateDrugDetails(pres);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
                 connection.Close();
             }
         }
