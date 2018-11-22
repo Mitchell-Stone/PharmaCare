@@ -300,6 +300,8 @@
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtFilledDispatched" ValidationGroup="presOutValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvFilledDispatched" runat="server" ErrorMessage="Filled and Dispatched is required"
                     ControlToValidate="txtFilledDispatched" CssClass="text-danger float-right" ValidationGroup="presOutValidation"></asp:RequiredFieldValidator>
+                <asp:CompareValidator ID="cvFilledDispatched" runat="server"  Operator="DataTypeCheck" Type="Integer" CssClass="text-danger float-right"
+                ControlToValidate="txtFilledDispatched" ErrorMessage="Value must be a whole number"></asp:CompareValidator>
             </div>
             <div class="col-md-4">
                 <label class="font-weight-bold">Date Dispatched:</label>
@@ -326,6 +328,8 @@
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtToFill" ValidationGroup="presOutValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvToFill" runat="server" ErrorMessage="To Fill is required"
                     ControlToValidate="txtToFill" CssClass="text-danger float-right" ValidationGroup="presOutValidation"></asp:RequiredFieldValidator>
+                <asp:RegularExpressionValidator ID="revToFill" runat="server" ErrorMessage="To Fill length must be between 6 and 10"
+                    ValidationExpression="^[a-zA-Z]{5,10}$" CssClass="text-danger float-right" ControlToValidate="txtToFill"></asp:RegularExpressionValidator>
             </div>
         </div>
         <div class="row col-md">
