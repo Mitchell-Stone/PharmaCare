@@ -10,21 +10,21 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceholder" runat="server">
     <h1>Outdoor Patient Prescription Page</h1>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <label class="float-left">Search Patient : </label>
             <asp:TextBox ID="txtSearchPatient" runat="server" CssClass="float-center"></asp:TextBox>
             <asp:Button ID="btnFindPatient" runat="server" Text="Find Patient" CssClass="right"/>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-12">
             <label class="float-left">Search Prescription by ID : </label>
             <asp:TextBox ID="txtFindPrescription" runat="server" CssClass="float-none"></asp:TextBox>
-            <asp:Button ID="btnFindPrescription" runat="server" Text="Find Prescription" CssClass="float-right" />            
+            <asp:Button ID="btnFindPrescription" runat="server" Text="Find Prescription" CssClass="right" />            
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-8">
             <label> First Name : </label>
             <asp:TextBox ID="txtPFname" runat="server" ></asp:TextBox>
             <label> Last Name : </label>
