@@ -47,6 +47,9 @@
             </div>
         </div>
     </div>
+    <%-- <asp:GridView ID="gvPrepList1" runat="server" AutoPostBack="True" 
+        AutoGenerateColumns="true" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
+    </asp:GridView>--%>
     <asp:GridView ID="gvPrepList" runat="server" AutoPostBack="True" 
         AutoGenerateColumns="false" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
         <Columns>
