@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using PharmaCare.CocktailServiceReference;
+using System.Collections.Generic;
 
 namespace PharmaCare
 {
@@ -470,6 +472,27 @@ namespace PharmaCare
 
         protected void btnCheckCocktail_Click(object sender, EventArgs e)
         {
+            List<string> drugs = new List<string>();
+            for (int i = 0; i < dgvAddPrescriptionDetails.Rows.Count; i++)
+            {
+                string drugName;
+                drugName = Convert.ToString(dgvAddPrescriptionDetails.Rows[i].Cells[3].Text);
+                drugs.Add(drugName);
+                
+            }
+            string drugList = string.Join(";", drugs);
+            CocktailServiceClient client = new CocktailServiceClient();
+            
+            bool check = client.checkCocktail(drugList);
+            if (check == true)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Dangerous" + "');", true);
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Safe" + "');", true);
+            }
+            client.Close();
             btnModify.Enabled = true;
         }
 
@@ -515,6 +538,8 @@ namespace PharmaCare
             {
                 //drug details
                 pres.DrugdetailsId = Convert.ToInt32(txtDrugDetailsId.Text);
+                pres.PrescriptionID = Convert.ToInt32(presID.Text);
+                pres.LinkId = Convert.ToInt32(txtLink.Text);
                 pres.DrugName = PresDrugID.Text;
                 pres.DrugDose = PresDrugDose.Text;
                 pres.FirstTime = PresFirst.Text;
@@ -524,7 +549,7 @@ namespace PharmaCare
             }
             try
             {
-                PrescriptionDB.updateDrugDetails(pres);
+                PrescriptionDB.updatePrescriptionDrugs(pres);
                 BindDrugDetailsToDGV();
                 btnAddPresDetails.Enabled = true;
                 btnModify.Enabled = true;
@@ -559,12 +584,13 @@ namespace PharmaCare
             GridViewRow row = dgvAddPrescriptionDetails.SelectedRow;
             //populate text fields 
             txtDrugDetailsId.Text = row.Cells[1].Text;
-            PresDrugID.Text = row.Cells[2].Text;
-            PresDrugDose.Text = row.Cells[4].Text;
-            PresFirst.Text = row.Cells[5].Text;
-            PresLast.Text = row.Cells[6].Text;
-            PresTimesADay.Text = row.Cells[7].Text;
-            PresDoseStatus.Text = row.Cells[8].Text;
+            txtLink.Text = row.Cells[2].Text;
+            PresDrugID.Text = row.Cells[3].Text;
+            PresDrugDose.Text = row.Cells[5].Text;
+            PresFirst.Text = row.Cells[6].Text;
+            PresLast.Text = row.Cells[7].Text;
+            PresTimesADay.Text = row.Cells[8].Text;
+            PresDoseStatus.Text = row.Cells[9].Text;
             btnModify.Enabled = true;
             btnAddPresDetails.Enabled = false;
             btnEditPresDetails.Enabled = true;
@@ -589,6 +615,7 @@ namespace PharmaCare
             {
                 //drug details
                 pres.DrugdetailsId = Convert.ToInt32(txtOutDrugId.Text);
+                pres.LinkId = Convert.ToInt32(txtOutLink.Text);
                 pres.DrugName = txtOutDrug.Text;
                 pres.DrugDose = txtOutDrugDose.Text;
                 pres.FirstTime = txtOutFTime.Text;
@@ -598,7 +625,7 @@ namespace PharmaCare
             }
             try
             {
-                PrescriptionDB.updateDrugDetails(pres);
+                PrescriptionDB.updatePrescriptionDrugs(pres);
                 BindOutDrugDetailsToDGV();
                 btnAddOutPresDetails.Enabled = true;
                 btnModifyOutdoor.Enabled = true;
@@ -724,7 +751,27 @@ namespace PharmaCare
 
         protected void btnCheckOutCocktail_Click(object sender, EventArgs e)
         {
+            List<string> drugs = new List<string>();
+            for (int i = 0; i < dgvOutdoorDrugDetails.Rows.Count; i++)
+            {
+                string drugName;
+                drugName = Convert.ToString(dgvOutdoorDrugDetails.Rows[i].Cells[3].Text);
+                drugs.Add(drugName);
 
+            }
+            string drugList = string.Join(";", drugs);
+            CocktailServiceClient client = new CocktailServiceClient();
+
+            bool check = client.checkCocktail(drugList);
+            if (check == true)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Dangerous" + "');", true);
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Safe" + "');", true);
+            }
+            client.Close();
         }
 
         protected void DgvOutdoorPrescriptions_PreRender(object sender, EventArgs e)
@@ -824,13 +871,13 @@ namespace PharmaCare
             GridViewRow row = dgvOutdoorDrugDetails.SelectedRow;
             //populate text fields 
             txtOutDrugId.Text = row.Cells[1].Text;
-            txtOutPresId.Text = row.Cells[2].Text;
+            txtOutLink.Text = row.Cells[2].Text;
             txtOutDrug.Text = row.Cells[3].Text;
-            txtOutDrugDose.Text = row.Cells[4].Text;
-            txtOutFTime.Text = row.Cells[5].Text;
-            txtOutLTime.Text = row.Cells[6].Text;
-            txtOutTimesPerDay.Text = row.Cells[7].Text;
-            txtOutDoseStatus.Text = row.Cells[8].Text;
+            txtOutDrugDose.Text = row.Cells[5].Text;
+            txtOutFTime.Text = row.Cells[6].Text;
+            txtOutLTime.Text = row.Cells[7].Text;
+            txtOutTimesPerDay.Text = row.Cells[8].Text;
+            txtOutDoseStatus.Text = row.Cells[9].Text;
             btnModifyOutdoor.Enabled = true;
             btnAddOutPresDetails.Enabled = false;
             btnEditOutPresDetails.Enabled = true;
