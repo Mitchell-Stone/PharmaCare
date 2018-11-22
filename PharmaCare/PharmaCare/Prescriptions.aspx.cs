@@ -22,7 +22,9 @@ namespace PharmaCare
             btnModify.Enabled = false;
             btnModifyOutdoor.Enabled = false;
             btnEditPresDetails.Enabled = false;
-            btnEditPresDetails.Enabled = false;
+            btnEditOutPresDetails.Enabled = false;
+            btnAddPresDetails.Enabled = false;
+            btnAddOutPresDetails.Enabled = false;
         }
 
         /**GLOBAL PRESCRIPTION BUTTONS**/
@@ -270,17 +272,19 @@ namespace PharmaCare
         }
 
         /// <summary>
-        /// clear prescription 
+        /// clear indoor prescription 
         /// </summary>
         private void clearPrescription()
         {
             //prescription
+            presID.Text = null;
             PresPatientID.Text = null;
             PresDocID.Text = null;
             PresDate.Text = null;
             PresAddInfo.InnerText = null;
             PresStatus.Text = null;
             //details
+            txtDrugDetailsId.Text = null;
             PresDrugID.Text = null;
             PresDrugDose.Text = null;
             PresFirst.Text = null;
@@ -294,6 +298,36 @@ namespace PharmaCare
             txtNursingStationId.Text = null;
             dgvAddPrescriptionDetails.DataSource = null;
             dgvAddPrescriptionDetails.DataBind();
+        }
+        
+        /// <summary>
+        /// clear outdoor prescription 
+        /// </summary>
+        private void clearOutPrescription()
+        {
+            //prescription
+            txtOutPresId.Text = null;
+            txtOutPatient.Text = null;
+            txtOutDoctor.Text = null;
+            txtOutDate.Text = null;
+            txtOutPresDetails.InnerText = null;
+            txtOutPresStatus.Text = null;
+            //details
+            txtOutDrugId.Text = null;
+            txtOutDrug.Text = null;
+            txtOutDrugDose.Text = null;
+            txtOutFTime.Text = null;
+            txtOutLTime.Text = null;
+            txtOutTimesPerDay.Text = null;
+            txtOutDoseStatus.Text = null;
+            //outdoor
+            txtFilledDispatched.Text = null;
+            txtDateDispatched.Text = null;
+            txtTimeDispatched.Text = null;
+            txtInEmergency.Text = null;
+            txtToFill.Text = null;
+            dgvOutdoorDrugDetails.DataSource = null;
+            dgvOutdoorDrugDetails.DataBind();
         }
 
         /// <summary>
@@ -391,6 +425,7 @@ namespace PharmaCare
             BindDrugDetailsToDGV();
             btnInsert.Enabled = false;
             btnModify.Enabled = true;
+            btnAddPresDetails.Enabled = true;
         }
 
         private void BindDrugDetailsToDGV()
@@ -401,6 +436,26 @@ namespace PharmaCare
                 con.Open();
                 dgvAddPrescriptionDetails.DataSource = PrescriptionDB.getDrugDetails(con, Convert.ToInt32(presID.Text));
                 dgvAddPrescriptionDetails.DataBind();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        private void BindOutDrugDetailsToDGV()
+        {
+            SqlConnection con = PharmaCareDB.GetConnection();
+            try
+            {
+                con.Open();
+                dgvOutdoorDrugDetails.DataSource = PrescriptionDB.getDrugDetails(con, Convert.ToInt32(txtOutPresId.Text));
+                dgvOutdoorDrugDetails.DataBind();
             }
             catch (Exception)
             {
@@ -442,6 +497,7 @@ namespace PharmaCare
             {
                 PrescriptionDB.insertPrescriptionDrugs(pres);
                 BindDrugDetailsToDGV();
+                btnModify.Enabled = true;
             }
             catch (Exception)
             {
@@ -471,6 +527,7 @@ namespace PharmaCare
                 PrescriptionDB.updateDrugDetails(pres);
                 BindDrugDetailsToDGV();
                 btnAddPresDetails.Enabled = true;
+                btnModify.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -525,12 +582,59 @@ namespace PharmaCare
         /**OUTDOOR BUTTONS**/
         protected void btnEditOutPresDetails_Click(object sender, EventArgs e)
         {
+            Details pres = new Details();
 
+            if (validateInt(txtOutDrugId.Text) && !string.IsNullOrEmpty(txtOutDrug.Text + txtOutDrugDose.Text +
+                txtOutFTime.Text + txtOutLTime.Text + txtOutTimesPerDay.Text + txtOutDoseStatus.Text))
+            {
+                //drug details
+                pres.DrugdetailsId = Convert.ToInt32(txtOutDrugId.Text);
+                pres.DrugName = txtOutDrug.Text;
+                pres.DrugDose = txtOutDrugDose.Text;
+                pres.FirstTime = txtOutFTime.Text;
+                pres.LastTime = txtOutLTime.Text;
+                pres.TimesPerDay = txtOutTimesPerDay.Text;
+                pres.StatusOfDose = txtOutDoseStatus.Text;
+            }
+            try
+            {
+                PrescriptionDB.updateDrugDetails(pres);
+                BindOutDrugDetailsToDGV();
+                btnAddOutPresDetails.Enabled = true;
+                btnModifyOutdoor.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected void btnAddOutPresDetails_Click(object sender, EventArgs e)
         {
+            Details pres = new Details();
 
+            if (!string.IsNullOrEmpty(txtOutDrug.Text + txtOutDrugDose.Text +
+                txtOutFTime.Text + txtOutLTime.Text + txtOutTimesPerDay.Text + txtOutDoseStatus.Text))
+            {
+                pres.PrescriptionID = Convert.ToInt32(txtOutPresId.Text);
+                pres.DrugName = txtOutDrug.Text;
+                pres.Doses = txtOutDrugDose.Text;
+                pres.FirstTimeUse = txtOutFTime.Text;
+                pres.LastTimeUse = txtOutLTime.Text;
+                pres.FrequenseUseInADay = txtOutTimesPerDay.Text;
+                pres.DoseStatus = txtOutDoseStatus.Text;
+            }
+            try
+            {
+                PrescriptionDB.insertPrescriptionDrugs(pres);
+                BindOutDrugDetailsToDGV();
+                btnModifyOutdoor.Enabled = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         protected void btnInsertOutdoor_Click(object sender, EventArgs e)
@@ -562,7 +666,7 @@ namespace PharmaCare
                 if (pres != null)
                 {
                     PrescriptionDB.insertOutdoorPrescription(pres);
-                    //clearPrescription();
+                    clearOutPrescription();
                 }
                 else
                 {
@@ -601,7 +705,7 @@ namespace PharmaCare
             try
             {
                 PrescriptionDB.updateOutdoorPrescription(pres);
-                //clearPrescription();
+                clearOutPrescription();
                 btnInsertOutdoor.Enabled = true;
                 btnModifyOutdoor.Enabled = false;
             }
@@ -613,7 +717,9 @@ namespace PharmaCare
 
         protected void btnClearOutdoor_Click(object sender, EventArgs e)
         {
-
+            clearOutPrescription();
+            btnInsertOutdoor.Enabled = true;
+            btnModifyOutdoor.Enabled = false;
         }
 
         protected void btnCheckOutCocktail_Click(object sender, EventArgs e)
@@ -670,6 +776,8 @@ namespace PharmaCare
             BindDrugDetailsToOutdoorDGV();
             btnInsertOutdoor.Enabled = false;
             btnModifyOutdoor.Enabled = true;
+            btnAddOutPresDetails.Enabled = true;
+
         }
 
         private void BindDrugDetailsToOutdoorDGV()

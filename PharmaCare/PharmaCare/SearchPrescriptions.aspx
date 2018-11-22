@@ -31,7 +31,7 @@
             <asp:TextBox ID="txtPLname" runat="server" ></asp:TextBox>
         </div>   
     </div>
-        <div class="col-xl-12">            
+        <div class="table-responsive">            
             <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="False" 
                 AllowSorting="True"
                 CssClass="table table-bordered table-striped table-condensed"  CellPadding="4" ForeColor="#333333" GridLines="None" DataSourceID="SqlDataSource1">
