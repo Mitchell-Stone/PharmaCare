@@ -36,7 +36,8 @@ namespace PharmaCare
                 {
                     Session["New"] = txtUsername.Text;
                     //Response.Write("Password is correct");
-                    Response.Write("<script>alert('login successful');</script>");
+                    //Response.Write("<script>alert('login successful');</script>");
+                    Response.Redirect("Users.aspx");
                 }
                 else
                 {
