@@ -26,8 +26,8 @@ namespace PharmaCare.Models
             string query =
 
             "SELECT Patients.Name, CONCAT(IndoorPrescriptions.FloorNumber, ', ', IndoorPrescriptions.WingNumber, ', ', " +
-            "IndoorPrescriptions.RoomNumber) AS Ward, Drugs.DrugName, Prescription.DrugDose, " +
-            "Prescription.TimesPerDay, Prescription.FirstTime, Prescription.LastTime " +
+            "IndoorPrescriptions.RoomNumber) AS Ward, Drugs.DrugName, DrugDetails.DrugDose, " +
+            "DrugDetails.TimesPerDay, DrugDetails.FirstTime, DrugDetails.LastTime " +
 
             "FROM Prescription " +
 
@@ -39,13 +39,21 @@ namespace PharmaCare.Models
 
             "ON Prescription.PatientID = Patients.PatientID " +
 
-            "INNER JOIN Drugs " +
+            "INNER JOIN PrescriptionDrugs " +
 
-            "ON Prescription.DrugId = Drugs.DrugId " +
+            "ON PrescriptionDrugs.PrescriptionId = Prescription.PrescriptionId " +
+            
+            "INNER JOIN Drugs " +
+            
+            "On PrescriptionDrugs.DrugId = Drugs.DrugId " +
+            
+            "INNER JOIN DrugDetails " +
+            
+            "ON PrescriptionDrugs.LinkId = DrugDetails.LinkId " +
 
             "WHERE IndoorPrescriptions.NursingStationId = @NursingStationID " +
             
-            "AND Prescription.PrescriptionStatus = 'active' " +
+            "AND DrugDetails.StatusOfDose = 'Active' " +
             
             "ORDER BY Ward";
             
