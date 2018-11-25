@@ -47,38 +47,49 @@
             </div>
         </div>
     </div>
-    <%-- <asp:GridView ID="gvPrepList1" runat="server" AutoPostBack="True" 
-        AutoGenerateColumns="true" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
-    </asp:GridView>--%>
-    <asp:GridView ID="gvPrepList" runat="server" AutoPostBack="True" 
-        AutoGenerateColumns="false" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
-        <Columns>
-            <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID"
-                SortExpression="PrescriptionId"></asp:BoundField>
-            <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
-                SortExpression="PrescriptionDate"></asp:BoundField>
-            <asp:BoundField DataField="DrugName" HeaderText="Drug Name"
-                SortExpression="DrugName"></asp:BoundField>
-            <asp:BoundField DataField="DrugForm" HeaderText="Drug Form"
-                SortExpression="DrugForm"></asp:BoundField>
-            <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose (mg)"
-                SortExpression="DrugDose"></asp:BoundField>
-            <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day"
-                SortExpression="TimesPerDay"></asp:BoundField>
-            <asp:BoundField DataField="PrescriptionStatus" HeaderText="Status"
-                SortExpression="PrescriptionStatus"></asp:BoundField>
-            <asp:TemplateField HeaderText="Set Prescription Status">
-                <ItemTemplate>
-                    <asp:DropDownList runat="server" ID="ddlStatusTypes" AutoPostBack="false" 
-                        CssClass="form-control"></asp:DropDownList>                    
-                    <asp:Button runat="server" Text="Apply Status" CommandName="SetPrescriptionStatus" 
-                        CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
-                        CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnSetStatus"
-                        AutoPostBack="false"/>
-                </ItemTemplate>
-            </asp:TemplateField>
-        </Columns>
-    </asp:GridView>
+    <div>
+        <asp:GridView ID="gvPrepList" runat="server" AutoPostBack="True" 
+            AutoGenerateColumns="false" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
+            <Columns>
+                <asp:BoundField DataField="DrugName" HeaderText="Drug Name"
+                    SortExpression="DrugName"></asp:BoundField>
+                <asp:BoundField DataField="DrugForm" HeaderText="Drug Form"
+                    SortExpression="DrugForm"></asp:BoundField>
+                <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose (mg)"
+                    SortExpression="DrugDose"></asp:BoundField>
+                <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day"
+                    SortExpression="TimesPerDay"></asp:BoundField>
+                <asp:BoundField DataField="PrescriptionStatus" HeaderText="Status"
+                    SortExpression="PrescriptionStatus"></asp:BoundField>
+            </Columns>
+        </asp:GridView>
+        <asp:GridView ID="gvGroupPrepList" runat="server" AutoPostBack="True" 
+            AutoGenerateColumns="false" CssClass="table table-hover table-bordered"
+            OnRowCommand="gvGroupPrepList_RowCommand">
+            <Columns>           
+                <asp:BoundField DataField="PrescriptionId" HeaderText="Prescription ID"
+                    SortExpression="PrescriptionId"></asp:BoundField>
+                <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
+                    SortExpression="PrescriptionDate"></asp:BoundField>
+                <asp:BoundField DataField="PrescriptionCount" HeaderText="Prescription Count"
+                    SortExpression="PrescriptionCount"></asp:BoundField>
+                <asp:TemplateField HeaderText="Prescription Functions">
+                    <ItemTemplate>  
+                        <asp:Button runat="server" Text="View Prescription" CommandName="ViewPrescription" 
+                            CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
+                            CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnViewPrescription"
+                            AutoPostBack="false"/> 
+                        <asp:DropDownList runat="server" ID="ddlStatusTypes" AutoPostBack="false" 
+                            CssClass="form-control"></asp:DropDownList>
+                        <asp:Button runat="server" Text="Apply Status" CommandName="SetPrescriptionStatus" 
+                            CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
+                            CssClass="btn btn-outline-primary m-2 btn-md btn-block" ID="btnSetStatus"
+                            AutoPostBack="false"/>                                     
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+    </div>
     <asp:Label runat="server" ID="test"></asp:Label>
 </asp:Content>
 

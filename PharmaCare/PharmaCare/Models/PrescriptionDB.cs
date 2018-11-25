@@ -436,8 +436,7 @@ namespace PharmaCare.Models
 
             string sql = "SELECT PrescriptionStatus, Prescription.PrescriptionId, PrescriptionDate, " +
                 "DrugName, DrugForm, DrugDose, TimesPerDay " +
-                "FROM Prescription " +
-                "LEFT JOIN PrescriptionDrugs " +
+                "FROM Prescription " + "LEFT JOIN PrescriptionDrugs " +
                 "ON PrescriptionDrugs.PrescriptionId = Prescription.PrescriptionId " +
                 "LEFT JOIN Drugs " +
                 "ON Drugs.DrugId = PrescriptionDrugs.DrugId " +

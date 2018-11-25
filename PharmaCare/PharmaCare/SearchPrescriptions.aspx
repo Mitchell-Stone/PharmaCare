@@ -23,7 +23,7 @@
             <asp:Button ID="btnFindPrescription" runat="server" Text="Find Prescription" CssClass="right" />            
         </div>
     </div>
-        <div class="table-responsive">            
+        <div class="container">            
             <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="False" 
                 AllowSorting="True"
                 CssClass="table table-bordered table-striped table-condensed"  CellPadding="4" ForeColor="#333333" GridLines="None" DataSourceID="SqlDataSource1">
@@ -35,14 +35,12 @@
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"  />
                     <asp:BoundField DataField="IndoorEmergency" HeaderText="IndoorEmergency" SortExpression="IndoorEmergency" />
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="PrescriptionDate" SortExpression="PrescriptionDate" />
-                   
                     <asp:BoundField DataField="ToFill" HeaderText="ToFill" SortExpression="ToFill" />
                     <asp:BoundField DataField="DateDispatched" HeaderText="DateDispatched" SortExpression="DateDispatched" />
                     <asp:BoundField DataField="DrugId" HeaderText="DrugId" SortExpression="DrugId" />
                     <asp:BoundField DataField="DrugName" HeaderText="DrugName" SortExpression="DrugName" />
                     <asp:BoundField DataField="DrugForm" HeaderText="DrugForm" SortExpression="DrugForm"  />                  
                     <asp:BoundField DataField="DrugDose" HeaderText="DrugDose" SortExpression="DrugDose" />
-                   
                     <asp:BoundField DataField="PrescriptionStatus" HeaderText="PrescriptionStatus" SortExpression="PrescriptionStatus" />
                     <asp:BoundField DataField="DoctorID" HeaderText="DoctorID" SortExpression="DoctorID" />
                     
@@ -54,7 +52,15 @@
                     <asp:Parameter DefaultValue="Active" Name="status" Size="20" Type="String" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            
+            <asp:DetailsView ID="DetailsPrescription" runat="server" AllowPaging="True"  
+                AutoGenerateRows="False" CellPadding="4" DataKeyNames="id"   DataSourceID="SQLDrugDetails" >
+
+
+            </asp:DetailsView>
+
+
+            <asp:SqlDataSource ID="SQLDrugDetails" runat="server"></asp:SqlDataSource>
+
 
         </div>
 </asp:Content>
