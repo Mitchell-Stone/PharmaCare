@@ -49,7 +49,7 @@
     </div>
     <div>
         <asp:GridView ID="gvPrepList" runat="server" AutoPostBack="True" 
-            AutoGenerateColumns="false" CssClass="table table-hover table-bordered" OnRowCommand="gvPrepList_RowCommand">
+            AutoGenerateColumns="false" CssClass="table table-hover table-bordered">
             <Columns>
                 <asp:BoundField DataField="DrugName" HeaderText="Drug Name"
                     SortExpression="DrugName"></asp:BoundField>

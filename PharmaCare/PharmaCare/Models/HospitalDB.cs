@@ -1,4 +1,11 @@
-﻿using System.Data.SqlClient;
+﻿/*
+ *      Date Created = 27th October 2018
+ *      Created By = 
+ *      Purpose = This class manages the connection to the TAFE internal database
+ *      Bugs = No known bugs
+ */
+
+using System.Data.SqlClient;
 
 namespace PharmaCare.Models
 {

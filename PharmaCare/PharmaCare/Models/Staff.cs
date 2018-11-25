@@ -1,7 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿/*
+ *      Date Created = 30th October 2018
+ *      Created By = 
+ *      Purpose = This is the model for staff object creation
+ *      Bugs = No known bugs
+ */
+
 
 namespace PharmaCare.Models
 {

@@ -1,12 +1,18 @@
-﻿using System;
-using System.Linq;
+﻿/*
+ *      Date Created = 20th October 2018
+ *      Created By = Mitchell Stone: 451381461
+ *      Purpose = This is the master page for the entire site and manages the header and footer content for each page
+ *      Bugs = No known bugs
+ */
+
+using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace PharmaCare
 {
-    public partial class Site : System.Web.UI.MasterPage
+    public partial class Site : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

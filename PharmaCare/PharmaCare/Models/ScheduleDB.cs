@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ *      Date Created = 30th October 2018
+ *      Created By = 
+ *      Purpose = This is the model for database interaction and returns data for the schedule page
+ *      Bugs = No known bugs
+ */
+
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI.WebControls;
 
 namespace PharmaCare.Models

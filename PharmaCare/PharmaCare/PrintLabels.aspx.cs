@@ -1,14 +1,21 @@
-﻿using PharmaCare.Models;
+﻿/*
+ *      Date Created = 15th Novemeber 2018
+ *      Created By = Mitchell Stone: 451381461
+ *      Purpose = The Print Labes page displays all the currently active prescriptions so they can be printed.
+ *      Bugs = No known bugs
+ */
+ 
+using PharmaCare.Models;
 using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace PharmaCare
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class WebForm1 : Page
     {
+        // The Load Page function
         protected void Page_Load(object sender, EventArgs e)
         {
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
@@ -19,6 +26,7 @@ namespace PharmaCare
             }                
         }
 
+        // Binds the data returned from the SQL query and binds it to the grid view
         private void BindToGridView()
         {
             DataTable dt = PrescriptionDB.LabelsToPrint();
@@ -26,6 +34,7 @@ namespace PharmaCare
             gvLabelList.DataBind();
         }
 
+        // Gathers the data from the grid view row when a button is selected on that row
         protected void gvLabelList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "ViewLabel")
@@ -41,6 +50,7 @@ namespace PharmaCare
                 int drugDose = Convert.ToInt32(gvLabelList.Rows[index].Cells[4].Text);
                 int timesPerDay = Convert.ToInt32(gvLabelList.Rows[index].Cells[5].Text);
 
+                // Populate the example image of the label
                 lblDoctorName.Text = String.Format("Subscribing Doctor: Dr {0}", doctorName);
                 lblPatientId.Text = String.Format("Patient ID: {0}", patientId);
                 lblPatientName.Text = String.Format("Patient Name: {0}", patientName);

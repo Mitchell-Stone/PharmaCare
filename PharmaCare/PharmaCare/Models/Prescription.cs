@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+﻿/*
+ *      Date Created = 29th October 2018
+ *      Created By = 
+ *      Purpose = This is the model for the creation of prescription objects
+ *      Bugs = No known bugs
+ */
 
 namespace PharmaCare.Models
 {
