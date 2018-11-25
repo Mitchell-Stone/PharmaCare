@@ -1,7 +1,7 @@
 ﻿/*
  *      Date Created = 1st November 2018
- *      Created By = 
- *      Purpose = 
+ *      Created By = Kyle
+ *      Purpose = To interact with the ScheduleDB Class and return data.
  *      Bugs = No known bugs
  */
 
@@ -19,6 +19,7 @@ namespace PharmaCare
         {
             if (!IsPostBack)
             {
+                // Call user defined method
                 NursingStationID = ddlNurseStations.SelectedValue;
                 ScheduleDB BindData = new ScheduleDB(NursingStationID, scheduleList);
             }
@@ -31,6 +32,7 @@ namespace PharmaCare
 
         protected void ddlNurseStations_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Call user defined method
             NursingStationID = ddlNurseStations.SelectedValue;
             ScheduleDB BindData = new ScheduleDB(NursingStationID, scheduleList);
         }
