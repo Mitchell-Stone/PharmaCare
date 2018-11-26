@@ -1,0 +1,6 @@
+C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.dll.config
+C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.dll
+C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\bin\PharmaCare.pdb
+C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\obj\Release\PharmaCare.csproj.CoreCompileInputs.cache
+C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\obj\Release\PharmaCare.dll
+C:\Users\0111005906\Desktop\PharmaCare\PharmaCare\PharmaCare\obj\Release\PharmaCare.pdb
