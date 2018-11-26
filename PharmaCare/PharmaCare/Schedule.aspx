@@ -3,7 +3,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceholder" runat="server">
     <h1>Administer Drug Schedule</h1>
-    <h2>Select a nursing station:</h2>
 
     <%-- This dropdown list is so you can filter the schedule by nursing station --%>
     <asp:DropDownList ID="ddlNurseStations" runat="server" AutoPostBack="True" 
