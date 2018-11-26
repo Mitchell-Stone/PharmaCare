@@ -25,7 +25,7 @@
     </asp:DataGrid>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
 
-    <asp:Button ID="btnPrintbtn" runat="server" Text="Print" OnClientClick="javascript:window.print();" />
+    <asp:Button ID="btnPrintbtn" runat="server" CssClass="btn btn-outline-primary m-2" Text="Print" OnClientClick="javascript:window.print();" />
 
 
 </asp:Content>
