@@ -1,6 +1,6 @@
 ﻿/*
  *      Date Created = 29th October 2018
- *      Created By = 
+ *      Created By = Kaitlyn: 450950837
  *      Purpose = This is the model for the creation of prescription objects
  *      Bugs = No known bugs
  */
