@@ -259,9 +259,9 @@ namespace PharmaCare
                 int index = Convert.ToInt32(e.CommandArgument);
 
                 //get the value of the prescription id column cell
-                int prescriptionId = Convert.ToInt32(gvPrepList.Rows[index].Cells[0].Text);
+                int prescriptionId = Convert.ToInt32(gvGroupPrepList.Rows[index].Cells[0].Text);
 
-                DropDownList drop = gvPrepList.Rows[index].FindControl("ddlStatusTypes") as DropDownList;
+                DropDownList drop = gvGroupPrepList.Rows[index].FindControl("ddlStatusTypes") as DropDownList;
                 string status = drop.Text;
 
                 //update the database

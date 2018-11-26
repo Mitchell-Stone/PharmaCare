@@ -15,7 +15,7 @@ using System.Drawing;
 
 namespace PharmaCare
 {
-    public partial class Prescriptions : System.Web.UI.Page
+    public partial class Prescriptions : Page
     {
         Patient patient = new Patient();
 
