@@ -1,0 +1,87 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" 
+    Inherits="PharmaCare.Site" ClientIDMode="Static" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head runat="server">
+        <title>PharmaCare</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="Content/site.css" rel="stylesheet" />
+        <script src="Scripts/jquery-1.9.1.min.js"></script>
+        <script src="Scripts/bootstrap.min.js"></script>
+        
+        <asp:ContentPlaceHolder ID="headPlaceholder" runat="server"></asp:ContentPlaceHolder>
+    </head>
+    <body>       
+        <div class="container">
+            <form id="form1" runat="server" class="form-horizontal content-page">            
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container-fluid">
+                    <!-- navbar body - nav content for toggling -->
+                    
+                    <div id="mainMenu">
+                       <h2 class="pharma">PharmaCare</h2>
+                        <ul id="navList" runat="server" class="nav">
+                            <li runat="server" class="dropdown">
+                                <asp:HyperLink NavigateUrl="~/#.aspx" runat="server" CssClass="selection-header">
+                                    Doctor 
+                                </asp:HyperLink>
+                                <div class="dropdown-block">
+                                    <asp:HyperLink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">Prescriptions</asp:HyperLink>
+                                </div>
+                            </li>
+                            <li runat="server" class="dropdown">
+                                <asp:HyperLink NavigateUrl="~/#.aspx" runat="server" CssClass="selection-header">
+                                    Pharmacist
+                                </asp:HyperLink>
+                                <div class="dropdown-block">
+                                    <asp:Hyperlink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">View Prescriptions</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/PrintLabels.aspx" runat="server" CssClass="dropdown-content">Print Labels</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/PreparationList.aspx" runat="server" CssClass="dropdown-content">Preperation List</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Distribution Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/NursingStationListPharma.aspx" runat="server" CssClass="dropdown-content">Nursing Station List</asp:Hyperlink>
+                                </div>
+                            </li>
+                            <li runat="server" class="dropdown">
+                                <asp:HyperLink NavigateUrl="~/#.aspx" runat="server" CssClass="selection-header">
+                                    Nurse
+                                </asp:HyperLink>
+                                <div class="dropdown-block">
+                                    <asp:Hyperlink NavigateUrl="~/Prescriptions.aspx" runat="server" CssClass="dropdown-content">View Prescriptions</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/Schedule.aspx" runat="server" CssClass="dropdown-content">Distribution Schedule</asp:Hyperlink>
+                                    <asp:Hyperlink NavigateUrl="~/#.aspx" runat="server" CssClass="dropdown-content">Nursing Station List</asp:Hyperlink>
+                                </div>
+                            </li>
+                            <li runat="server" class="dropdown">                               
+                                <asp:HyperLink NavigateUrl="~/#.aspx" runat="server" CssClass="selection-header">
+                                    Staff
+                                </asp:HyperLink>
+                                <div class="dropdown-block">
+                                    <asp:Hyperlink NavigateUrl="~/SearchPrescriptions.aspx" runat="server" CssClass="dropdown-content">Out Patient Prescriptions</asp:Hyperlink>
+                                </div>
+                            </li>   
+                            <li runat="server" class="dropdown">
+                                <asp:HyperLink NavigateUrl="~/LogIn.aspx" runat="server" CssClass="selection-header">
+                                    Log In
+                                </asp:HyperLink>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+                <hr />
+                <main class="row">
+                    <div class="col-sm-12">
+                        <asp:ContentPlaceHolder ID="mainPlaceholder" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </main>
+                <footer class="text-center text-capitalize">
+                    <label>copyright &copy; PharmaCare, all rights reserved.</label>
+                </footer>
+            </form>
+         </div>      
+    </body>
+</html>

@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿/*
+ *      Date Created = 27th October 2018
+ *      Created By = Kaitlyn: 450950837
+ *      Purpose = This is the model for Patient object creation
+ *      Bugs = No known bugs
+ */
 
 namespace PharmaCare.Models
 {

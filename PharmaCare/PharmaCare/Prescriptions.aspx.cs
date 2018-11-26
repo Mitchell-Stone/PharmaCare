@@ -1,8 +1,9 @@
 ﻿/*
- *      Student ID: 450950837
- *      Student Name: Kaitlyn Parsons
- *      Date: 22/11/2018
- *      Bugs: Nil
+ *      Date Created = 5/11/2018 
+ *      Created By = Kaitlyn Parsons: 450950837
+ *      Purpose = This page is to view all relevant prescriptions and prescription details for a given patient. 
+ *      It allows for editing, creating and cancelling prescriptions. 
+ *      Bugs = No known bugs
  */
 using PharmaCare.Models;
 using System;
@@ -15,7 +16,7 @@ using System.Drawing;
 
 namespace PharmaCare
 {
-    public partial class Prescriptions : System.Web.UI.Page
+    public partial class Prescriptions : Page
     {
         Patient patient = new Patient();
 
@@ -500,7 +501,7 @@ namespace PharmaCare
         }
 
         /// <summary>
-        /// 
+        /// Binds the prescription details to the data grid on the indoor prescription
         /// </summary>
         private void BindDrugDetailsToDGV()
         {
@@ -903,6 +904,7 @@ namespace PharmaCare
                 throw;
             }
         }
+
         /// <summary>
         /// inserts an outdoor prescription
         /// </summary>
@@ -992,6 +994,7 @@ namespace PharmaCare
                 throw ex;
             }
         }
+
         /// <summary>
         /// updates details of outdoor prescription
         /// </summary>
@@ -1073,6 +1076,7 @@ namespace PharmaCare
                 throw ex;
             }
         }
+
         /// <summary>
         /// clears prescription and details on outdoor prescriptions
         /// </summary>
@@ -1084,6 +1088,7 @@ namespace PharmaCare
             btnInsertOutdoor.Enabled = true;
             btnModifyOutdoor.Enabled = false;
         }
+
         /// <summary>
         /// Checks cocktail service on outdoor prescriptions details
         /// </summary>

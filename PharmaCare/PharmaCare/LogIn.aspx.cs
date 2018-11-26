@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿/*
+ *      Date Created = 27th October 2018
+ *      Created By = 
+ *      Purpose = This manages the PharmaCare Login Page
+ *      Bugs = No known bugs
+ */
+
+using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Configuration;
-using PharmaCare.Models;
 
 namespace PharmaCare
 {
-    public partial class WebForm5 : System.Web.UI.Page
+    public partial class WebForm5 : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

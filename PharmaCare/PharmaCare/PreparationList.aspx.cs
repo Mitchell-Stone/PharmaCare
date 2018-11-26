@@ -1,26 +1,24 @@
 ﻿/*
- *      Student ID = 451381461
- *      Student Name = Mitchell Stone
- *      Purpose = This page is capable of viewing all 
- * 
+ *      Date Created = 5th Novemeber 2018
+ *      Created By = Mitchell Stone: 451381461
+ *      Purpose = This page is to view all the prescriptions and their allocated drug. The status of the prescription can be altered from this window.
+ *      Bugs = Error when searching by id
  */
- 
+
 using PharmaCare.Models;
 using System;
-using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace PharmaCare
 {
-    public partial class WebForm2 : System.Web.UI.Page
+    public partial class WebForm2 : Page
     {
         // List of strings for status dropdown selectors
-        private List<string> allStatus = new List<string>()
+        private string[] allStatus = 
         {
             "--Select Status--",
             "Active",
@@ -33,6 +31,7 @@ namespace PharmaCare
             "Suspended"
         };
 
+        // The page load function
         protected void Page_Load(object sender, EventArgs e)
         {
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
@@ -46,6 +45,7 @@ namespace PharmaCare
             }    
         }
 
+        // Binds the list of available status types to the dropdown list shown in the gridview
         private void SetStatusDDL()
         {
             // Function that is called to bind the dropdown selection values
@@ -57,6 +57,7 @@ namespace PharmaCare
             }
         }
 
+        // Creates a list of Preperation objects to be displayed on the gridview
         private List<Preperation> GetObjectList(DataTable dt)
         {
             var list = (from rw in dt.AsEnumerable()
@@ -73,6 +74,8 @@ namespace PharmaCare
             return list;   
         }
 
+
+        // Gathers the presctription data from the database with a specific ID and then binds it to the gridview
         private void BindToGridView(int prescriptionId)
         {
             //create a new data table and put the sql results into it
@@ -85,18 +88,22 @@ namespace PharmaCare
             gvPrepList.DataBind();
         }
 
+        // Bind the prescription data from the database with a specific status and then binds it to the gridview
         private void BindToGridView(string status)
         {
             // Open the connection, populate the datasource and then bind it to the gridview
             if (status == "All")
             {
-                //create a new data table and put the sql results into it
+                // Gets the object list for all prescription types
                 List<Preperation> prepList = GetObjectList(PrescriptionDB.BindAllPrescriptionType());
 
+                // Create a temp list for temp storage
                 List<GroupPreperation> tempList = new List<GroupPreperation>();
 
+                // Groups all the items in the list together by their prescription ID
                 var grpList = prepList.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
 
+                // Iterate of the grplist and create the data needed for the intial selection table
                 foreach (var grp in grpList)
                 {
                     GroupPreperation prep = new GroupPreperation();
@@ -108,7 +115,7 @@ namespace PharmaCare
                     tempList.Add(prep);
                 }
 
-                //bind the data table to the grid view
+                //b Bind the data table to the group preperation grid view
                 gvGroupPrepList.DataSource = tempList;
                 gvGroupPrepList.DataBind();
 
@@ -116,7 +123,8 @@ namespace PharmaCare
             }
             else
             {
-                //create a new data table and put the sql results into it
+                // Performs the same function in the first part of the if statment but returns
+                // a list of prescriptions by a specific type
                 List<Preperation> prepList = GetObjectList(PrescriptionDB.BindPrescriptionType(status));
 
                 List<GroupPreperation> tempList = new List<GroupPreperation>();
@@ -139,12 +147,7 @@ namespace PharmaCare
                 gvGroupPrepList.DataBind();
 
                 SetStatusDDL();
-            }
-        }
-
-        protected void gvPrepList_RowCommand(object sender, GridViewCommandEventArgs c)
-        {
-            
+            }   
         }
 
         #region Controls for the selection type buttons
@@ -153,6 +156,9 @@ namespace PharmaCare
         {
             //bind the data to the gridview datasource
             BindToGridView("Active");
+
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Active Prescriptions";
@@ -163,6 +169,9 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("Non-Verified");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Non-Verified Prescriptions";
         }
@@ -171,6 +180,9 @@ namespace PharmaCare
         {
             //bind the data to the gridview datasource
             BindToGridView("Cancelled");
+
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Cancelled Prescriptions";
@@ -181,6 +193,9 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("On Hold");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying On-Hold Prescriptions";
         }
@@ -189,6 +204,9 @@ namespace PharmaCare
         {
             //bind the data to the gridview datasource
             BindToGridView("Expired");
+
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Expired Prescriptions";
@@ -199,6 +217,9 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("Cocktail Warning");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Cocktail Conflicted Prescriptions";;
         }
@@ -208,15 +229,18 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("All");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying All Prescriptions";
         }
 
         #endregion
 
+        // Conducts search for prescriptions by id number when number is entered into the text box
         protected void btnSearchForPrescription_Click(object sender, EventArgs e)
-        {
-            // Conducts search for prescriptions by id number when number is entered into the text box
+        {           
             try
             {
                 //get the id from the search box
@@ -233,18 +257,19 @@ namespace PharmaCare
             }         
         }
 
+        // Gathers the data about the prescription from the selected row when a row button is pressed
         protected void gvGroupPrepList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "ViewPrescription")
             {
-                //get the index of the row
+                // Get the index of the row
                 int index = Convert.ToInt32(e.CommandArgument);
 
-                //get the value of the prescription id column cell
+                // Get the value of the prescription id column cell
                 int prescriptionId = Convert.ToInt32(gvGroupPrepList.Rows[index].Cells[0].Text);
 
+                // Create a data table and bind it to the gridview
                 DataTable dt = PrescriptionDB.BindPrescriptionById(prescriptionId);
-
                 gvPrepList.DataSource = dt;
                 gvPrepList.DataBind();
             }
@@ -255,9 +280,9 @@ namespace PharmaCare
                 int index = Convert.ToInt32(e.CommandArgument);
 
                 //get the value of the prescription id column cell
-                int prescriptionId = Convert.ToInt32(gvPrepList.Rows[index].Cells[0].Text);
+                int prescriptionId = Convert.ToInt32(gvGroupPrepList.Rows[index].Cells[0].Text);
 
-                DropDownList drop = gvPrepList.Rows[index].FindControl("ddlStatusTypes") as DropDownList;
+                DropDownList drop = gvGroupPrepList.Rows[index].FindControl("ddlStatusTypes") as DropDownList;
                 string status = drop.Text;
 
                 //update the database

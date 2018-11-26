@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ *      Date Created = 30th October 2018
+ *      Created By = Kyle 
+ *      Purpose = This is the model for database interaction and returns data for the schedule page
+ *      Bugs = No known bugs
+ */
+
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI.WebControls;
 
 namespace PharmaCare.Models
@@ -15,7 +18,7 @@ namespace PharmaCare.Models
         {
             GetSchedule(NursingStationID, scheduleList);
         }
-
+        // User defined method for SQL query
         private void GetSchedule(string NursingStationID, DataGrid scheduleList)
         {
             scheduleList.DataSource = null;
@@ -57,12 +60,14 @@ namespace PharmaCare.Models
             
             "ORDER BY Ward";
             
+            // Using predefined method for DB connection
             string connection = ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString;
 
+            // Opening DB connection with query command and closing after use
             using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
-
+                // Adding SQL parameters and binding data
                 using (SqlCommand command = new SqlCommand(query, con))
                 {
                     command.Parameters.Add(new SqlParameter("@NursingStationID", NursingStationID));

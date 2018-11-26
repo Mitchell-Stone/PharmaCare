@@ -1,7 +1,13 @@
-﻿using System;
+﻿/*
+ *      Date Created = 29 October 2018
+ *      Created By = Mitchell Stone: 451381461
+ *      Purpose = This is the model that controls all interaction with the database to return data about prescritpions.
+ *      Bugs = No known bugs
+ */
+
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using PharmaCare.CocktailServiceReference;
 
 namespace PharmaCare.Models
 {
@@ -380,6 +386,7 @@ namespace PharmaCare.Models
             }
         }
 
+        // Returns the data for all Active prescriptions to be displayed for printing
         public static DataTable LabelsToPrint()
         {
             //create a new data table for the data returned from the query
@@ -427,6 +434,7 @@ namespace PharmaCare.Models
             }          
         }
 
+        // Returns a data table of all prescriptions by a specific type
         public static DataTable BindPrescriptionType(string status)
         {
             //create a new data table
@@ -513,6 +521,7 @@ namespace PharmaCare.Models
             }          
         }
 
+        // Returns ALL the prescription data needed for the preperation window
         public static DataTable BindAllPrescriptionType()
         {
             //create a data table to hold the data returned from the query
@@ -556,6 +565,7 @@ namespace PharmaCare.Models
             }
         }
 
+        // Updates the current status of a prescription
         public static void UpdatePrescriptionStatus(int prescriptionId, string status)
         {
             //open connection to the local database

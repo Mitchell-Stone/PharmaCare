@@ -1,10 +1,11 @@
-﻿using PharmaCare.Models;
+﻿/*
+ *      Date Created = 27th October 2018
+ *      Created By = 
+ *      Purpose = This page is used to display the nursing station list
+ *      Bugs = No known bugs
+ */
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Configuration;
 

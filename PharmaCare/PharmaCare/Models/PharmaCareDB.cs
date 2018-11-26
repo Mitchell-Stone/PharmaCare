@@ -1,4 +1,11 @@
-﻿using System.Configuration;
+﻿/*
+ *      Date Created = 27th October 2018
+ *      Created By = Mitchell Stone: 451381461
+ *      Purpose = This class manages the connection to the local database
+ *      Bugs = No known bugs
+ */
+
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace PharmaCare.Models

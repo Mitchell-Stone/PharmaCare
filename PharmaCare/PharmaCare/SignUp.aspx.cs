@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿/*
+ *      Date Created = 27th October 2018
+ *      Created By = 
+ *      Purpose = 
+ *      Bugs = No known bugs
+ */
+
+using System;
 
 namespace PharmaCare
 {

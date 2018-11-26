@@ -7,11 +7,10 @@
 using PharmaCare.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
 
 namespace PharmaCare
 {
@@ -22,6 +21,7 @@ namespace PharmaCare
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
             if (!IsPostBack)
             {
                // PresentDataInTheList("All");
@@ -33,29 +33,34 @@ namespace PharmaCare
             string search = txtSearchPatient.Text;
 
         }
-        /*private void PresentDataInTheList (string status)
-        {
-            SqlConnection con = PharmaCareDB.GetConnection();
-            List<string> tempList = new List<string>();
 
-            try
-            {
-                con.Open();
-                if (status == "All")
-                {
-                    SqlDataReader reader = PrescriptionDB.GetODPprescription(con, status);
-                    dgvPrescriptions.DataSource = reader;
-                    dgvPrescriptions.DataBind();
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
-        }*/
+        protected void dgvPrescriptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+        /*private void PresentDataInTheList (string status)
+{
+   SqlConnection con = PharmaCareDB.GetConnection();
+   List<string> tempList = new List<string>();
+
+   try
+   {
+       con.Open();
+       if (status == "All")
+       {
+           SqlDataReader reader = PrescriptionDB.GetODPprescription(con, status);
+           dgvPrescriptions.DataSource = reader;
+           dgvPrescriptions.DataBind();
+       }
+   }
+   catch (SqlException ex)
+   {
+       throw ex;
+   }
+   finally
+   {
+       con.Close();
+   }
+}*/
     }
 }

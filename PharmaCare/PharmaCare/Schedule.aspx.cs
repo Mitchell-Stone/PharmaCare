@@ -1,12 +1,12 @@
-﻿using PharmaCare.Models;
+﻿/*
+ *      Date Created = 1st November 2018
+ *      Created By = Kyle
+ *      Purpose = To interact with the ScheduleDB Class and return data.
+ *      Bugs = No known bugs
+ */
+
+using PharmaCare.Models;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace PharmaCare
@@ -17,10 +17,10 @@ namespace PharmaCare
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            btnPrintbtn.Visible = false;
+            if (ddlNurseStations.Items.FindByText("Please select a Nursing Station").Enabled == false)
             {
-                NursingStationID = ddlNurseStations.SelectedValue;
-                ScheduleDB BindData = new ScheduleDB(NursingStationID, scheduleList);
+                btnPrintbtn.Visible = true;
             }
         }
 
@@ -31,6 +31,10 @@ namespace PharmaCare
 
         protected void ddlNurseStations_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ddlNurseStations.Items.FindByText("Please select a Nursing Station").Enabled = false;
+            btnPrintbtn.Visible = true;
+            
+            // Call user defined method
             NursingStationID = ddlNurseStations.SelectedValue;
             ScheduleDB BindData = new ScheduleDB(NursingStationID, scheduleList);
         }
