@@ -8,8 +8,10 @@
     <%-- This dropdown list is so you can filter the schedule by nursing station --%>
     <asp:DropDownList ID="ddlNurseStations" runat="server" AutoPostBack="True" 
                         DataSourceID="NurseStationSource" DataTextField="NursingStationId" 
-                        DataValueField="NursingStationId" CssClass="form-control" OnSelectedIndexChanged="ddlNurseStations_SelectedIndexChanged"> <%-- %>OnSelectedIndexChanged="ddlNurseStations_SelectedIndexChanged"> --%>
-                    </asp:DropDownList>
+                        DataValueField="NursingStationId" CssClass="form-control" OnSelectedIndexChanged="ddlNurseStations_SelectedIndexChanged"
+                        EnableViewState="true" AppendDataboundItems="true"> <%-- %>OnSelectedIndexChanged="ddlNurseStations_SelectedIndexChanged"> --%>
+                        <asp:ListItem Selected="True" Value="0">Please select a Nursing Station</asp:ListItem>               
+    </asp:DropDownList>
                     <asp:SqlDataSource ID="NurseStationSource" runat="server" 
                         ConnectionString='<%$ ConnectionStrings:PharmaCareDB %>' 
                         SelectCommand="SELECT DISTINCT [NursingStationId] 
@@ -18,14 +20,8 @@
                     </asp:SqlDataSource>
 
     <%-- Might be an idea to use a grid to display the schedule for a 24 hour period --%>
-    <asp:DataGrid ID="scheduleList" runat="server" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" 
-        GridLines="Horizontal" Width="1031px" >
-        <AlternatingItemStyle BackColor="#F7F7F7" />
-        <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
-        <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
-        <ItemStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
-        <PagerStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" HorizontalAlign="Right" Mode="NumericPages" />
-        <SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
+    <asp:DataGrid ID="scheduleList" runat="server" AutoPostBack="True" 
+            AutoGenerateColumns="true" CssClass="table table-hover table-bordered">
     </asp:DataGrid>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
 
