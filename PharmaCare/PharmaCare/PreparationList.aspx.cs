@@ -18,7 +18,7 @@ namespace PharmaCare
     public partial class WebForm2 : Page
     {
         // List of strings for status dropdown selectors
-        private List<string> allStatus = new List<string>()
+        private string[] allStatus = 
         {
             "--Select Status--",
             "Active",
@@ -157,6 +157,9 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("Active");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Active Prescriptions";
         }     
@@ -165,6 +168,9 @@ namespace PharmaCare
         {
             //bind the data to the gridview datasource
             BindToGridView("Non-Verified");
+
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Non-Verified Prescriptions";
@@ -175,6 +181,9 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("Cancelled");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Cancelled Prescriptions";
         }
@@ -183,6 +192,9 @@ namespace PharmaCare
         {
             //bind the data to the gridview datasource
             BindToGridView("On Hold");
+
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying On-Hold Prescriptions";
@@ -193,6 +205,9 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("Expired");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Expired Prescriptions";
         }
@@ -202,6 +217,9 @@ namespace PharmaCare
             //bind the data to the gridview datasource
             BindToGridView("Cocktail Warning");
 
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
+
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Cocktail Conflicted Prescriptions";;
         }
@@ -210,6 +228,9 @@ namespace PharmaCare
         {
             //bind the data to the gridview datasource
             BindToGridView("All");
+
+            //clear the data from the gridview
+            gvGroupPrepList.DataSource = null;
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying All Prescriptions";
