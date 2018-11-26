@@ -2,7 +2,7 @@
  *      Date Created = 5th Novemeber 2018
  *      Created By = Mitchell Stone: 451381461
  *      Purpose = This page is to view all the prescriptions and their allocated drug. The status of the prescription can be altered from this window.
- *      Bugs = No known bugs
+ *      Bugs = Error when searching by id
  */
 
 using PharmaCare.Models;
