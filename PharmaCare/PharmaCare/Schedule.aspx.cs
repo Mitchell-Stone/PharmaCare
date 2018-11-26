@@ -18,6 +18,10 @@ namespace PharmaCare
         protected void Page_Load(object sender, EventArgs e)
         {
             btnPrintbtn.Visible = false;
+            if (ddlNurseStations.Items.FindByText("Please select a Nursing Station").Enabled == false)
+            {
+                btnPrintbtn.Visible = true;
+            }
         }
 
         protected void NurseStationSource_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
@@ -27,11 +31,9 @@ namespace PharmaCare
 
         protected void ddlNurseStations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(ddlNurseStations.SelectedIndex != 0)
-            {
-                ddlNurseStations.Items.FindByText("Please select a Nursing Station").Enabled = false;
-                btnPrintbtn.Visible = true;
-            }
+            ddlNurseStations.Items.FindByText("Please select a Nursing Station").Enabled = false;
+            btnPrintbtn.Visible = true;
+            
             // Call user defined method
             NursingStationID = ddlNurseStations.SelectedValue;
             ScheduleDB BindData = new ScheduleDB(NursingStationID, scheduleList);
