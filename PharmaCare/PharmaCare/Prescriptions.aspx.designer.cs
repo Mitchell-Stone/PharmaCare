@@ -382,6 +382,15 @@ namespace PharmaCare {
         protected global::System.Web.UI.WebControls.Button btnModify;
         
         /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancel;
+        
+        /// <summary>
         /// btnClear control.
         /// </summary>
         /// <remarks>
@@ -785,6 +794,15 @@ namespace PharmaCare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModifyOutdoor;
+        
+        /// <summary>
+        /// btnCancelOutdoor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelOutdoor;
         
         /// <summary>
         /// btnClearOutdoor control.

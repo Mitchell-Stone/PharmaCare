@@ -763,6 +763,43 @@ namespace PharmaCare.Models
             }
         }
 
+        /// <summary>
+        /// sets the prescription status to Cancelled
+        /// </summary>
+        /// <param name="id"></param>
+        public static void cancelPrescription(int id)
+        {
+            //set connection to PharmaCareDB class getConneciton method
+            SqlConnection connection = PharmaCareDB.GetConnection();
+
+            //update statement
+            string updateStatement = "UPDATE Prescription SET PrescriptionStatus = 'Cancelled' " +
+                "WHERE PrescriptionId = @PrescriptionId";
+
+            //update command
+            SqlCommand cancelCommand = new SqlCommand(updateStatement, connection);
+
+            cancelCommand.Parameters.AddWithValue("@PrescriptionId", id);
+
+            try
+            {
+                //open sql connection
+                connection.Open();
+                //execute update query
+                cancelCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                //throw sql error
+                throw ex;
+            }
+            finally
+            {
+                //close sql connection
+                connection.Close();
+            }
+        }
+
         public static SqlDataReader GetODPprescription(SqlConnection con, string status)
         {
             try
