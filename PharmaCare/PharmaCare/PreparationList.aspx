@@ -37,12 +37,17 @@
             </div>
             <div class="col-6">
                 <div class="container">
-                    <p>Search by Prescription ID:</p>
-                    <asp:TextBox runat="server" ID="tbPrescriptionIdSearch"></asp:TextBox>
-                    <asp:Button runat="server" Text="Search for Prescription" 
-                    CssClass="btn btn-outline-primary m-2" ID="btnSearchForPrescription" OnClick="btnSearchForPrescription_Click"/>
-                    <asp:CompareValidator runat="server" ID="vvPrescriptionId" Type="Integer" ControlToValidate="tbPrescriptionIdSearch"
-                    ErrorMessage="A prescription ID must be entered" Operator="DataTypeCheck"></asp:CompareValidator>  
+                    <div class="row">
+                        <p>Search by Prescription ID:</p>
+                        <asp:TextBox runat="server" ID="tbPrescriptionIdSearch"></asp:TextBox>
+                        <asp:Button runat="server" Text="Search for Prescription" 
+                        CssClass="btn btn-outline-primary m-2" ID="btnSearchForPrescription" OnClick="btnSearchForPrescription_Click"/>
+                    </div>
+                    <div class="row">
+                        <asp:Label runat="server" ID="txtWarning" CssClass="text-danger"></asp:Label>
+                        <asp:CompareValidator runat="server" ID="vvPrescriptionId" Type="Integer" ControlToValidate="tbPrescriptionIdSearch"
+                        ErrorMessage="A valid prescription ID must be entered" Operator="DataTypeCheck" CssClass="text-danger"></asp:CompareValidator>  
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -71,7 +76,7 @@
                     SortExpression="PrescriptionId"></asp:BoundField>
                 <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
                     SortExpression="PrescriptionDate"></asp:BoundField>
-                <asp:BoundField DataField="PrescriptionCount" HeaderText="Prescription Count"
+                <asp:BoundField DataField="PrescriptionCount" HeaderText="Drug Count"
                     SortExpression="PrescriptionCount"></asp:BoundField>
                 <asp:TemplateField HeaderText="Prescription Functions">
                     <ItemTemplate>  

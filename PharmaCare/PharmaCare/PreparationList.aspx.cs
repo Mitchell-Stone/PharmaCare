@@ -74,18 +74,38 @@ namespace PharmaCare
             return list;   
         }
 
-
         // Gathers the presctription data from the database with a specific ID and then binds it to the gridview
         private void BindToGridView(int prescriptionId)
         {
             //create a new data table and put the sql results into it
-            List<Preperation> prep = GetObjectList(PrescriptionDB.BindPrescriptionById(prescriptionId));
+            List<Preperation> prepList = GetObjectList(PrescriptionDB.BindPrescriptionById(prescriptionId));
 
-            var grpList = prep.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+            if (prepList.Count == 0)
+            {
+                txtWarning.Text = string.Format("No records found for Prescription with ID: {0}", prescriptionId);
+            }
+
+            // Create a temp list for temp storage
+            List<GroupPreperation> tempList = new List<GroupPreperation>();
+
+            var grpList = prepList.GroupBy(u => u.PrescriptionId).Select(grp => grp.ToList()).ToList();
+
+            foreach (var grp in grpList)
+            {
+                GroupPreperation prep = new GroupPreperation();
+                prep.PrescriptionId = grp[0].PrescriptionId;
+                prep.PrescriptionCount = grp.Count;
+                prep.PrescriptionDate = grp[0].PrescriptionDate;
+                prep.PrepList = grp;
+
+                tempList.Add(prep);
+            }
 
             //bind the data table to the grid view
-            gvPrepList.DataSource = grpList;
-            gvPrepList.DataBind();
+            gvGroupPrepList.DataSource = tempList;
+            gvGroupPrepList.DataBind();
+
+            
         }
 
         // Bind the prescription data from the database with a specific status and then binds it to the gridview
@@ -154,11 +174,15 @@ namespace PharmaCare
 
         protected void btnActivePres_Click(object sender, EventArgs e)
         {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
             //bind the data to the gridview datasource
             BindToGridView("Active");
 
             //clear the data from the gridview
-            gvGroupPrepList.DataSource = null;
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Active Prescriptions";
@@ -166,11 +190,15 @@ namespace PharmaCare
 
         protected void btnNonVerifiedPres_Click(object sender, EventArgs e)
         {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
             //bind the data to the gridview datasource
             BindToGridView("Non-Verified");
 
             //clear the data from the gridview
-            gvGroupPrepList.DataSource = null;
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Non-Verified Prescriptions";
@@ -178,11 +206,15 @@ namespace PharmaCare
 
         protected void btnCancelledPres_Click(object sender, EventArgs e)
         {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
             //bind the data to the gridview datasource
             BindToGridView("Cancelled");
 
             //clear the data from the gridview
-            gvGroupPrepList.DataSource = null;
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Cancelled Prescriptions";
@@ -190,11 +222,15 @@ namespace PharmaCare
 
         protected void btnOnHoldPres_Click(object sender, EventArgs e)
         {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
             //bind the data to the gridview datasource
             BindToGridView("On Hold");
 
             //clear the data from the gridview
-            gvGroupPrepList.DataSource = null;
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying On-Hold Prescriptions";
@@ -202,11 +238,15 @@ namespace PharmaCare
 
         protected void btnExpiredPres_Click(object sender, EventArgs e)
         {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
             //bind the data to the gridview datasource
             BindToGridView("Expired");
 
             //clear the data from the gridview
-            gvGroupPrepList.DataSource = null;
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Expired Prescriptions";
@@ -214,11 +254,15 @@ namespace PharmaCare
 
         protected void btnCocktailPres_Click(object sender, EventArgs e)
         {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
             //bind the data to the gridview datasource
             BindToGridView("Cocktail Warning");
 
             //clear the data from the gridview
-            gvGroupPrepList.DataSource = null;
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying Cocktail Conflicted Prescriptions";;
@@ -226,11 +270,15 @@ namespace PharmaCare
 
         protected void btnShowAll_Click(object sender, EventArgs e)
         {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
             //bind the data to the gridview datasource
             BindToGridView("All");
 
             //clear the data from the gridview
-            gvGroupPrepList.DataSource = null;
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
 
             //update the heading to indicate what is being shown
             table_header.Text = "Displaying All Prescriptions";
@@ -240,7 +288,14 @@ namespace PharmaCare
 
         // Conducts search for prescriptions by id number when number is entered into the text box
         protected void btnSearchForPrescription_Click(object sender, EventArgs e)
-        {           
+        {
+            //clear the warning text if it is being shown
+            txtWarning.Text = "";
+
+            //clear the data from the grid view
+            gvPrepList.DataSource = null;
+            gvPrepList.DataBind();
+
             try
             {
                 //get the id from the search box
