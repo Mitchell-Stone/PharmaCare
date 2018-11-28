@@ -78,6 +78,8 @@
                     SortExpression="PrescriptionDate"></asp:BoundField>
                 <asp:BoundField DataField="PrescriptionCount" HeaderText="Drug Count"
                     SortExpression="PrescriptionCount"></asp:BoundField>
+                <asp:BoundField DataField="PrescriptionStatus" HeaderText="Prescription Status"
+                    SortExpression="PrescriptionStatus"></asp:BoundField>
                 <asp:TemplateField HeaderText="Prescription Functions">
                     <ItemTemplate>  
                         <asp:Button runat="server" Text="View Prescription" CommandName="ViewPrescription" 
