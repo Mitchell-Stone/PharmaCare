@@ -301,8 +301,6 @@
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtFilledDispatched" ValidationGroup="presOutValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvFilledDispatched" runat="server" ErrorMessage="Filled and Dispatched is required"
                     ControlToValidate="txtFilledDispatched" CssClass="text-danger float-right" ValidationGroup="presOutValidation"></asp:RequiredFieldValidator>
-                <asp:CompareValidator ID="cvFilledDispatched" runat="server" Operator="DataTypeCheck" Type="Integer" CssClass="text-danger float-right"
-                    ControlToValidate="txtFilledDispatched" ErrorMessage="Value must be a whole number"></asp:CompareValidator>
             </div>
             <div class="col-md-4">
                 <label class="font-weight-bold">Date Dispatched:</label>
