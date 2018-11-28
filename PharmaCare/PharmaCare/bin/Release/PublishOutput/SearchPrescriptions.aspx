@@ -25,18 +25,16 @@
     </div>
         <div class="container">            
             <asp:GridView ID="dgvPrescriptions" runat="server" AutoGenerateColumns="False" 
-                AllowSorting="True"
-                CssClass="table table-bordered table-striped table-condensed"  CellPadding="4" ForeColor="#333333" GridLines="None" DataSourceID="SqlDataSource1">
+                AllowSorting="True" DataKeyNames="PrescriptionId"
+                CssClass="table table-bordered table-striped table-condensed"  CellPadding="4" ForeColor="#333333" GridLines="None" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="dgvPrescriptions_SelectedIndexChanged">
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />              
                 <Columns>
-                    <asp:BoundField DataField="OPDId" HeaderText="OPDId" ReadOnly="True" SortExpression="OPDId" InsertVisible="False" />
                     <asp:BoundField DataField="PrescriptionId" HeaderText="PrescriptionId" ReadOnly="true" InsertVisible="False" SortExpression="PrescriptionId"  />
                     <asp:BoundField DataField="PatientID" HeaderText="PatientID" ReadOnly="true" InsertVisible="False" SortExpression="PatientID"  />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"  />
                     <asp:BoundField DataField="DateDispatched" HeaderText="DateDispatched" SortExpression="DateDispatched" />
                     <asp:BoundField DataField="PrescriptionStatus" HeaderText="PrescriptionStatus" SortExpression="PrescriptionStatus" />
                     <asp:BoundField DataField="PrescriptionDate" HeaderText="PrescriptionDate" SortExpression="PrescriptionDate" />
-                    <asp:BoundField DataField="DoctorID" HeaderText="DoctorID" SortExpression="DoctorID" />
                     <asp:BoundField DataField="IndoorEmergency" HeaderText="IndoorEmergency" SortExpression="IndoorEmergency" />
                     
                 </Columns>                             
@@ -57,20 +55,20 @@
                     <asp:Parameter DefaultValue="Active" Name="status" Size="20" Type="String" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:DetailsView ID="DetailsPrescription" runat="server" AllowPaging="True"  
-                AutoGenerateRows="False" CellPadding="4" DataKeyNames="id"   DataSourceID="SQLDrugDetails" ForeColor="#333333" GridLines="None" >
+            <asp:DetailsView ID="DetailsPrescription" runat="server" AllowPaging="True"  DataKeyNames="PrescriptionId" 
+                AutoGenerateRows="False" CellPadding="4"   DataSourceID="SQLDrugDetails" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <CommandRowStyle BackColor="#E2DED6" Font-Bold="True" />
                 <EditRowStyle BackColor="#999999" />
                 <FieldHeaderStyle BackColor="#E9ECF1" Font-Bold="True" />
                 <Fields>
-                    <asp:BoundField DataField="PrescriptionId" HeaderText="PrescriptionId" ReadOnly="true" />
-                    <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true"/>
-                    <asp:BoundField DataField="DrugId" HeaderText="Drug Id" ReadOnly="true"/>
-                    <asp:BoundField DataField="DrugName" HeaderText="Drug Name" ReadOnly="true"/>
-                    <asp:BoundField DataField="DrugForm" HeaderText="Drug Form" ReadOnly="true"/>
-                    <asp:BoundField DataField="DrugDose" HeaderText="Drug Dose" ReadOnly="true"/>
-                    <asp:BoundField DataField="ToFill" HeaderText="To Fill" ReadOnly="true"/>
+                    <asp:BoundField DataField="ToFill" HeaderText="ToFill" SortExpression="ToFill" />
+                    <asp:BoundField DataField="DrugId" HeaderText="DrugId" SortExpression="DrugId"/>
+                    <asp:BoundField DataField="DrugName" HeaderText="DrugName" SortExpression="DrugName"/>
+                    <asp:BoundField DataField="DrugForm" HeaderText="DrugForm" SortExpression="DrugForm"/>
+                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"/>
+                    <asp:BoundField DataField="PrescriptionId" HeaderText="PrescriptionId" ReadOnly="true" InsertVisible="False" SortExpression="PrescriptionId"/>
+                    <asp:BoundField DataField="DrugDose" HeaderText="DrugDose" SortExpression="DrugDose"/>
                 </Fields>
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
                 <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -80,10 +78,11 @@
 
             </asp:DetailsView>
             
-            <asp:SqlDataSource ID="SQLDrugDetails" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT OPDPrescriptions.ToFill, Drugs.DrugId, Drugs.DrugName, Drugs.DrugForm, Patients.Name, Prescription.PrescriptionId, DrugDetails.DrugDose FROM OPDPrescriptions LEFT OUTER JOIN Prescription ON OPDPrescriptions.PrescriptionId = Prescription.PrescriptionId LEFT OUTER JOIN Patients ON Prescription.PatientID = Patients.PatientID LEFT OUTER JOIN PrescriptionDrugs ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId LEFT OUTER JOIN Drugs ON PrescriptionDrugs.DrugId = Drugs.DrugId LEFT OUTER JOIN DrugDetails ON DrugDetails.LinkId = PrescriptionDrugs.LinkId WHERE (Prescription.PrescriptionId = @status) ORDER BY Prescription.PrescriptionId"></asp:SqlDataSource>
-            <SelectParameters>
-                <asp:ControlParameter ID="DetailSelector" runat="server" ControlId="dgvPrescriptions" Name="PresctiptionId" PropertyName="SelectedValue" Type="String" />
-            </SelectParameters>
+            <asp:SqlDataSource ID="SQLDrugDetails" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT OPDPrescriptions.ToFill, Drugs.DrugId, Drugs.DrugName, Drugs.DrugForm, Patients.Name, Prescription.PrescriptionId, DrugDetails.DrugDose FROM OPDPrescriptions LEFT OUTER JOIN Prescription ON OPDPrescriptions.PrescriptionId = Prescription.PrescriptionId LEFT OUTER JOIN Patients ON Prescription.PatientID = Patients.PatientID LEFT OUTER JOIN PrescriptionDrugs ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId LEFT OUTER JOIN Drugs ON PrescriptionDrugs.DrugId = Drugs.DrugId LEFT OUTER JOIN DrugDetails ON DrugDetails.LinkId = PrescriptionDrugs.LinkId WHERE (Prescription.PrescriptionId = @status) ORDER BY Prescription.PrescriptionId">
+                <SelectParameters>
+                    <asp:ControlParameter ControlID="dgvPrescriptions" DefaultValue="11" Name="status" PropertyName="SelectedDataKey" Size="20" Type="String" />
+                </SelectParameters>
+            </asp:SqlDataSource>
 
         </div>
 </asp:Content>

@@ -14,35 +14,40 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <div class="row">
-                    <div class="mx-auto">
-                        <asp:Button runat="server" Text="Show Active Prescriptions" 
-                            CssClass="btn btn-outline-primary m-2" ID="btnActivePres" OnClick="btnActivePres_Click"/>
-                        <asp:Button runat="server" Text="Show Non-Verified Prescriptions" 
-                            CssClass="btn btn-outline-primary m-2" ID="btnNonVerifiedPres" OnClick="btnNonVerifiedPres_Click"/>
-                        <asp:Button runat="server" Text="Show Cancelled Prescriptions" 
-                            CssClass="btn btn-outline-primary m-2" ID="btnCancelledPres" OnClick="btnCancelledPres_Click"/>
-                        <asp:Button runat="server" Text="Show On Hold Prescriptions" 
-                            CssClass="btn btn-outline-primary m-2" ID="btnOnHoldPres" OnClick="btnOnHoldPres_Click"/>
-                        <asp:Button runat="server" Text="Show Expired Prescriptions" 
-                            CssClass="btn btn-outline-primary m-2" ID="btnExpiredPres" OnClick="btnExpiredPres_Click"/>
-                        <asp:Button runat="server" Text="Show Cocktail Conflicts" 
-                            CssClass="btn btn-outline-primary m-2" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>              
-                        <asp:Button runat="server" Text="Show All Prescriptions" 
-                            CssClass="btn btn-outline-primary m-2" ID="btnShowAll" OnClick="btnShowAll_Click"/>                
-                    </div>
+                <div class="row">                    
+                    <div class="col-6">
+                        <asp:Button runat="server" Text="Show Active" 
+                            CssClass="btn btn-outline-primary m-2 btn-block" ID="btnActivePres" OnClick="btnActivePres_Click"/>
+                        <asp:Button runat="server" Text="Show Non-Verified" 
+                            CssClass="btn btn-outline-primary m-2 btn-block" ID="btnNonVerifiedPres" OnClick="btnNonVerifiedPres_Click"/>                
+                        <asp:Button runat="server" Text="Show Cancelled" 
+                            CssClass="btn btn-outline-primary m-2 btn-block" ID="btnCancelledPres" OnClick="btnCancelledPres_Click"/> 
+                    </div>  
+                    <div class="col-6">
+                        <asp:Button runat="server" Text="Show On Hold" 
+                            CssClass="btn btn-outline-primary m-2 btn-block" ID="btnOnHoldPres" OnClick="btnOnHoldPres_Click"/>
+                        <asp:Button runat="server" Text="Show Expired" 
+                            CssClass="btn btn-outline-primary m-2 btn-block" ID="btnExpiredPres" OnClick="btnExpiredPres_Click"/>
+                        <asp:Button runat="server" Text="Show Cocktail" 
+                            CssClass="btn btn-outline-primary m-2 btn-block" ID="btnCocktailPres" OnClick="btnCocktailPres_Click"/>
+                    </div>                   
+                    <asp:Button runat="server" Text="Show All"
+                        CssClass="btn btn-outline-primary m-2 btn-block" ID="btnShowAll" OnClick="btnShowAll_Click"/>
                 </div>
             </div>
             <div class="col-6">
                 <div class="container">
                     <div class="row">
-                        <p>Search by Prescription ID</p>
+                        <p>Search by Prescription ID:</p>
                         <asp:TextBox runat="server" ID="tbPrescriptionIdSearch"></asp:TextBox>
                         <asp:Button runat="server" Text="Search for Prescription" 
                         CssClass="btn btn-outline-primary m-2" ID="btnSearchForPrescription" OnClick="btnSearchForPrescription_Click"/>
+                    </div>
+                    <div class="row">
+                        <asp:Label runat="server" ID="txtWarning" CssClass="text-danger"></asp:Label>
                         <asp:CompareValidator runat="server" ID="vvPrescriptionId" Type="Integer" ControlToValidate="tbPrescriptionIdSearch"
-                        ErrorMessage="A prescription ID must be entered" Operator="DataTypeCheck"></asp:CompareValidator>                    
-                    </div>               
+                        ErrorMessage="A valid prescription ID must be entered" Operator="DataTypeCheck" CssClass="text-danger"></asp:CompareValidator>  
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -71,7 +76,7 @@
                     SortExpression="PrescriptionId"></asp:BoundField>
                 <asp:BoundField DataField="PrescriptionDate" HeaderText="Prescription Date"
                     SortExpression="PrescriptionDate"></asp:BoundField>
-                <asp:BoundField DataField="PrescriptionCount" HeaderText="Prescription Count"
+                <asp:BoundField DataField="PrescriptionCount" HeaderText="Drug Count"
                     SortExpression="PrescriptionCount"></asp:BoundField>
                 <asp:TemplateField HeaderText="Prescription Functions">
                     <ItemTemplate>  
