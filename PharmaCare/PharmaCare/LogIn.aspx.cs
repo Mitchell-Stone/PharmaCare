@@ -28,17 +28,25 @@ namespace PharmaCare
             SqlCommand com = new SqlCommand(checkuser, conn);
             int temp = Convert.ToInt32(com.ExecuteScalar().ToString());
             conn.Close();
-            if(temp == 1)
+            if (temp == 1)
             {
-               conn.Open();
-                string checkpasswordQuery= "select Password from Staff where UserName ='" + txtUsername.Text + "'";
+                conn.Open();
+                string checkpasswordQuery = "select Password from Staff where UserName ='" + txtUsername.Text + "'";
                 SqlCommand passComm = new SqlCommand(checkpasswordQuery, conn);
                 string password = passComm.ExecuteScalar().ToString();
-                if(password == txtPassword.Text)
+                if (password == txtPassword.Text)
                 {
                     Session["New"] = txtUsername.Text;
-                    //Response.Write("Password is correct");
-                    Response.Write("<script>alert('login successful');</script>");
+
+                    string security = "select SecurityLevel from Staff where UserName = '" + txtUsername.Text + "'";
+                    if (security == "1")
+                    {
+                        Response.Redirect("LogIn.aspx");
+                    }
+                    else
+                        //Response.Write("Password is correct");
+                        //Response.Write("<script>alert('login successful');</script>");
+                        Response.Redirect("Users.aspx");
                 }
                 else
                 {
