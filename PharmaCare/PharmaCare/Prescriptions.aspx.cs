@@ -1239,6 +1239,23 @@ namespace PharmaCare
             }
         }
 
+        protected void btnCancelPres_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(presID.Text))
+            {
+                PrescriptionDB.cancelPrescription(Convert.ToInt32(presID.Text));
+            }
+        }
+
+        protected void btnCancelOutdoor_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtOutPresId.Text))
+            {
+                PrescriptionDB.cancelPrescription(Convert.ToInt32(txtOutPresId.Text));
+            }
+            
+        }
+
         /**END OUTDOOR BUTTONS**/
     }
 }

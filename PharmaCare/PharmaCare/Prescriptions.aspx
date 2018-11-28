@@ -186,8 +186,8 @@
         </div>
         <div class="row col-md table-responsive">
             <label class="font-weight-bold">Drug Details:</label><br />
-            <asp:GridView runat="server" ID="dgvAddPrescriptionDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover" 
-                AutoGenerateSelectButton="true" OnRowDataBound="dgvAddPrescriptionDetails_RowDataBound" 
+            <asp:GridView runat="server" ID="dgvAddPrescriptionDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover"
+                AutoGenerateSelectButton="true" OnRowDataBound="dgvAddPrescriptionDetails_RowDataBound"
                 OnSelectedIndexChanged="dgvAddPrescriptionDetails_SelectedIndexChanged" OnPreRender="dgvAddPrescriptionDetails_PreRender">
                 <Columns>
                     <asp:BoundField DataField="DrugDetailsId" HeaderText="ID" />
@@ -199,7 +199,7 @@
                     <asp:BoundField DataField="LastTime" HeaderText="Last Time" />
                     <asp:BoundField DataField="TimesPerDay" HeaderText="Times Per Day" />
                     <asp:BoundField DataField="StatusOfDose" HeaderText="Dose Status" />
-                    
+
                 </Columns>
             </asp:GridView>
         </div>
@@ -208,6 +208,7 @@
                 <asp:Button runat="server" Text="Check Cocktail" CssClass="btn btn-outline-primary m-2" ID="btnCheckCocktail" OnClick="btnCheckCocktail_Click" />
                 <asp:Button runat="server" Text="Create" CssClass="btn btn-outline-primary m-2" ID="btnInsert" OnClick="btnInsertPres_Click" ValidationGroup="presValidation" />
                 <asp:Button runat="server" Text="Modify" CssClass="btn btn-outline-primary m-2" ID="btnModify" OnClick="btnModifyPres_Click" ValidationGroup="presValidation" />
+                <asp:Button runat="server" Text="Cancel" CssClass="btn btn-outline-primary m-2" ID="btnCancel" OnClick="btnCancelPres_Click" />
                 <asp:Button runat="server" Text="Clear" CssClass="btn btn-outline-primary m-2" ID="btnClear" OnClick="btnClearPres_Click" />
             </div>
         </div>
@@ -300,8 +301,8 @@
                 <asp:TextBox runat="server" CssClass="float-right" ID="txtFilledDispatched" ValidationGroup="presOutValidation"></asp:TextBox><br />
                 <asp:RequiredFieldValidator ID="rfvFilledDispatched" runat="server" ErrorMessage="Filled and Dispatched is required"
                     ControlToValidate="txtFilledDispatched" CssClass="text-danger float-right" ValidationGroup="presOutValidation"></asp:RequiredFieldValidator>
-                <asp:CompareValidator ID="cvFilledDispatched" runat="server"  Operator="DataTypeCheck" Type="Integer" CssClass="text-danger float-right"
-                ControlToValidate="txtFilledDispatched" ErrorMessage="Value must be a whole number"></asp:CompareValidator>
+                <asp:CompareValidator ID="cvFilledDispatched" runat="server" Operator="DataTypeCheck" Type="Integer" CssClass="text-danger float-right"
+                    ControlToValidate="txtFilledDispatched" ErrorMessage="Value must be a whole number"></asp:CompareValidator>
             </div>
             <div class="col-md-4">
                 <label class="font-weight-bold">Date Dispatched:</label>
@@ -340,8 +341,8 @@
         </div>
         <div class="row col-md table-responsive">
             <label class="font-weight-bold">Drug Details:</label><br />
-            <asp:GridView runat="server" ID="dgvOutdoorDrugDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover" 
-                 AutoGenerateSelectButton="true" OnRowDataBound="dgvOutdoorDrugDetails_RowDataBound" 
+            <asp:GridView runat="server" ID="dgvOutdoorDrugDetails" AutoGenerateColumns="false" CssClass="table table-bordered table-hover"
+                AutoGenerateSelectButton="true" OnRowDataBound="dgvOutdoorDrugDetails_RowDataBound"
                 OnSelectedIndexChanged="dgvOutdoorDrugDetails_SelectedIndexChanged" OnPreRender="dgvOutdoorDrugDetails_PreRender">
                 <Columns>
                     <asp:BoundField DataField="DrugDetailsId" HeaderText="Details ID" />
@@ -361,6 +362,7 @@
                 <asp:Button runat="server" Text="Check Cocktail" CssClass="btn btn-outline-primary m-2" ID="btnCheckOutCocktail" OnClick="btnCheckOutCocktail_Click" />
                 <asp:Button runat="server" Text="Create" CssClass="btn btn-outline-primary m-2" ID="btnInsertOutdoor" OnClick="btnInsertOutdoor_Click" ValidationGroup="presOutValidation" />
                 <asp:Button runat="server" Text="Modify" CssClass="btn btn-outline-primary m-2" ID="btnModifyOutdoor" OnClick="btnModifyOutdoor_Click" ValidationGroup="presOutValidation" />
+                <asp:Button runat="server" Text="Cancel" CssClass="btn btn-outline-primary m-2" ID="btnCancelOutdoor" OnClick="btnCancelOutdoor_Click" />
                 <asp:Button runat="server" Text="Clear" CssClass="btn btn-outline-primary m-2" ID="btnClearOutdoor" OnClick="btnClearOutdoor_Click" />
             </div>
         </div>

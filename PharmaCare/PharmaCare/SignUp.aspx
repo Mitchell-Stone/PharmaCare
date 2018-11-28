@@ -18,28 +18,29 @@
                 <div class="contents">
                 <div class="label-textstwo">First Name
                     </div>
-                <input class="Text" id="inputsm" type="text" />
-                </div>
+                    <asp:TextBox ID="txtfirst" runat="server"></asp:TextBox>
+               </div>
 
                  <div class="contents">
                 <div class="label-textstwo">Last Name
                     </div>
-                <input class="Text" type="text" />
+                     <asp:TextBox ID="txtlast" runat="server" cssclass="form-control"></asp:TextBox>
                 </div>
             
                 <div class="contents">
                 <div class="label-textstwo">UserName</div>
-                <input class="Text" type="text" />
+                    <asp:TextBox ID="txtuser" runat="server" cssclass="form-control"></asp:TextBox>
                 </div>
 
                 <div class="contents">
                 <div class="label-textstwo">SecurityLevel</div>
-                 <input class="Text" type="text" />
+                    <asp:TextBox ID="txtlevel" runat="server" cssclass="form-control"></asp:TextBox>
                 </div>
 
                 <div class="contents">
                 <div class="label-textstwo">Password</div>
-                <input class="Text" type="password" />
+                    <asp:textbox id="txtpassword" runat="server"
+                       type="password" cssclass="form-control"></asp:textbox>
                 </div>
                   
                  
@@ -47,16 +48,9 @@
                     <asp:Button class="back" runat="server" Text="Back" ID="btn_Back" OnClick="btn_back" />
 
                    
-                    <asp:Button class="submit" runat="server" Text="Submit" ID="btn_Submit" OnClick="btn_submit" />
-
-                 
+                    <asp:Button class="submit" runat="server" Text="Submit" ID="btn_Submit" OnClick="btn_submit" />                
                 </div>
-
-            
-
-         
         </div>   
     </form>
 </body>
 </html>
-

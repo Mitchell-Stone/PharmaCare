@@ -12,32 +12,9 @@
     <asp:DropDownList ID="DropDownListNurse" runat="server" CssClass="form-control" DataSourceID="SqlDataSource2" DataTextField="NursingStationId" DataValueField="PrescriptionId" AutoPostBack="True"></asp:DropDownList>
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT [PrescriptionId], [NursingStationId] FROM [IndoorPrescriptions]"></asp:SqlDataSource>
     <br />
-            <asp:GridView ID="StationList" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource3" ForeColor="#333333" GridLines="None" DataKeyNames="PrescriptionId" Width="138px">
-                <AlternatingRowStyle BackColor="White" />
-                <Columns>
-                    <asp:BoundField DataField="PatientID" HeaderText="PatientID" SortExpression="PatientID" />
-                    <asp:BoundField DataField="PrescriptionId" HeaderText="PrescriptionId" InsertVisible="False" ReadOnly="True" SortExpression="PrescriptionId" />
-                    <asp:BoundField DataField="PrescriptionDate" HeaderText="PrescriptionDate" SortExpression="PrescriptionDate" />
-                    <asp:BoundField DataField="AdditionalInformation" HeaderText="AdditionalInformation" SortExpression="AdditionalInformation" />
-                    <asp:BoundField DataField="PrescriptionStatus" HeaderText="PrescriptionStatus" SortExpression="PrescriptionStatus" />
-                </Columns>
-                <EditRowStyle BackColor="#2461BF" />
-                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="#EFF3FB" />
-                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                <SortedDescendingHeaderStyle BackColor="#4870BE" />
-            </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT [PatientID], [PrescriptionId], [PrescriptionDate], [AdditionalInformation], [PrescriptionStatus] FROM [Prescription] WHERE ([PrescriptionId] = @PrescriptionId)">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="DropDownListNurse" Name="PrescriptionId" PropertyName="SelectedValue" Type="Int32" />
-                </SelectParameters>
-            </asp:SqlDataSource>
-            <asp:GridView ID="GridView1" runat="server" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource4" ForeColor="#333333" GridLines="None">
+
+
+	 <asp:GridView ID="GridView1" runat="server" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource4" ForeColor="#333333" GridLines="None" CssClass="table table-hover table-bordered">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="PrescriptionId" HeaderText="PrescriptionId" SortExpression="PrescriptionId" />
@@ -60,8 +37,16 @@
                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT IndoorPrescriptions.PrescriptionId, Prescription.PatientID, IndoorPrescriptions.RoomNumber, IndoorPrescriptions.WingNumber, IndoorPrescriptions.FloorNumber, Prescription.PrescriptionDate, Prescription.PrescriptionStatus, Patients.Name FROM Drugs INNER JOIN DrugDetails INNER JOIN Prescription INNER JOIN IndoorPrescriptions ON Prescription.PrescriptionId = IndoorPrescriptions.PrescriptionId INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID INNER JOIN PrescriptionDrugs ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId ON DrugDetails.LinkId = PrescriptionDrugs.LinkId ON Drugs.DrugId = PrescriptionDrugs.DrugId"></asp:SqlDataSource>
-    <br />
+
+            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT distinct(IndoorPrescriptions.PrescriptionId), Prescription.PatientID, IndoorPrescriptions.RoomNumber, IndoorPrescriptions.WingNumber, IndoorPrescriptions.FloorNumber, Prescription.PrescriptionDate, Prescription.PrescriptionStatus, Patients.Name FROM Drugs INNER JOIN DrugDetails INNER JOIN Prescription INNER JOIN IndoorPrescriptions ON Prescription.PrescriptionId = IndoorPrescriptions.PrescriptionId INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID INNER JOIN PrescriptionDrugs ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId ON DrugDetails.LinkId = PrescriptionDrugs.LinkId ON Drugs.DrugId = PrescriptionDrugs.DrugId WHERE (Prescription.PrescriptionId = @PrescriptionId)">
+    <SelectParameters>
+                    <asp:ControlParameter ControlID="DropDownListNurse" Name="PrescriptionId" PropertyName="SelectedValue" Type="Int32" />
+                </SelectParameters>
+            </asp:SqlDataSource>
+
+
+
+            <br />
       <asp:Button ID="Printbtn" runat="server" Text="Print" OnClientClick="javascript:window.print();" />
 
    </asp:Content>

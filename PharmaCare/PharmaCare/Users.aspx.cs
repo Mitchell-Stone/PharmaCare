@@ -19,13 +19,13 @@ namespace PharmaCare
             {
                 Response.Redirect("");
             }
-
+          
         }
 
         protected void LogOut_btn_Click(object sender, EventArgs e)
         {
             Session["New"] = null;
-            Response.Redirect("");
+            Response.Redirect("LogIn.aspx");
 
         }
     }
