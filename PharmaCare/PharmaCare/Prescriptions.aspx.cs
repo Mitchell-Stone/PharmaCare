@@ -29,6 +29,9 @@ namespace PharmaCare
             btnEditOutPresDetails.Enabled = false;
             btnAddPresDetails.Enabled = false;
             btnAddOutPresDetails.Enabled = false;
+            btnCheckCocktail.Enabled = false;
+            btnCheckOutCocktail.Enabled = false;
+
         }
 
         /**GLOBAL PRESCRIPTION BUTTONS**/
@@ -498,6 +501,7 @@ namespace PharmaCare
             btnInsert.Enabled = false;
             btnModify.Enabled = true;
             btnAddPresDetails.Enabled = true;
+            btnCheckCocktail.Enabled = true;
         }
 
         /// <summary>
@@ -613,6 +617,7 @@ namespace PharmaCare
                 BindDrugDetailsToDGV();
                 clearPrescriptionDetails();
                 btnModify.Enabled = true;
+                btnCheckOutCocktail.Enabled = true;
             }
             catch (Exception)
             {
@@ -639,6 +644,7 @@ namespace PharmaCare
                 if (drugExists > 0)
                 {
                     PresDrugID.ForeColor = Color.Black;
+                    
                 }
                 else
                 {
@@ -679,6 +685,7 @@ namespace PharmaCare
                 clearPrescriptionDetails();
                 btnAddPresDetails.Enabled = true;
                 btnModify.Enabled = true;
+                btnCheckOutCocktail.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -821,6 +828,7 @@ namespace PharmaCare
                 clearOutPrescriptionDetails();
                 btnAddOutPresDetails.Enabled = true;
                 btnModifyOutdoor.Enabled = true;
+                btnCheckOutCocktail.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -897,6 +905,7 @@ namespace PharmaCare
                 BindDrugDetailsToOutdoorDGV();
                 clearOutPrescriptionDetails();
                 btnModifyOutdoor.Enabled = true;
+                btnCheckCocktail.Enabled = true;
             }
             catch (Exception)
             {
@@ -1117,6 +1126,7 @@ namespace PharmaCare
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "This Drug Combination is Safe" + "');", true);
             }
             client.Close();
+            btnModifyOutdoor.Enabled = true;
         }
 
         protected void DgvOutdoorPrescriptions_PreRender(object sender, EventArgs e)
@@ -1169,6 +1179,7 @@ namespace PharmaCare
             btnInsertOutdoor.Enabled = false;
             btnModifyOutdoor.Enabled = true;
             btnAddOutPresDetails.Enabled = true;
+            btnCheckOutCocktail.Enabled = true;
 
         }
 
