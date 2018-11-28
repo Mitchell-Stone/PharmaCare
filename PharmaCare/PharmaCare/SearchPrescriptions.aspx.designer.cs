@@ -13,42 +13,6 @@ namespace PharmaCare {
     public partial class SearchPrescriptions {
         
         /// <summary>
-        /// txtSearchPatient control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearchPatient;
-        
-        /// <summary>
-        /// btnFindPatient control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFindPatient;
-        
-        /// <summary>
-        /// txtFindPrescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFindPrescription;
-        
-        /// <summary>
-        /// btnFindPrescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFindPrescription;
-        
-        /// <summary>
         /// dgvPrescriptions control.
         /// </summary>
         /// <remarks>
@@ -73,7 +37,7 @@ namespace PharmaCare {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DetailsView DetailsPrescription;
+        protected global::System.Web.UI.WebControls.GridView DetailsPrescription;
         
         /// <summary>
         /// SQLDrugDetails control.
