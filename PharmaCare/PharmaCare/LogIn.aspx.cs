@@ -1,6 +1,6 @@
 ﻿/*
  *      Date Created = 27th October 2018
- *      Created By = 
+ *      Created By = Saugat Raut
  *      Purpose = This manages the PharmaCare Login Page
  *      Bugs = No known bugs
  */
@@ -22,7 +22,7 @@ namespace PharmaCare
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString);
-            //SqlConnection conn = HospitalDB.GetConnection();
+            
             conn.Open();
             string checkuser = "select count (*) from Staff where UserName ='" + txtUsername.Text + "'";
             SqlCommand com = new SqlCommand(checkuser, conn);
@@ -36,6 +36,7 @@ namespace PharmaCare
                 string password = passComm.ExecuteScalar().ToString();
                 if (password == txtPassword.Text)
                 {
+                    //create a seesion for the user
                     Session["New"] = txtUsername.Text;
 
                     string security = "select SecurityLevel from Staff where UserName = '" + txtUsername.Text + "'";
@@ -44,8 +45,7 @@ namespace PharmaCare
                         Response.Redirect("LogIn.aspx");
                     }
                     else
-                        //Response.Write("Password is correct");
-                        //Response.Write("<script>alert('login successful');</script>");
+                        
                         Response.Redirect("Users.aspx");
                 }
                 else

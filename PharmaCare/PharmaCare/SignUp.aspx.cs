@@ -1,7 +1,7 @@
 ﻿/*
  *      Date Created = 27th October 2018
- *      Created By = 
- *      Purpose = 
+ *      Created By = Saugat Raut
+ *      Purpose = This page will help user to sign up
  *      Bugs = No known bugs
  */
 
@@ -25,23 +25,27 @@ namespace PharmaCare
 
         protected void btn_submit(object sender, EventArgs e)
         {
-
+            //get connection
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["PharmaCareDB"].ConnectionString);
-            //SqlConnection conn = HospitalDB.GetConnection();
 
-
+            // query
             string update = "insert into Staff(FirstName,LastName,UserName,Password,SecurityLevel) values('" + txtfirst.Text + "','" + txtlast.Text + "','" + txtuser.Text + "','" + txtpassword.Text + "','" + txtlevel.Text + "')";
 
             SqlCommand cmd = new SqlCommand(update, conn);
             conn.Open();
             cmd.ExecuteNonQuery();
-            // int value =  cmd.ExecuteNonQuery();
+           
             conn.Close();
-            // if (value > 0)
-            // {
+            
             Response.Write("Data saved");
 
-            // }
+            // clear all the textboxes
+            txtfirst.Text = "";
+            txtlast.Text = "";
+            txtlevel.Text = "";
+            txtpassword.Text = "";
+            txtuser.Text = "";
+          
 
         }
     }

@@ -11,7 +11,8 @@ namespace PharmaCare
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["New"] != null)
+            //creating a session
+            if (Session["New"] != null)
             {
                 welcomeLbl.Text += Session["New"].ToString();
             }

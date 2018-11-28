@@ -1,4 +1,7 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NursingStationListPharma.aspx.cs"
+﻿
+
+
+<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NursingStationListPharma.aspx.cs"
     Inherits="PharmaCare.NursingStationListPharma" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="headPlaceholder" runat="server">
 </asp:Content>
@@ -8,12 +11,12 @@
             <h2>Nursing Station List
             </h2>
     Select a Nursing Station:
-     
+      <%-- Drop Down Function     --%>
     <asp:DropDownList ID="DropDownListNurse" runat="server" CssClass="form-control" DataSourceID="SqlDataSource2" DataTextField="NursingStationId" DataValueField="PrescriptionId" AutoPostBack="True"></asp:DropDownList>
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT [PrescriptionId], [NursingStationId] FROM [IndoorPrescriptions]"></asp:SqlDataSource>
     <br />
 
-
+     <%-- Datagrid View  --%>
 	 <asp:GridView ID="GridView1" runat="server" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource4" ForeColor="#333333" GridLines="None" CssClass="table table-hover table-bordered">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
@@ -37,7 +40,7 @@
                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
-
+     <%-- Sql Data Source  --%>
             <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:PharmaCareDB %>" SelectCommand="SELECT distinct(IndoorPrescriptions.PrescriptionId), Prescription.PatientID, IndoorPrescriptions.RoomNumber, IndoorPrescriptions.WingNumber, IndoorPrescriptions.FloorNumber, Prescription.PrescriptionDate, Prescription.PrescriptionStatus, Patients.Name FROM Drugs INNER JOIN DrugDetails INNER JOIN Prescription INNER JOIN IndoorPrescriptions ON Prescription.PrescriptionId = IndoorPrescriptions.PrescriptionId INNER JOIN Patients ON Prescription.PatientID = Patients.PatientID INNER JOIN PrescriptionDrugs ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId ON DrugDetails.LinkId = PrescriptionDrugs.LinkId ON Drugs.DrugId = PrescriptionDrugs.DrugId WHERE (Prescription.PrescriptionId = @PrescriptionId)">
     <SelectParameters>
                     <asp:ControlParameter ControlID="DropDownListNurse" Name="PrescriptionId" PropertyName="SelectedValue" Type="Int32" />
