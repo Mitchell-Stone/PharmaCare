@@ -1,4 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PreparationList.aspx.cs" Inherits="PharmaCare.WebForm2" %>
+﻿<%--
+    Created by: Mitchell Stone 451381461
+    Date Created: 5th Novemeber 2018
+    Purpose = This page is to view all the prescriptions and their allocated drug. The status of the prescription can be altered from this window.
+    Bugs = nil
+    
+--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PreparationList.aspx.cs" Inherits="PharmaCare.WebForm2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="headPlaceholder" runat="server">
 </asp:Content>
 
