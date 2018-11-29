@@ -57,8 +57,8 @@
                 </SelectParameters>
             </asp:SqlDataSource>             <%--End of the top chart above --%>   
              <%--Start of the bottom chart below --%>   
-            <asp:GridView ID="DetailsPrescription" runat="server" AllowPaging="True"  DataKeyNames="PrescriptionId" 
-                AutoGenerateRows="False" CellPadding="4"   DataSourceID="SQLDrugDetails" ForeColor="#333333" GridLines="None">
+            <asp:GridView ID="DetailsPrescription" runat="server"   DataKeyNames="PrescriptionId" 
+                AutoGenerateRows="False"    DataSourceID="SQLDrugDetails" ForeColor="#333333" GridLines="None" AutoGenerateColumns="False">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 
                 <EditRowStyle BackColor="#999999" />
@@ -74,7 +74,7 @@
                 </Columns>
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
                 <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                
                 <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
 
 
