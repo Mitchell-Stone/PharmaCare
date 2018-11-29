@@ -42,13 +42,10 @@ namespace PharmaCare
         {
             if (e.CommandName == "ViewDrugs")
             {
-                // Get the index of the row
                 int index = Convert.ToInt32(e.CommandArgument);
 
-                // Get the value of the prescription id column cell
                 int prescriptionId = Convert.ToInt32(gvPrescriptions.Rows[index].Cells[0].Text);
 
-                // Create a data table and bind it to the gridview
                 DataTable dt = PrescriptionDB.GetDrugsByPrescriptionID(prescriptionId);
                 gvDetailsPrescription.DataSource = dt;
                 gvDetailsPrescription.DataBind();
