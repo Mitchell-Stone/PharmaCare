@@ -26,7 +26,7 @@ namespace PharmaCare
             }                
         }
 
-        // Binds the data returned from the SQL query and binds it to the grid view
+        // Binds the data returned from the SQL query and binds it to the grid view using a data table
         private void BindToGridView()
         {
             DataTable dt = PrescriptionDB.LabelsToPrint();

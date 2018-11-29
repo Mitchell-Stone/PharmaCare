@@ -2,7 +2,7 @@
  *      Date Created = 5th Novemeber 2018
  *      Created By = Mitchell Stone: 451381461
  *      Purpose = This page is to view all the prescriptions and their allocated drug. The status of the prescription can be altered from this window.
- *      Bugs = Error when searching by id
+ *      Bugs = nil
  */
 
 using PharmaCare.Models;
@@ -96,6 +96,7 @@ namespace PharmaCare
                 prep.PrescriptionId = grp[0].PrescriptionId;
                 prep.PrescriptionCount = grp.Count;
                 prep.PrescriptionDate = grp[0].PrescriptionDate;
+                prep.PrescriptionStatus = grp[0].PrescriptionStatus;
                 prep.PrepList = grp;
 
                 tempList.Add(prep);
@@ -130,6 +131,7 @@ namespace PharmaCare
                     prep.PrescriptionId = grp[0].PrescriptionId;
                     prep.PrescriptionCount = grp.Count;
                     prep.PrescriptionDate = grp[0].PrescriptionDate;
+                    prep.PrescriptionStatus = grp[0].PrescriptionStatus;
                     prep.PrepList = grp;
                     
                     tempList.Add(prep);
@@ -157,6 +159,7 @@ namespace PharmaCare
                     prep.PrescriptionId = grp[0].PrescriptionId;
                     prep.PrescriptionCount = grp.Count;
                     prep.PrescriptionDate = grp[0].PrescriptionDate;
+                    prep.PrescriptionStatus = grp[0].PrescriptionStatus;
                     prep.PrepList = grp;
 
                     tempList.Add(prep);
@@ -294,7 +297,7 @@ namespace PharmaCare
 
             //clear the data from the grid view
             gvPrepList.DataSource = null;
-            gvPrepList.DataBind();
+            gvPrepList.DataBind();  
 
             try
             {
@@ -304,12 +307,15 @@ namespace PharmaCare
                 {
                     //search for the id and bind to the grid view
                     BindToGridView(id);
+                    table_header.Text = string.Format("Displaying Prescription ID: {0}",id);
                 }
             }
             catch (FormatException)
             {
                 Console.WriteLine("No value entered");
-            }         
+            }
+
+            SetStatusDDL();
         }
 
         // Gathers the data about the prescription from the selected row when a row button is pressed
