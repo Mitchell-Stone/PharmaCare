@@ -800,41 +800,81 @@ namespace PharmaCare.Models
             }
         }
 
-        public static SqlDataReader GetODPprescription(SqlConnection con, string status)
+        public static DataTable GetODPprescription()
         {
+            DataTable dt = new DataTable();
+
+            SqlConnection con = PharmaCareDB.GetConnection();
+
             try
             {
-                string sql = "SELECT OPDId, FilledAndDispatched, DateDispatched, TimeDispatched, IndoorEmergency, ToFill, Drugs.DrugId, " +
-                    "DrugName, DrugForm, Patients.PatientID, Patients.Name, Prescription.PrescriptionId, " +
-                    "Prescription.DoctorID, PrescriptionDate, AdditionalInformation, PrescriptionStatus, DrugDose " +
+                con.Open();
+
+                string sql = "SELECT OPDPrescriptions.OPDId, OPDPrescriptions.DateDispatched, OPDPrescriptions.IndoorEmergency, Patients.PatientID, " +
+                    "Patients.Name, Prescription.PrescriptionId, Prescription.DoctorID, Prescription.PrescriptionDate, " +
+                    "Prescription.PrescriptionStatus " +
                     "FROM OPDPrescriptions " +
-                    "LEFT JOIN Prescription " +
-                    "ON OPDPrescriptions.prescriptionId = Prescription.PrescriptionId " +
-                    "LEFT JOIN Patients " +
+                    "LEFT OUTER JOIN Prescription " +
+                    "ON OPDPrescriptions.PrescriptionId = Prescription.PrescriptionId " +
+                    "LEFT OUTER JOIN Patients " +
                     "ON Prescription.PatientID = Patients.PatientID " +
-                    "LEFT JOIN PrescriptionDrugs " +
-                    "ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId " +
-                    "LEFT JOIN Drugs " +
-                    "ON PrescriptionDrugs.DrugId = Drugs.DrugId " +
-                    "LEFT JOIN DrugDetails " +
-                    "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
-                    "WHERE PrescriptionStatus = @status " +
-                    "ORDER BY PrescriptionDate ASC";
+                    "WHERE PrescriptionStatus = 'Active' " +
+                    "ORDER BY PrescriptionDate";
+
                 using (var command = new SqlCommand(sql, con))
                 {
-                    command.Parameters.AddWithValue("status", status);
-                    return command.ExecuteReader();
+                   
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    dt.Load(reader);
+                    return dt;
                 }
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
-
         }
 
+        public static DataTable GetDrugsByPrescriptionID(int id)
+        {
+            DataTable dt = new DataTable();
 
+            SqlConnection con = PharmaCareDB.GetConnection();
+
+            try
+            {
+                con.Open();
+
+                string sql = "SELECT OPDPrescriptions.ToFill, Drugs.DrugId, Drugs.DrugName, Drugs.DrugForm, " +
+                    "Patients.Name, Prescription.PrescriptionId, DrugDetails.DrugDose " +
+                    "FROM OPDPrescriptions " +
+                    "LEFT OUTER JOIN Prescription " +
+                    "ON OPDPrescriptions.PrescriptionId = Prescription.PrescriptionId " +
+                    "LEFT OUTER JOIN Patients " +
+                    "ON Prescription.PatientID = Patients.PatientID " +
+                    "LEFT OUTER JOIN PrescriptionDrugs " +
+                    "ON Prescription.PrescriptionId = PrescriptionDrugs.PrescriptionId " +
+                    "LEFT OUTER JOIN Drugs " +
+                    "ON PrescriptionDrugs.DrugId = Drugs.DrugId " +
+                    "LEFT OUTER JOIN DrugDetails ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
+                    "WHERE Prescription.PrescriptionId = @id " +
+                    "ORDER BY Prescription.PrescriptionId ";
+                ;
+
+                using (var command = new SqlCommand(sql, con))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    dt.Load(reader);
+                    return dt;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
     }
-
-
 }
