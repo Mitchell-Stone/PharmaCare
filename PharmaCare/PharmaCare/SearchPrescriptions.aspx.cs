@@ -11,6 +11,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Linq;
+using System.Data.SqlClient;
 
 namespace PharmaCare
 {
@@ -22,47 +23,36 @@ namespace PharmaCare
         protected void Page_Load(object sender, EventArgs e)
         {
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
-            // if (!IsPostBack)
-            //  {
-            // PresentDataInTheList("All");
-            // }
+
+            if (!IsPostBack)
+            {
+                PresentDataInTheList();
+            }
         }
 
-        protected void BtnFindPatient_Click(object sender, EventArgs e)
+        private void PresentDataInTheList()
         {
-            //string search = txtSearchPatient.Text;
-
-
+            DataTable dt = PrescriptionDB.GetODPprescription();
+                    
+            gvPrescriptions.DataSource = dt;
+            gvPrescriptions.DataBind();           
         }
 
-        protected void dgvPrescriptions_SelectedIndexChanged(object sender, EventArgs e)
+        protected void dgvPrescriptions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName == "ViewDrugs")
+            {
+                // Get the index of the row
+                int index = Convert.ToInt32(e.CommandArgument);
 
+                // Get the value of the prescription id column cell
+                int prescriptionId = Convert.ToInt32(gvPrescriptions.Rows[index].Cells[0].Text);
+
+                // Create a data table and bind it to the gridview
+                DataTable dt = PrescriptionDB.GetDrugsByPrescriptionID(prescriptionId);
+                gvDetailsPrescription.DataSource = dt;
+                gvDetailsPrescription.DataBind();
+            }
         }
-
-        /*private void PresentDataInTheList (string status)
-{
-SqlConnection con = PharmaCareDB.GetConnection();
-List<string> tempList = new List<string>();
-
-try
-{
-con.Open();
-if (status == "All")
-{
-  SqlDataReader reader = PrescriptionDB.GetODPprescription(con, status);
-  dgvPrescriptions.DataSource = reader;
-  dgvPrescriptions.DataBind();
-}
-}
-catch (SqlException ex)
-{
-throw ex;
-}
-finally
-{
-con.Close();
-}
-}*/
     }
 }
