@@ -1,4 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PreparationList.aspx.cs" Inherits="PharmaCare.WebForm2" %>
+﻿<%--
+    Created by: Mitchell Stone 451381461
+    Date Created: 5th Novemeber 2018
+    Purpose = This page is to view all the prescriptions and their allocated drug. The status of the prescription can be altered from this window.
+    Bugs = nil
+    
+--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PreparationList.aspx.cs" Inherits="PharmaCare.WebForm2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="headPlaceholder" runat="server">
 </asp:Content>
 
@@ -78,6 +86,8 @@
                     SortExpression="PrescriptionDate"></asp:BoundField>
                 <asp:BoundField DataField="PrescriptionCount" HeaderText="Drug Count"
                     SortExpression="PrescriptionCount"></asp:BoundField>
+                <asp:BoundField DataField="PrescriptionStatus" HeaderText="Prescription Status"
+                    SortExpression="PrescriptionStatus"></asp:BoundField>
                 <asp:TemplateField HeaderText="Prescription Functions">
                     <ItemTemplate>  
                         <asp:Button runat="server" Text="View Prescription" CommandName="ViewPrescription" 
