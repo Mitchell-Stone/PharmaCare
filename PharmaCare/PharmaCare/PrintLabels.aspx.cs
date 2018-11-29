@@ -64,5 +64,19 @@ namespace PharmaCare
                 Console.WriteLine("PRINTING LABEL");       
             }
         }
+
+        protected void btnIndoor_Click(object sender, EventArgs e)
+        {
+            DataTable dt = PrescriptionDB.LabelsToPrintIndoor();
+            gvLabelList.DataSource = dt;
+            gvLabelList.DataBind();
+        }
+
+        protected void btnOutdoor_Click(object sender, EventArgs e)
+        {
+            DataTable dt = PrescriptionDB.LabelsToPrintOutdoor();
+            gvLabelList.DataSource = dt;
+            gvLabelList.DataBind(); 
+        }
     }
 }

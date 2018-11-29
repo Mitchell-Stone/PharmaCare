@@ -386,6 +386,108 @@ namespace PharmaCare.Models
             }
         }
 
+        // Returns the data for all indoor prescription labels
+        public static DataTable LabelsToPrintIndoor()
+        {
+            //create a new data table for the data returned from the query
+            DataTable dt = new DataTable();
+
+            //get the sql connection
+            SqlConnection con = PharmaCareDB.GetConnection();
+
+            string sql = "SELECT Patients.PatientID, Name, DoctorName, " +
+                "DrugName, DrugDose, TimesPerDay " +
+                "FROM Prescription " +
+                "RIGHT JOIN IndoorPrescriptions " +
+                "ON IndoorPrescriptions.PrescriptionId = Prescription.PrescriptionId " +
+                "RIGHT JOIN Doctors " +
+                "ON Prescription.DoctorID = Doctors.DoctorID " +
+                "RIGHT JOIN Patients " +
+                "ON Prescription.PatientID = Patients.PatientID " +
+                "LEFT JOIN PrescriptionDrugs " +
+                "ON PrescriptionDrugs.PrescriptionId = Prescription.PrescriptionId " +
+                "LEFT JOIN Drugs " +
+                "ON Drugs.DrugId = PrescriptionDrugs.DrugId " +
+                "LEFT JOIN DrugDetails " +
+                "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
+                "WHERE PrescriptionStatus = 'Active' " +
+                "ORDER BY Patients.PatientID";
+
+            try
+            {
+                //open the connection and execute the reader
+                con.Open();
+                using (var command = new SqlCommand(sql, con))
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+                    //load the reader into the data table
+                    dt.Load(reader);
+                    //return the data table
+                    return dt;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //close the connection
+                con.Close();
+            }
+        }
+
+        // Returns the data for all outdoor prescription labels
+        public static DataTable LabelsToPrintOutdoor()
+        {
+            //create a new data table for the data returned from the query
+            DataTable dt = new DataTable();
+
+            //get the sql connection
+            SqlConnection con = PharmaCareDB.GetConnection();
+
+            string sql = "SELECT Patients.PatientID, Name, DoctorName, " +
+                "DrugName, DrugDose, TimesPerDay " +
+                "FROM Prescription " +
+                "RIGHT JOIN OPDPrescriptions " +
+                "ON OPDPrescriptions.PrescriptionId = Prescription.PrescriptionId " +
+                "RIGHT JOIN Doctors " +
+                "ON Prescription.DoctorID = Doctors.DoctorID " +
+                "RIGHT JOIN Patients " +
+                "ON Prescription.PatientID = Patients.PatientID " +
+                "LEFT JOIN PrescriptionDrugs " +
+                "ON PrescriptionDrugs.PrescriptionId = Prescription.PrescriptionId " +
+                "LEFT JOIN Drugs " +
+                "ON Drugs.DrugId = PrescriptionDrugs.DrugId " +
+                "LEFT JOIN DrugDetails " +
+                "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
+                "WHERE PrescriptionStatus = 'Active' " +
+                "ORDER BY Patients.PatientID";
+
+            try
+            {
+                //open the connection and execute the reader
+                con.Open();
+                using (var command = new SqlCommand(sql, con))
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+                    //load the reader into the data table
+                    dt.Load(reader);
+                    //return the data table
+                    return dt;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //close the connection
+                con.Close();
+            }
+        }
+
         // Returns the data for all Active prescriptions to be displayed for printing
         public static DataTable LabelsToPrint()
         {
@@ -409,7 +511,7 @@ namespace PharmaCare.Models
                 "LEFT JOIN DrugDetails " +
                 "ON DrugDetails.LinkId = PrescriptionDrugs.LinkId " +
                 "WHERE PrescriptionStatus = 'Active' " +
-                "ORDER BY Name";
+                "ORDER BY Patients.PatientID";
             try
             {
                 //open the connection and execute the reader

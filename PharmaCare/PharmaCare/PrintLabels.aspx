@@ -17,6 +17,10 @@
         <div class="row">
             <h2>Listing Currently Active Prescriptions</h2>
         </div>
+        <div class="row">
+            <asp:Button runat="server" Text="Indoor" CssClass="btn btn-outline-primary m-2" ID="btnIndoor" OnClick="btnIndoor_Click" />
+            <asp:Button runat="server" Text="Outdoor" CssClass="btn btn-outline-primary m-2" ID="btnOutdoor" OnClick="btnOutdoor_Click" />
+        </div>
     </div>
     <div class="col-6">
         <div class="prescription-label">
